@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -17,6 +18,11 @@ public class Clicker : MonoBehaviour
     private float currentClickProgress = 0f;
     private Vector3 nextBuildPosition;
 
+    [SerializeField]
+    GameObject topBorder; //For dynamically moving the top border
+
+    public static event Action NewFloor; //Listener for when a new floor is created
+
     void Start()
     {
         currentClickRequirement = startingClickRequirement;
@@ -28,6 +34,13 @@ public class Clicker : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) // Left click
         {
             OnClickBuild();
+        }
+
+        //Checks if the next build pos is off screen, this will make it so top border scales dynamically
+        
+        if(nextBuildPosition.y > Camera.main.orthographicSize)
+        {
+            topBorder.transform.position = nextBuildPosition + new Vector3(0,buildHeightOffset,0);
         }
     }
 
@@ -49,7 +62,7 @@ public class Clicker : MonoBehaviour
     //Method to generate random new floor that visually stacks on the last one
     private void BuildNewFloor()
     {
-        GameObject prefabToSpawn = floorPrefabs[Random.Range(0, floorPrefabs.Count)];
+        GameObject prefabToSpawn = floorPrefabs[UnityEngine.Random.Range(0, floorPrefabs.Count)];
         GameObject newFloor = Instantiate(prefabToSpawn, nextBuildPosition, Quaternion.identity, towerBase);
 
         //Dynamically assign sorting order
@@ -61,5 +74,7 @@ public class Clicker : MonoBehaviour
 
         currentFloor++;
         nextBuildPosition += new Vector3(0, buildHeightOffset, 0);
+        
+        NewFloor?.Invoke(); //New floor is built invoke the event to let the manager know!
     }
 }
