@@ -13,6 +13,12 @@ public class Clicker : MonoBehaviour
     public int startingClickRequirement = 5;
     public float clickRequirementMultiplier = 1.5f;
 
+    [Header("Hammer Animation")]
+    public GameObject hammerAnimObject; //Assigned in inspector
+    private Animator hammerAnimator;
+    public float hammerTimeout = 0.15f; // Time window to keep hammering after last click
+    private float lastClickTime = 0f;
+
     private int currentFloor = 0;
     private float currentClickRequirement;
     private float currentClickProgress = 0f;
@@ -25,20 +31,35 @@ public class Clicker : MonoBehaviour
 
     void Start()
     {
+        //Starting click requirement is 5 for now
         currentClickRequirement = startingClickRequirement;
         nextBuildPosition = towerBase.position;
+
+        //Get hammer animator object
+        if (hammerAnimObject != null)
+            hammerAnimator = hammerAnimObject.GetComponent<Animator>();
     }
 
     private void Update()
     {
+        //Check for click input
         if (Input.GetMouseButtonDown(0)) // Left click
         {
             OnClickBuild();
         }
 
+        //Logic for stopping hammering animation
+        if (hammerAnimator != null && hammerAnimator.GetBool("isHammering"))
+        {
+            if (Time.time - lastClickTime > hammerTimeout)
+            {
+                hammerAnimator.SetBool("isHammering", false);
+            }
+        }
+
         //Checks if the next build pos is off screen, this will make it so top border scales dynamically
-        
-        if(nextBuildPosition.y > Camera.main.orthographicSize)
+
+        if (nextBuildPosition.y > Camera.main.orthographicSize)
         {
             topBorder.transform.position = nextBuildPosition + new Vector3(0,buildHeightOffset,0);
         }
@@ -49,13 +70,21 @@ public class Clicker : MonoBehaviour
     {
         currentClickProgress++;
 
-        Debug.Log("I am being clicked!");
+        lastClickTime = Time.time;
+
+        //Move and trigger hammer animation
+        if (hammerAnimator != null)
+        {
+            hammerAnimObject.transform.position = nextBuildPosition;    //Move hammer to the build position
+            hammerAnimator.SetBool("isHammering", true);
+        }
 
         if (currentClickProgress >= currentClickRequirement)
         {
             BuildNewFloor();
             currentClickProgress = 0f;
             currentClickRequirement = Mathf.Ceil(currentClickRequirement * clickRequirementMultiplier);
+            hammerAnimObject.transform.position = nextBuildPosition;
         }
     }
 
