@@ -30,7 +30,7 @@ public class GoldGenerator : MonoBehaviour
             //Instantiate popup (uses coinPopup script)
             if (coinPopupPrefab != null)
             {
-                Vector3 popupPosition = transform.position + new Vector3(2.0f, 0.0f, 0);
+                Vector3 popupPosition = transform.position + new Vector3(2.5f, 0.0f, 0);
 
                 //We instantiate the coin and set parent to the uiCanvas
                 GameObject popup = Instantiate(coinPopupPrefab, popupPosition, Quaternion.identity, uiCanvas.transform);

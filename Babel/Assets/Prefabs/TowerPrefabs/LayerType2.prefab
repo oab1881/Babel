@@ -98,4 +98,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goldPerSecond: 10
-  coinPopupPrefab: {fileID: 2087528920961471044, guid: 9616d1c62b96b594db6ea62295c12ee4, type: 3}
+  coinPopupPrefab: {fileID: 2343874541718838704, guid: 02e478ff82ce9244ebfb0c16146bca1b, type: 3}
