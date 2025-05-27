@@ -91,6 +91,12 @@ public class Clicker : MonoBehaviour
     //Method to generate random new floor that visually stacks on the last one
     private void BuildNewFloor()
     {
+        // Apply a one-time vertical offset before the first floor is placed
+        if (currentFloor == 0)
+        {
+            nextBuildPosition += new Vector3(0, .5f, 0); // tiny extra offset
+        }
+
         GameObject prefabToSpawn = floorPrefabs[UnityEngine.Random.Range(0, floorPrefabs.Count)];
         GameObject newFloor = Instantiate(prefabToSpawn, nextBuildPosition, Quaternion.identity, towerBase);
 
