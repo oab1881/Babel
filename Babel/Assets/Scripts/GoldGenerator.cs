@@ -8,11 +8,14 @@ public class GoldGenerator : MonoBehaviour
 {
     public float goldPerSecond = 10f;
     public GameObject coinPopupPrefab;
-    [SerializeField]
-    //Canvas uiCanvas; // Drag your Canvas into this field
+    GameObject uiCanvas;
+
+    
 
     private void OnEnable()
     {
+        //Check if we have gotten a reference to our canvas
+        if(uiCanvas == null) uiCanvas = GameObject.Find("UICanvas");
         StartCoroutine(GenerateGold());
     }
 
@@ -28,9 +31,11 @@ public class GoldGenerator : MonoBehaviour
             if (coinPopupPrefab != null)
             {
                 Vector3 popupPosition = transform.position + new Vector3(2.0f, 0.0f, 0);
-                GameObject popup = Instantiate(coinPopupPrefab, popupPosition, Quaternion.identity);
+
+                //We instantiate the coin and set parent to the uiCanvas
+                GameObject popup = Instantiate(coinPopupPrefab, popupPosition, Quaternion.identity, uiCanvas.transform);
                 popup.transform.localScale = Vector3.one; // Force proper scale
-                //popup.transform.SetParent(uiCanvas.transform, false); *BUGGED************************************
+                
 
                 TextMeshPro text = popup.GetComponentInChildren<TextMeshPro>();
                 if (text != null)

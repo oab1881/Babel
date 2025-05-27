@@ -100,6 +100,8 @@ public class Clicker : MonoBehaviour
         GameObject prefabToSpawn = floorPrefabs[UnityEngine.Random.Range(0, floorPrefabs.Count)];
         GameObject newFloor = Instantiate(prefabToSpawn, nextBuildPosition, Quaternion.identity, towerBase);
 
+        currentFloor++;
+
         //Dynamically assign sorting order
         SpriteRenderer sr = newFloor.GetComponentInChildren<SpriteRenderer>();
         if (sr != null)
@@ -107,7 +109,6 @@ public class Clicker : MonoBehaviour
             sr.sortingOrder = currentFloor; //Or use -currentFloor to reverse direction
         }
 
-        currentFloor++;
         nextBuildPosition += new Vector3(0, buildHeightOffset, 0);
         
         NewFloor?.Invoke(); //New floor is built invoke the event to let the manager know!
