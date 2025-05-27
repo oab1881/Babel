@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5504789627536311793}
   - component: {fileID: 7650773570872031896}
   - component: {fileID: 4512851882774037152}
+  - component: {fileID: 8327750649786824672}
   m_Layer: 0
   m_Name: LayerType1
   m_TagString: Untagged
@@ -99,3 +100,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goldPerSecond: 10
   coinPopupPrefab: {fileID: 2343874541718838704, guid: 02e478ff82ce9244ebfb0c16146bca1b, type: 3}
+--- !u!114 &8327750649786824672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880958427461158923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0362184bfafc1a94f952c0a6eabbc40d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

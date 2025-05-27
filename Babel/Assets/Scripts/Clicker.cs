@@ -31,6 +31,8 @@ public class Clicker : MonoBehaviour
 
     public static uint multiplyer = 1;
 
+    List<GameObject> floorsList = new List<GameObject>(); //List containing all built floors in the heirarchy
+
     void Start()
     {
         //Starting click requirement is 5 for now
@@ -98,6 +100,13 @@ public class Clicker : MonoBehaviour
 
         GameObject prefabToSpawn = floorPrefabs[UnityEngine.Random.Range(0, floorPrefabs.Count)];
         GameObject newFloor = Instantiate(prefabToSpawn, nextBuildPosition, Quaternion.identity, towerBase);
+
+
+        //Sets the health of the new floor to how many clicks it took
+        newFloor.GetComponent<FloorInformation>().CreateFloor((uint)currentClickProgress);
+
+        //Adds the new floor to list of floor
+        floorsList.Add(newFloor);
 
         currentFloor++;
 
