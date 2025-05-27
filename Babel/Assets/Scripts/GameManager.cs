@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -9,6 +10,9 @@ public class GameManager : MonoBehaviour
     public uint floor = 0;
     public uint money = 0;
     public uint piety = 0;
+
+    [SerializeField]
+    private TextMeshProUGUI goldDisplay;
 
     private void Awake()
     {
@@ -35,8 +39,20 @@ public class GameManager : MonoBehaviour
         piety++;
     }
 
+    //Method that increments gold and calls UpdateGoldUI
     public void AddGold(float amount)
     {
         money += (uint)amount;
+        UpdateGoldUI();
     }
+
+    //Method that updates the gold count in game
+    private void UpdateGoldUI()
+    {
+        if (goldDisplay != null)
+        {
+            goldDisplay.text = $": {money}";
+        }
+    }
+
 }

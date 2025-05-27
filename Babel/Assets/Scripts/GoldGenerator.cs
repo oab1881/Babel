@@ -10,8 +10,6 @@ public class GoldGenerator : MonoBehaviour
     public GameObject coinPopupPrefab;
     GameObject uiCanvas;
 
-    
-
     private void OnEnable()
     {
         //Check if we have gotten a reference to our canvas
@@ -25,7 +23,8 @@ public class GoldGenerator : MonoBehaviour
         while (true)
         {
             GameManager.Instance.AddGold(goldPerSecond);
-            Debug.Log("Gold generated. Current gold: " + GameManager.Instance.money);
+
+            //Debug.Log("Gold generated. Current gold: " + GameManager.Instance.money);
 
             //Instantiate popup (uses coinPopup script)
             if (coinPopupPrefab != null)

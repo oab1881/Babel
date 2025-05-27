@@ -15,7 +15,7 @@ public class Clicker : MonoBehaviour
 
     [Header("Hammer Animation")]
     public GameObject hammerAnimObject; //Assigned in inspector
-    private Animator hammerAnimator;
+    public Animator hammerAnimator;
     public float hammerTimeout = 0.15f; // Time window to keep hammering after last click
     private float lastClickTime = 0f;
 
