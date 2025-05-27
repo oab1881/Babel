@@ -21,13 +21,15 @@ public class Clicker : MonoBehaviour
 
     private int currentFloor = 0;
     private float currentClickRequirement;
-    private float currentClickProgress = 0f;
+    public static float currentClickProgress = 0f;
     private Vector3 nextBuildPosition;
 
     [SerializeField]
     GameObject topBorder; //For dynamically moving the top border
 
     public static event Action NewFloor; //Listener for when a new floor is created
+
+    public static uint multiplyer = 1;
 
     void Start()
     {
@@ -47,6 +49,8 @@ public class Clicker : MonoBehaviour
         {
             OnClickBuild();
         }
+
+        CheckFloorStatus();
 
         //Logic for stopping hammering animation
         if (hammerAnimator != null && hammerAnimator.GetBool("isHammering"))
@@ -68,7 +72,8 @@ public class Clicker : MonoBehaviour
     //Clicking anywhere on the screen calls this
     public void OnClickBuild()
     {
-        currentClickProgress++;
+        //Increases click progress by one times the multiplyer or just (the multiplyer)
+        currentClickProgress+=  multiplyer;
 
         lastClickTime = Time.time;
 
@@ -79,13 +84,7 @@ public class Clicker : MonoBehaviour
             hammerAnimator.SetBool("isHammering", true);
         }
 
-        if (currentClickProgress >= currentClickRequirement)
-        {
-            BuildNewFloor();
-            currentClickProgress = 0f;
-            currentClickRequirement = Mathf.Ceil(currentClickRequirement * clickRequirementMultiplier);
-            hammerAnimObject.transform.position = nextBuildPosition;
-        }
+        CheckFloorStatus();
     }
 
     //Method to generate random new floor that visually stacks on the last one
@@ -112,5 +111,26 @@ public class Clicker : MonoBehaviour
         nextBuildPosition += new Vector3(0, buildHeightOffset, 0);
         
         NewFloor?.Invoke(); //New floor is built invoke the event to let the manager know!
+    }
+
+
+    //Function to be used later which increases multiplyer
+    //Buttons in ui will call this function
+    //Will have to incorporate a way to figure out if player has enough money
+    //Also need to implement a fail vs success outcome
+    public static void IncreaseMultiplyer()
+    {
+        multiplyer *= multiplyer;
+    }
+
+    void CheckFloorStatus()
+    {
+        if (currentClickProgress >= currentClickRequirement)
+        {
+            BuildNewFloor();
+            currentClickProgress = 0f;
+            currentClickRequirement = Mathf.Ceil(currentClickRequirement * clickRequirementMultiplier);
+            hammerAnimObject.transform.position = nextBuildPosition;
+        }
     }
 }
