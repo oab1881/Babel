@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public uint floor = 0;
-    public uint money = 0;
+    public  static uint money = 0;
     public uint piety = 0;
 
     [SerializeField]

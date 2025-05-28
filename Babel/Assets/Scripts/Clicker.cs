@@ -77,6 +77,8 @@ public class Clicker : MonoBehaviour
         //Increases click progress by one times the multiplyer or just (the multiplyer)
         currentClickProgress+=  multiplyer;
 
+        Debug.Log(multiplyer);
+
         lastClickTime = Time.time;
 
         //Move and trigger hammer animation
@@ -129,7 +131,8 @@ public class Clicker : MonoBehaviour
     //Also need to implement a fail vs success outcome
     public static void IncreaseMultiplyer()
     {
-        multiplyer *= multiplyer;
+        if (multiplyer == 1) multiplyer = 2;
+        else multiplyer *= multiplyer;
     }
 
     void CheckFloorStatus()
