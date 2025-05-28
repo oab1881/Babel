@@ -7,7 +7,7 @@ public class WorkersManager : MonoBehaviour
 {
     //Worker count increase and they build every second for you
     uint workerCount = 0;
-    uint workerCost = 100;
+    uint workerCost = 30;
 
     //Engineer count is strictly for ui as a multiplyer goes into effect in Clicker.cs
     uint engineerCount = 0;
@@ -16,7 +16,10 @@ public class WorkersManager : MonoBehaviour
     public static uint EngineerCount { get; private set; }  //used to access for the particle system in Clicker
 
     [SerializeField]
-    uint priceIncrease = 100;
+    uint priceIncreaseEngineers = 100;
+
+    [SerializeField]
+    uint priceIncreaseWorkers = 10;
 
     [Header("Click Particles")]
     public ParticleSystem clickParticles; // Assigned in inspector
@@ -98,11 +101,13 @@ public class WorkersManager : MonoBehaviour
             }
         }
 
-        workerCostText.text = workerCost.ToString();
-        workerCountText.text = workerCount.ToString();
+        //Uses the format numbers function in game manager to make the numbers format properly
 
-        engineerCostText.text = engineerCost.ToString();
-        engineerCountText.text = engineerCount.ToString();
+        workerCostText.text = GameManager.FormatNumbers(workerCost);
+        workerCountText.text = GameManager.FormatNumbers(workerCount);
+
+        engineerCostText.text = GameManager.FormatNumbers(engineerCost);
+        engineerCountText.text = GameManager.FormatNumbers(engineerCount);
     }
 
     //Starts the couroutine for wokers
@@ -132,7 +137,9 @@ public class WorkersManager : MonoBehaviour
         if(GameManager.money >= workerCost)
         {
             GameManager.money -= workerCost;
-            workerCost += priceIncrease;
+            workerCost += priceIncreaseWorkers;
+
+            priceIncreaseWorkers += 5;
             IncreaseWorkers();
 
             // === Spawn TinyGuy ===
@@ -155,7 +162,7 @@ public class WorkersManager : MonoBehaviour
         if (GameManager.money >= engineerCost)
         {
             GameManager.money -= engineerCost;
-            engineerCost += priceIncrease;
+            engineerCost += priceIncreaseEngineers;
             Clicker.IncreaseMultiplyer();
             engineerCount++;
             EngineerCount = engineerCount;  //used in Clicker

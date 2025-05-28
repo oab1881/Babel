@@ -51,8 +51,32 @@ public class GameManager : MonoBehaviour
     {
         if (goldDisplay != null)
         {
-            goldDisplay.text = $": {money}";
+            goldDisplay.text = FormatNumbers(money);
         }
     }
+        
 
-}
+     //Formats currency using suffixes
+     public static string FormatNumbers(uint curr)
+     {
+        string[] suffixes = {
+        "", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No",
+        "Dc", "Ud", "Dd", "Td", "Qad", "Qid", "Sxd", "Spd", "Ocd",
+        "Nod", "Vg", "Uvg", "Dvg"
+        };
+        double value = (double)curr;
+         if (value < 1000)
+             return value.ToString("0");
+
+         int suffixIndex = 0;
+         while (value >= 1000 && suffixIndex < suffixes.Length - 1)
+         {
+             value /= 1000;
+             suffixIndex++;
+         }
+
+         return value.ToString("0.##") + suffixes[suffixIndex];
+     }
+ }
+
+

@@ -42,7 +42,7 @@ public class GoldGenerator : MonoBehaviour
                 popup.transform.localScale = Vector3.one; // Force proper scale
                 
 
-                TextMeshPro text = popup.GetComponentInChildren<TextMeshPro>();
+                TMP_Text text = popup.GetComponentInChildren<TMP_Text>();
                 if (text != null)
                 {
                     text.text = $"+{goldPerSecond}";
