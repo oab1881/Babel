@@ -10,6 +10,12 @@ public class GoldGenerator : MonoBehaviour
     public GameObject coinPopupPrefab;
     GameObject uiCanvas;
 
+    public float GoldPerSecond
+    {
+        set { goldPerSecond = value; }
+        get { return goldPerSecond;}
+    }
+
     private void OnEnable()
     {
         //Check if we have gotten a reference to our canvas

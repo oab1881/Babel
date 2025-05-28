@@ -7,7 +7,7 @@ public class FloorInformation : MonoBehaviour
     //Reference to health and current level of this floor
     uint health;
     uint level = 1;
-    uint upgradeCost = 100;
+    uint upgradeCost = 50;
 
     //Reference to plus button which will upgrade the tower
     [SerializeField]
@@ -24,8 +24,16 @@ public class FloorInformation : MonoBehaviour
     }
 
 
-    /* Commented out til we can fix the upgrade button to display properly
-    
+    private void Update()
+    {
+        if (level >= 3)
+        {
+            upgrageButton.SetActive(false);
+        }
+    }
+
+    // Commented out til we can fix the upgrade button to display properly
+
     //When the mouse enters this object we display the upgrade button
     private void OnMouseEnter()
     {
@@ -45,7 +53,21 @@ public class FloorInformation : MonoBehaviour
         }
     }
 
-    */
+    public void CheckUpgrade()
+    {
+        if(GameManager.money >= upgradeCost)
+        {
+            level++;
+            //Make the prefab switch styles
+            goldGeneratorScript.GoldPerSecond += 10;
+            GameManager.money -= upgradeCost;
+            upgradeCost += 50;
+        }
+        else
+        {
+            Debug.Log("Cant upgrade not enough money");
+        }
+    }
 
 
 
