@@ -33,6 +33,22 @@ public class Clicker : MonoBehaviour
 
     List<GameObject> floorsList = new List<GameObject>(); //List containing all built floors in the heirarchy
 
+    public float CurrentClickProgress
+    {
+        get
+        {
+            return currentClickProgress;
+        }
+    }
+
+    public float ClickRequirement
+    {
+        get
+        {
+            return currentClickRequirement;
+        }
+    }
+
     void Start()
     {
         //Starting click requirement is 5 for now
