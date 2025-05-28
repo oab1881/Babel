@@ -24,7 +24,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField]
     Rigidbody2D rb;
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         //Creates a zeroed out velocity

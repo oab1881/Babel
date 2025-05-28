@@ -171,14 +171,11 @@ public class Clicker : MonoBehaviour
     }
 
 
-    //Function to be used later which increases multiplyer
-    //Buttons in ui will call this function
-    //Will have to incorporate a way to figure out if player has enough money
-    //Also need to implement a fail vs success outcome
+    //This method is called by WorkerManager once it figures out if you can buy the stuff.
     public static void IncreaseMultiplyer()
     {
         if (multiplyer == 1) multiplyer = 2;
-        else multiplyer *= multiplyer;
+        else multiplyer *= 2;
     }
 
     void CheckFloorStatus()

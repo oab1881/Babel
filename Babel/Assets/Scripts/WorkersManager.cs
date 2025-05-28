@@ -18,6 +18,9 @@ public class WorkersManager : MonoBehaviour
     [SerializeField]
     uint priceIncrease = 100;
 
+    [Header("Click Particles")]
+    public ParticleSystem clickParticles; // Assigned in inspector
+
     //Workaround to make the hammering animation play when builders are building
     [Header("Hammer Animation")]
     public GameObject hammerAnimObject; //Assigned in inspector
@@ -70,10 +73,29 @@ public class WorkersManager : MonoBehaviour
 
         //We start the coroutine to generate clicks from workers
 
-        //Move and trigger hammer animation
-        if (hammerAnimator != null)
+        //Move and trigger hammer animation & starts particles
+        if (workerCount > 0)
         {
-            hammerAnimator.SetBool("isHammering", true);
+            if (hammerAnimator != null)
+            {
+                hammerAnimator.SetBool("isHammering", true);
+            }
+
+            // Move the particles to match hammer and play
+            if (clickParticles != null && !clickParticles.isPlaying)
+            {
+                clickParticles.transform.position = hammerAnimObject.transform.position;
+
+                //Dynamically adjust particle emission based on engineer count
+                var emission = clickParticles.emission;
+                emission.rateOverTime = engineerCount * 2; // or tweak values
+
+                //Dynamically adjust particle size
+                var main = clickParticles.main;
+                main.startSize = 0.1f + engineerCount * 0.01f;
+
+                clickParticles.Play();
+            }
         }
 
         workerCostText.text = workerCost.ToString();
