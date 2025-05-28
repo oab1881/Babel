@@ -13,6 +13,10 @@ public class FloorInformation : MonoBehaviour
     [SerializeField]
     GameObject upgrageButton;
 
+    //Reference to Highlight outline
+    [SerializeField]
+    GameObject towerHighlight;
+
     [SerializeField]
     GoldGenerator goldGeneratorScript;
 
@@ -41,6 +45,7 @@ public class FloorInformation : MonoBehaviour
         if (level < 3)
         {
             upgrageButton.SetActive(true);
+            towerHighlight.SetActive(true);
         }
     }
 
@@ -50,6 +55,7 @@ public class FloorInformation : MonoBehaviour
         if (upgrageButton.activeInHierarchy)
         {
             upgrageButton.SetActive(false);
+            towerHighlight.SetActive(false);
         }
     }
 
