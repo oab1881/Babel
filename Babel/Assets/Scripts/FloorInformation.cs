@@ -17,6 +17,15 @@ public class FloorInformation : MonoBehaviour
     [SerializeField]
     GameObject towerHighlight;
 
+    //Reference to Price Panel and Lerp Info
+    [SerializeField]
+    GameObject upgradePanel;
+    [SerializeField] float moveDistance = 5f; //How far to move left
+    [SerializeField] float lerpSpeed = 5f;
+    private Vector3 panelStartPos;
+    private Vector3 panelTargetPos;
+    private Coroutine moveCoroutine;
+
     [SerializeField]
     GoldGenerator goldGeneratorScript;
 
@@ -25,6 +34,12 @@ public class FloorInformation : MonoBehaviour
     public void CreateFloor(uint health)
     {
         this.health = health;
+    }
+
+    void Start()
+    {
+        panelStartPos = upgradePanel.transform.localPosition;
+        panelTargetPos = panelStartPos + Vector3.left * moveDistance;
     }
 
 
@@ -47,6 +62,9 @@ public class FloorInformation : MonoBehaviour
             upgrageButton.SetActive(true);
             towerHighlight.SetActive(true);
         }
+
+        //Move panel to the left
+        StartPanelLerp(panelTargetPos);
     }
 
     //When the mouse leaves we see if the upgrade button is active and set it to not be active
@@ -57,6 +75,9 @@ public class FloorInformation : MonoBehaviour
             upgrageButton.SetActive(false);
             towerHighlight.SetActive(false);
         }
+
+        //Move panel back to the right
+        StartPanelLerp(panelStartPos);
     }
 
     public void CheckUpgrade()
@@ -73,6 +94,30 @@ public class FloorInformation : MonoBehaviour
         {
             Debug.Log("Cant upgrade not enough money");
         }
+    }
+
+    //Used to move the panel from behind the tower to display upgrade price
+    void StartPanelLerp(Vector3 targetPos)
+    {
+        if (moveCoroutine != null)
+            StopCoroutine(moveCoroutine);
+
+        moveCoroutine = StartCoroutine(LerpPanel(targetPos));
+    }
+
+    IEnumerator LerpPanel(Vector3 targetPos)
+    {
+        Vector3 startPos = upgradePanel.transform.localPosition;
+        float t = 0f;
+
+        while (t < 1f)
+        {
+            t += Time.deltaTime * lerpSpeed;
+            upgradePanel.transform.localPosition = Vector3.Lerp(startPos, targetPos, t);
+            yield return null;
+        }
+
+        upgradePanel.transform.localPosition = targetPos; //Snap exactly at end
     }
 
 
