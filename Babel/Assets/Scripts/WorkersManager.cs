@@ -13,6 +13,8 @@ public class WorkersManager : MonoBehaviour
     uint engineerCount = 0;
     uint engineerCost = 100;
 
+    public static uint EngineerCount { get; private set; }  //used to access for the particle system in Clicker
+
     [SerializeField]
     uint priceIncrease = 100;
 
@@ -21,6 +23,15 @@ public class WorkersManager : MonoBehaviour
     public GameObject hammerAnimObject; //Assigned in inspector
     public Animator hammerAnimator;
     public float hammerTimeout = 0.15f; //Time window to keep hammering after last click
+
+    [Header("Tiny Guy Settings")]
+    [SerializeField] GameObject tinyGuyPrefab;
+    [SerializeField] Transform tinyGuyParent; //Attach the hammer and anvil in inspector
+    [SerializeField] float xOffset;
+    [SerializeField] float yOffset;
+
+    List<GameObject> tinyGuys = new List<GameObject>();
+
 
 
     //For all the texts on the worker and engineer ui
@@ -101,6 +112,15 @@ public class WorkersManager : MonoBehaviour
             GameManager.money -= workerCost;
             workerCost += priceIncrease;
             IncreaseWorkers();
+
+            // === Spawn TinyGuy ===
+            // Generate random X,Y offset to spread them around the top of the tower
+            Vector3 spawnPosition = Clicker.Instance.NextBuildPosition + new Vector3(Random.Range(-xOffset, xOffset), Random.Range(-yOffset, 0), 0f);
+
+            //Spawn TinyGuy on top of the tower
+            GameObject tinyGuy = Instantiate(tinyGuyPrefab, spawnPosition, Quaternion.identity, tinyGuyParent);
+            tinyGuys.Add(tinyGuy);
+
         }
         else
         {
@@ -116,6 +136,7 @@ public class WorkersManager : MonoBehaviour
             engineerCost += priceIncrease;
             Clicker.IncreaseMultiplyer();
             engineerCount++;
+            EngineerCount = engineerCount;  //used in Clicker
         }
         else
         {

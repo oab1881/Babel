@@ -19,6 +19,9 @@ public class Clicker : MonoBehaviour
     public float hammerTimeout = 0.15f; // Time window to keep hammering after last click
     private float lastClickTime = 0f;
 
+    [Header("Click Particles")]
+    public ParticleSystem clickParticles; // Assigned in inspector
+
     private int currentFloor = 0;
     private float currentClickRequirement;
     public static float currentClickProgress = 0f;
@@ -32,6 +35,17 @@ public class Clicker : MonoBehaviour
     public static uint multiplyer = 1;
 
     List<GameObject> floorsList = new List<GameObject>(); //List containing all built floors in the heirarchy
+
+    public static Clicker Instance { get; private set; }
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
+    public Vector3 NextBuildPosition => nextBuildPosition;
+    public float BuildHeightOffset => buildHeightOffset;
+
 
     public float CurrentClickProgress
     {
@@ -83,7 +97,7 @@ public class Clicker : MonoBehaviour
 
         if (nextBuildPosition.y > Camera.main.orthographicSize)
         {
-            topBorder.transform.position = nextBuildPosition + new Vector3(0,buildHeightOffset,0);
+            topBorder.transform.position = nextBuildPosition + new Vector3(0,(buildHeightOffset + 5),0);
         }
     }
 
@@ -104,13 +118,29 @@ public class Clicker : MonoBehaviour
             hammerAnimator.SetBool("isHammering", true);
         }
 
+        // Move the particles to match hammer and play
+        if (clickParticles != null)
+        {
+            clickParticles.transform.position = hammerAnimObject.transform.position;
+
+            //Dynamically adjust particle emission based on engineer count
+            var emission = clickParticles.emission;
+            emission.rateOverTime = WorkersManager.EngineerCount * 2; // or tweak values
+
+            //Dynamically adjust particle size
+            var main = clickParticles.main;
+            main.startSize = 0.1f + WorkersManager.EngineerCount * 0.01f;
+
+            clickParticles.Play();
+        }
+
         CheckFloorStatus();
     }
 
     //Method to generate random new floor that visually stacks on the last one
     private void BuildNewFloor()
     {
-        // Apply a one-time vertical offset before the first floor is placed
+        //Apply a one-time vertical offset before the first floor is placed
         if (currentFloor == 0)
         {
             nextBuildPosition += new Vector3(0, .5f, 0); // tiny extra offset
