@@ -128,7 +128,7 @@ MonoBehaviour:
   sR: {fileID: 4990964164105849257}
   changeSprites:
   - {fileID: 21300000, guid: 8e22a540bab30bb4d9f5014ed35ee624, type: 3}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 47bb818b5f5c1cc46bcba437edf0d96c, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

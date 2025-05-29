@@ -313,7 +313,7 @@ MonoBehaviour:
   sR: {fileID: 6183936235712129017}
   changeSprites:
   - {fileID: 21300000, guid: ad34d407d91258f47ad722818a235789, type: 3}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: da5935a7eea065941828f6da9b592f4e, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

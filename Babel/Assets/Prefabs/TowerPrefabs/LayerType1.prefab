@@ -128,7 +128,7 @@ MonoBehaviour:
   sR: {fileID: 7650773570872031896}
   changeSprites:
   - {fileID: 21300000, guid: ce0a4765917de21429c8d3c295bdf22d, type: 3}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 8345f4543992243448c6e3dba6635c36, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -633,7 +633,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6728866932750935093, guid: 641fa479b0888604e8432ee86abc7b96, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9183210211531088578, guid: 641fa479b0888604e8432ee86abc7b96, type: 3}
       propertyPath: m_LocalPosition.x

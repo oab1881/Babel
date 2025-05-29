@@ -81,55 +81,13 @@ public class FloorInformation : MonoBehaviour
     //When the mouse enters this object we display the upgrade button
     private void OnMouseEnter()
     {
-        //Shows the upgrade buttons for level 1
-        if (level == 1)
-        {
-            //Sets the money upgrade button to visible
-            baseUpgrade.SetActive(true);
-            archerUpgrade.SetActive(true);
-            
-        }
-
-        if(level == 2 && isArcherTower == false)
-        {
-            baseUpgrade.SetActive(true);
-            //Temple upgrade
-
-        }
-
-        //Highlight the tower no matter the upgrade level
-        towerHighlight.SetActive(true);
-
-        //Move panel to the left
-        StartPanelLerp(panelTargetPos);
+        ShowButtons();
     }
 
     //When the mouse leaves we see if the upgrade button is active and set it to not be active
     private void OnMouseExit()
     {
-        /*//If the button is active and the mouse moves out accounts for it when it is upgraded to max
-        if (level == 1)
-        {
-            baseUpgrade.SetActive(false);
-            archerUpgrade.SetActive(false);
-            
-        }*/
-
-
-        foreach (Transform child in this.transform)
-        {
-            if (child.gameObject.activeInHierarchy)
-            {
-                child.gameObject.SetActive(false);
-            }
-        }
-
-       
-        towerHighlight.SetActive(false);
-
-        //Move panel back to the right
-        StartPanelLerp(panelStartPos);
-
+        HideButtons();
     }
 
     //Checks to see if an upgreade can be done
@@ -198,6 +156,9 @@ public class FloorInformation : MonoBehaviour
             level++;
             GameManager.money -= upgradeCost;
             upgradeCost += 50;
+
+            HideButtons();
+            ShowButtons();
         }
     }
 
@@ -224,6 +185,61 @@ public class FloorInformation : MonoBehaviour
             upgradeCost += 100;
 
         }
+    }
+
+
+    //Function that hides buttons that shouldn't be displayed based on level
+    private void HideButtons()
+    {
+        foreach (Transform child in this.transform)
+        {
+            if (child.gameObject.activeInHierarchy && (child.gameObject.name != "TowerPanel (1)" || child.gameObject.name != "TowerPanel"))
+            {
+                child.gameObject.SetActive(false);
+            }
+        }
+
+
+        towerHighlight.SetActive(false);
+
+        //Move panel back to the right
+        StartPanelLerp(panelStartPos);
+    }
+
+
+    //Opposite of hide buttons shows buttons based on level should be
+    private void ShowButtons()
+    {
+        //Takes the level into account and hides buttons accordingly
+        //Shows the upgrade buttons for level 1
+        if (level == 1)
+        {
+            //Sets the money upgrade button to visible
+            baseUpgrade.SetActive(true);
+            archerUpgrade.SetActive(true);
+
+        }
+
+        if (level == 2 && isArcherTower == false)
+        {
+            baseUpgrade.SetActive(true);
+            //Temple upgrade
+
+        }
+
+        //Highlight the tower no matter the upgrade level
+        towerHighlight.SetActive(true);
+
+        foreach (Transform child in this.transform)
+        {
+            if (child.gameObject.name == "TowerPanel (1)" || child.gameObject.name == "TowerPanel")
+            {
+                child.gameObject.SetActive(true);
+            }
+        }
+
+        //Move panel to the left
+        StartPanelLerp(panelTargetPos);
     }
 
 
