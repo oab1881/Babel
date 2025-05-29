@@ -8,14 +8,28 @@ public class FloorInformation : MonoBehaviour
     uint health;
     uint level = 1;
     uint upgradeCost = 50;
+    uint maxHealth;
+    bool isArcherTower = false;
+    int archerTowerLv = -1; //Negative 1 signafies it doesn't exist *Note I may delete this later not sure of it's use*
+    uint damagePerSecond = 10;
+    //Vector for range? Radius??
+    bool isTemple = false;
+
+    int currentSprite = -1; //Current Sprite -1 is used to help calculate where in the list we are for upgrades
 
     //Reference to plus button which will upgrade the tower
     [SerializeField]
-    GameObject upgrageButton;
+    GameObject baseUpgrade;
+
+    [SerializeField]
+    GameObject archerUpgrade;
 
     //Reference to Highlight outline
     [SerializeField]
     GameObject towerHighlight;
+
+    [SerializeField]
+    GameObject templeUpgrade;
 
     //Reference to Price Panel and Lerp Info
     [SerializeField]
@@ -29,11 +43,25 @@ public class FloorInformation : MonoBehaviour
     [SerializeField]
     GoldGenerator goldGeneratorScript;
 
+    [SerializeField]
+    SpriteRenderer sR;
+
+
+    //0 BaseUpgrade LV2
+    //1 BaseUpgrade LV3
+    //2 ArcherTower LV1
+    //3 ArcherTower LV2
+    //4 Temple
+    //5 Catherdral
+    [SerializeField]
+    Sprite[] changeSprites; 
+
     //Creates a floor by setting the floor health equal to the clicks it took to build the floor
     //This is done in clicker.cs on GameManager
     public void CreateFloor(uint health)
     {
         this.health = health;
+        maxHealth= health;
     }
 
     void Start()
@@ -45,10 +73,7 @@ public class FloorInformation : MonoBehaviour
 
     private void Update()
     {
-        if (level >= 3)
-        {
-            upgrageButton.SetActive(false);
-        }
+        //Make invisible on click
     }
 
     // Commented out til we can fix the upgrade button to display properly
@@ -56,12 +81,24 @@ public class FloorInformation : MonoBehaviour
     //When the mouse enters this object we display the upgrade button
     private void OnMouseEnter()
     {
-        //Only shows the upgrade button if the level of the floor is below 
-        if (level < 3)
+        //Shows the upgrade buttons for level 1
+        if (level == 1)
         {
-            upgrageButton.SetActive(true);
-            towerHighlight.SetActive(true);
+            //Sets the money upgrade button to visible
+            baseUpgrade.SetActive(true);
+            archerUpgrade.SetActive(true);
+            
         }
+
+        if(level == 2 && isArcherTower == false)
+        {
+            baseUpgrade.SetActive(true);
+            //Temple upgrade
+
+        }
+
+        //Highlight the tower no matter the upgrade level
+        towerHighlight.SetActive(true);
 
         //Move panel to the left
         StartPanelLerp(panelTargetPos);
@@ -70,29 +107,42 @@ public class FloorInformation : MonoBehaviour
     //When the mouse leaves we see if the upgrade button is active and set it to not be active
     private void OnMouseExit()
     {
-        if (upgrageButton.activeInHierarchy)
+        /*//If the button is active and the mouse moves out accounts for it when it is upgraded to max
+        if (level == 1)
         {
-            upgrageButton.SetActive(false);
-            towerHighlight.SetActive(false);
+            baseUpgrade.SetActive(false);
+            archerUpgrade.SetActive(false);
+            
+        }*/
+
+
+        foreach (Transform child in this.transform)
+        {
+            if (child.gameObject.activeInHierarchy)
+            {
+                child.gameObject.SetActive(false);
+            }
         }
+
+       
+        towerHighlight.SetActive(false);
 
         //Move panel back to the right
         StartPanelLerp(panelStartPos);
+
     }
 
-    public void CheckUpgrade()
+    //Checks to see if an upgreade can be done
+    public bool CheckUpgrade()
     {
         if(GameManager.money >= upgradeCost)
         {
-            level++;
-            //Make the prefab switch styles
-            goldGeneratorScript.GoldPerSecond += 10;
-            GameManager.money -= upgradeCost;
-            upgradeCost += 50;
+            return true;
         }
         else
         {
             Debug.Log("Cant upgrade not enough money");
+            return false;
         }
     }
 
@@ -121,6 +171,60 @@ public class FloorInformation : MonoBehaviour
     }
 
 
+
+    public void baseUpgreade()
+    {
+        if (CheckUpgrade())
+        {
+            //Increase our overall level counter
+            level++;
+
+            //Check what sprite we are setting to
+            //Check Change sprite array for the reference for this index
+            if(currentSprite == -1)
+            {
+                currentSprite = 0;
+            }
+            else
+            {
+                currentSprite = 1;
+            }
+
+            //Actually set those sprites
+            sR.sprite = changeSprites[currentSprite];
+
+            //Increase how much money is generated
+            if(level == 0) goldGeneratorScript.GoldPerSecond += 10;
+            if (level == 1) goldGeneratorScript.GoldPerSecond += 30;
+            GameManager.money -= upgradeCost;
+            upgradeCost += 50;
+        }
+    }
+
+    public void ArcherUpgrade()
+    {
+        if (CheckUpgrade())
+        {
+            isArcherTower = true;
+
+            //Make the prefab switch styles match the if statements
+            goldGeneratorScript.GoldPerSecond += 20;
+            GameManager.money -= upgradeCost;
+            upgradeCost += 100;
+        }
+    }
+
+    public void TempleUpgrade()
+    {
+        if (CheckUpgrade())
+        {
+            //Make the prefab switch styles match the if statements
+            goldGeneratorScript.GoldPerSecond = 0;
+            GameManager.money -= upgradeCost;
+            upgradeCost += 100;
+
+        }
+    }
 
 
 }
