@@ -11,7 +11,11 @@ public class FloorInformation : MonoBehaviour
     uint maxHealth;
     bool isArcherTower = false;
     int archerTowerLv = -1; //Negative 1 signafies it doesn't exist *Note I may delete this later not sure of it's use*
-    uint damagePerSecond = 10;
+    uint damagePerSecond = 0;
+    //Set in create floor we can use this for progression and for effecting other floors
+    int floorNum;
+
+    
     //Vector for range? Radius??
     bool isTemple = false;
 
@@ -54,13 +58,14 @@ public class FloorInformation : MonoBehaviour
     //4 Temple
     //5 Catherdral
     [SerializeField]
-    Sprite[] changeSprites; 
+    Sprite[] changeSprites;
 
     //Creates a floor by setting the floor health equal to the clicks it took to build the floor
     //This is done in clicker.cs on GameManager
-    public void CreateFloor(uint health)
+    public void CreateFloor(uint health, int floorNum)
     {
         this.health = health;
+        this.floorNum= floorNum;
         maxHealth= health;
     }
 
@@ -182,7 +187,7 @@ public class FloorInformation : MonoBehaviour
             //Make the prefab switch styles match the if statements
             goldGeneratorScript.GoldPerSecond = 0;
             GameManager.money -= upgradeCost;
-            upgradeCost += 100;
+            upgradeCost += 950;
 
         }
     }

@@ -147,14 +147,15 @@ public class Clicker : MonoBehaviour
         GameObject prefabToSpawn = floorPrefabs[UnityEngine.Random.Range(0, floorPrefabs.Count)];
         GameObject newFloor = Instantiate(prefabToSpawn, nextBuildPosition, Quaternion.identity, towerBase);
 
+        currentFloor++;
 
         //Sets the health of the new floor to how many clicks it took
-        newFloor.GetComponent<FloorInformation>().CreateFloor((uint)currentClickProgress);
+        newFloor.GetComponent<FloorInformation>().CreateFloor((uint)currentClickProgress, currentFloor);
 
         //Adds the new floor to list of floor
         floorsList.Add(newFloor);
 
-        currentFloor++;
+        
 
         //Dynamically assign sorting order
         SpriteRenderer sr = newFloor.GetComponentInChildren<SpriteRenderer>();

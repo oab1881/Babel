@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 
     public uint floor = 0;
     public  static uint money = 0;
-    public uint piety = 0;
+    public static uint herecy = 0;
 
     [SerializeField]
     private TextMeshProUGUI goldDisplay;
@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     {
         floor++;
         money++;
-        piety++;
+        herecy++;
     }
 
     //Method that increments gold and calls UpdateGoldUI
