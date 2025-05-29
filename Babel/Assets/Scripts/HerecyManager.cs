@@ -29,8 +29,12 @@ public class HerecyManager : MonoBehaviour
 
     private IEnumerator SpawnAngles()
     {
-        int attackFloor = Random.Range(0, GameManager.floorObjects.Count); //Use this for position stuff
-        //Spawn Angle Code
+        if (spawnAngles)
+        {
+            int attackFloor = Random.Range(0, GameManager.floorObjects.Count); //Use this for position stuff
+                                                                               //Spawn Angle Code
+        }
         yield return new WaitForSeconds(spawnTime);
+        StartCoroutine(SpawnAngles());
     }
 }

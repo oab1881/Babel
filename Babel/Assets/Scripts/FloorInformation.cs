@@ -33,13 +33,15 @@ public class FloorInformation : MonoBehaviour
     [SerializeField]
     GameObject archerUpgrade;
 
+    [SerializeField]
+    GameObject templeUpgrade;
+
+
     //Reference to Highlight outline
     [SerializeField]
     GameObject towerHighlight;
 
-    [SerializeField]
-    GameObject templeUpgrade;
-
+    
     //Reference to Price Panel and Lerp Info
     [SerializeField]
     GameObject upgradePanel;
@@ -79,7 +81,8 @@ public class FloorInformation : MonoBehaviour
         panelStartPos = upgradePanel.transform.localPosition;
         panelTargetPos = panelStartPos + Vector3.left * moveDistance;
 
-        //Set upgrade price in the text
+        //Set upgrade price in the text and increases it based on floor
+        upgradeCost *= (uint)floorNum;
         upgradeText.text = GameManager.FormatNumbers(upgradeCost);
     }
 
@@ -102,19 +105,7 @@ public class FloorInformation : MonoBehaviour
         HideButtons();
     }
 
-    //Checks to see if an upgreade can be done
-    public bool CheckUpgrade()
-    {
-        if(GameManager.money >= upgradeCost)
-        {
-            return true;
-        }
-        else
-        {
-            Debug.Log("Cant upgrade not enough money");
-            return false;
-        }
-    }
+    
 
     //Used to move the panel from behind the tower to display upgrade price
     void StartPanelLerp(Vector3 targetPos)
@@ -142,24 +133,38 @@ public class FloorInformation : MonoBehaviour
 
     //Upgrades *Note in future we may want to change to graph of nodes 
 
+
+    //Checks to see if an upgreade can be done
+    public bool CheckUpgrade()
+    {
+        if (GameManager.money >= upgradeCost)
+        {
+            return true;
+        }
+        else
+        {
+            Debug.Log("Cant upgrade not enough money");
+            return false;
+        }
+    }
+
+    //Called on the BaseUpgradeButton onClick event
     public void baseUpgreade()
     {
         if (CheckUpgrade())
         {
             //Check what sprite we are setting to
             //Check Change sprite array for the reference for this index
-            if(currentSprite == -1)
+            if(level == 1)
             {
-                currentSprite = 0;
+                UpdateSprite(0);
             }
             else
             {
-                currentSprite = 1;
+                UpdateSprite(1);
             }
 
-            //Actually set those sprites
-            sR.sprite = changeSprites[currentSprite];
-
+            
             //Increase how much money is generated
             if(level == 1) goldGeneratorScript.GoldPerSecond += 20; //Will make 30
             if (level == 2) goldGeneratorScript.GoldPerSecond += 70;    //Will make 100
@@ -167,10 +172,7 @@ public class FloorInformation : MonoBehaviour
             //Increase our overall level counter
             level++;
             GameManager.money -= upgradeCost;
-            upgradeCost += 1000;  //adjusted due to inflation (made it harder to progress)
-
-            // Update 
-            upgradeText.text =GameManager.FormatNumbers(upgradeCost);
+            IncreaseCost(700);
 
             HideButtons();
             ShowButtons();
@@ -184,9 +186,14 @@ public class FloorInformation : MonoBehaviour
             isArcherTower = true;
 
             //Make the prefab switch styles match the if statements
-            goldGeneratorScript.GoldPerSecond += 20;
+            level++;
+            goldGeneratorScript.GoldPerSecond += 10; // Will Make 20
             GameManager.money -= upgradeCost;
-            upgradeCost += 100;
+
+            IncreaseCost(2500); // Increases the price to 2800
+
+            HideButtons();
+            ShowButtons();
         }
     }
 
@@ -239,8 +246,15 @@ public class FloorInformation : MonoBehaviour
         if (level == 2 && isArcherTower == false)
         {
             baseUpgrade.SetActive(true);
-            //Temple upgrade
+            //templeUpgrade.SetActive(true);
 
+        }
+
+        if(level == 2 && isArcherTower == true)
+        {
+            //Move archer button to the middle
+            archerUpgrade.transform.position = new Vector3(0, archerUpgrade.transform.position.y, 0);
+            archerUpgrade.SetActive(true);
         }
 
         //Highlight the tower no matter the upgrade level
@@ -259,4 +273,20 @@ public class FloorInformation : MonoBehaviour
     }
 
 
+    //Increases the cost of upgrades
+    private void IncreaseCost(int amount)
+    {
+        upgradeCost += (uint)(amount + (30* floorNum)); 
+
+        // Update text using format numbers
+        upgradeText.text = GameManager.FormatNumbers(upgradeCost);
+    }
+
+
+    private void UpdateSprite(int spriteIndex)
+    {
+        //Actually set those sprites
+        sR.sprite = changeSprites[spriteIndex];
+
+    }
 }
