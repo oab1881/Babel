@@ -8,7 +8,7 @@ public class FloorInformation : MonoBehaviour
     //Reference to health and current level of this floor
     uint health;
     uint level = 1;
-    uint upgradeCost = 500;
+    uint upgradeCost = 100;
     uint maxHealth;
     bool isArcherTower = false;
     int archerTowerLv = -1; //Negative 1 signafies it doesn't exist *Note I may delete this later not sure of it's use*
@@ -57,6 +57,13 @@ public class FloorInformation : MonoBehaviour
     [SerializeField]
     SpriteRenderer sR;
 
+    [SerializeField]
+    SphereCollider LeftCollider;
+
+    [SerializeField]
+    SphereCollider RightCollider;
+
+
 
     //0 BaseUpgrade LV2
     //1 BaseUpgrade LV3
@@ -84,6 +91,8 @@ public class FloorInformation : MonoBehaviour
         //Set upgrade price in the text and increases it based on floor
         upgradeCost *= (uint)floorNum;
         upgradeText.text = GameManager.FormatNumbers(upgradeCost);
+
+
     }
 
 
@@ -185,6 +194,10 @@ public class FloorInformation : MonoBehaviour
         {
             isArcherTower = true;
 
+            if (level == 1) UpdateSprite(2);
+            else UpdateSprite(3);
+           
+
             //Make the prefab switch styles match the if statements
             level++;
             goldGeneratorScript.GoldPerSecond += 10; // Will Make 20
@@ -203,6 +216,8 @@ public class FloorInformation : MonoBehaviour
         {
             isTemple = true;
             level++;
+
+            UpdateSprite(4);
 
             //Make the prefab switch styles match the if statements
             GameManager.DecreaseHerecy(50); //Decreases herecy by 50
@@ -265,6 +280,18 @@ public class FloorInformation : MonoBehaviour
             archerUpgrade.SetActive(true);
         }
 
+        if(level < 3)
+        {
+            //Move panel to the left
+            StartPanelLerp(panelTargetPos);
+        }
+
+        if(level == 3 && isTemple == true)
+        {
+            //Move panel to the left
+            StartPanelLerp(panelTargetPos);
+        }
+
         
 
         //Highlight the tower no matter the upgrade level
@@ -278,8 +305,7 @@ public class FloorInformation : MonoBehaviour
             }
         }
 
-        //Move panel to the left
-        StartPanelLerp(panelTargetPos);
+        
     }
 
 
