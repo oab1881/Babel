@@ -8,11 +8,15 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public uint floor = 0;
+    public static List<FloorInformation> floorObjects = new List<FloorInformation>();
+
+
     public  static uint money = 0;
     public static uint herecy = 0;
 
     [SerializeField]
     private TextMeshProUGUI goldDisplay;
+
 
     private void Awake()
     {
@@ -32,11 +36,13 @@ public class GameManager : MonoBehaviour
         Clicker.NewFloor += NewFloor;
     }
 
+
+    //Attached to the clicker event that recieves the signal a new floor was built
     public void NewFloor()
     {
         floor++;
         money++;
-        herecy++;
+        herecy+= 5;
     }
 
     //Method that increments gold and calls UpdateGoldUI

@@ -80,14 +80,12 @@ public class FloorInformation : MonoBehaviour
         panelTargetPos = panelStartPos + Vector3.left * moveDistance;
 
         //Set upgrade price in the text
-        upgradeText.text = upgradeCost.ToString();
+        upgradeText.text = GameManager.FormatNumbers(upgradeCost);
     }
 
 
     private void Update()
     {
-        //Make invisible on click
-
     }
 
     // Commented out til we can fix the upgrade button to display properly
@@ -142,7 +140,7 @@ public class FloorInformation : MonoBehaviour
         upgradePanel.transform.localPosition = targetPos; //Snap exactly at end
     }
 
-
+    //Upgrades *Note in future we may want to change to graph of nodes 
 
     public void baseUpgreade()
     {
@@ -172,7 +170,7 @@ public class FloorInformation : MonoBehaviour
             upgradeCost += 1000;  //adjusted due to inflation (made it harder to progress)
 
             // Update 
-            upgradeText.text = upgradeCost.ToString();
+            upgradeText.text =GameManager.FormatNumbers(upgradeCost);
 
             HideButtons();
             ShowButtons();
@@ -237,6 +235,7 @@ public class FloorInformation : MonoBehaviour
 
         }
 
+        //For a tower upgraded to base lv 2
         if (level == 2 && isArcherTower == false)
         {
             baseUpgrade.SetActive(true);
@@ -249,7 +248,7 @@ public class FloorInformation : MonoBehaviour
 
         foreach (Transform child in this.transform)
         {
-            if (child.gameObject.name != "Canvas" || child.gameObject.name != "UpgradeCost" || child.gameObject.name == "TowerPanel (1)" || child.gameObject.name == "TowerPanel")
+            if (child.gameObject.name == "Canvas" || child.gameObject.name == "UpgradeCost" || child.gameObject.name == "TowerPanel (1)" || child.gameObject.name == "TowerPanel")
             {
                 child.gameObject.SetActive(true);
             }

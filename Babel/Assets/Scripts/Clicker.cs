@@ -149,11 +149,13 @@ public class Clicker : MonoBehaviour
 
         currentFloor++;
 
+        FloorInformation floorInfo = newFloor.GetComponent<FloorInformation>();
+
         //Sets the health of the new floor to how many clicks it took
-        newFloor.GetComponent<FloorInformation>().CreateFloor((uint)currentClickProgress, currentFloor);
+        floorInfo.CreateFloor((uint)currentClickProgress, currentFloor);
 
         //Adds the new floor to list of floor
-        floorsList.Add(newFloor);
+        GameManager.floorObjects.Add(floorInfo);
 
         
 
