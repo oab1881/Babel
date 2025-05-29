@@ -32,7 +32,7 @@ public class Clicker : MonoBehaviour
 
     public static event Action NewFloor; //Listener for when a new floor is created
 
-    public static uint multiplyer = 1;
+    public static float multiplyer = 1;
 
     List<GameObject> floorsList = new List<GameObject>(); //List containing all built floors in the heirarchy
 
@@ -174,7 +174,7 @@ public class Clicker : MonoBehaviour
     public static void IncreaseMultiplyer()
     {
         if (multiplyer == 1) multiplyer = 2;
-        else multiplyer *= 2;
+        else multiplyer *= 1.5f;                //(owen) - I changed this to balance the game better now that workers scale
     }
 
     void CheckFloorStatus()

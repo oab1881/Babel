@@ -487,6 +487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0362184bfafc1a94f952c0a6eabbc40d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  upgradeText: {fileID: 6059118237097108847}
   baseUpgrade: {fileID: 254289600368575283}
   archerUpgrade: {fileID: 3834244217357952251}
   towerHighlight: {fileID: 9174221341234595700}
@@ -631,13 +632,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4589590096003361312}
     m_Modifications:
+    - target: {fileID: 3589131284577066495, guid: a61d460d0f97d624299203ebc7d120e4, type: 3}
+      propertyPath: m_text
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 3999992850400069271, guid: a61d460d0f97d624299203ebc7d120e4, type: 3}
       propertyPath: m_Name
-      value: TowerPanel (2)
+      value: TowerPanel
       objectReference: {fileID: 0}
     - target: {fileID: 4272052324054146932, guid: a61d460d0f97d624299203ebc7d120e4, type: 3}
       propertyPath: m_SortingOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443379337468378956, guid: a61d460d0f97d624299203ebc7d120e4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443379337468378956, guid: a61d460d0f97d624299203ebc7d120e4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443379337468378956, guid: a61d460d0f97d624299203ebc7d120e4, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7443379337468378956, guid: a61d460d0f97d624299203ebc7d120e4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -649,7 +666,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7443379337468378956, guid: a61d460d0f97d624299203ebc7d120e4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.28633687
       objectReference: {fileID: 0}
     - target: {fileID: 7443379337468378956, guid: a61d460d0f97d624299203ebc7d120e4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -694,3 +711,14 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3999992850400069271, guid: a61d460d0f97d624299203ebc7d120e4, type: 3}
   m_PrefabInstance: {fileID: 7339011469519272080}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6059118237097108847 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3589131284577066495, guid: a61d460d0f97d624299203ebc7d120e4, type: 3}
+  m_PrefabInstance: {fileID: 7339011469519272080}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -54,10 +54,19 @@ public class GameManager : MonoBehaviour
             goldDisplay.text = FormatNumbers(money);
         }
     }
-        
 
-     //Formats currency using suffixes
-     public static string FormatNumbers(uint curr)
+    //Method that updates the multiplier count
+    public void UpdateMultUI()
+    {
+        if (goldDisplay != null)
+        {
+            goldDisplay.text = FormatNumbers(Clicker.multiplyer);
+        }
+    }
+
+
+    //Formats currency using suffixes
+    public static string FormatNumbers(float curr)
      {
         string[] suffixes = {
         "", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No",

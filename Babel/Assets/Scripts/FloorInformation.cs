@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class FloorInformation : MonoBehaviour
@@ -7,7 +8,7 @@ public class FloorInformation : MonoBehaviour
     //Reference to health and current level of this floor
     uint health;
     uint level = 1;
-    uint upgradeCost = 50;
+    uint upgradeCost = 500;
     uint maxHealth;
     bool isArcherTower = false;
     int archerTowerLv = -1; //Negative 1 signafies it doesn't exist *Note I may delete this later not sure of it's use*
@@ -15,7 +16,11 @@ public class FloorInformation : MonoBehaviour
     //Set in create floor we can use this for progression and for effecting other floors
     int floorNum;
 
-    
+    //Reference to upgradeText (child of upgradePanel on all prefab towers)
+    [SerializeField]
+    TMP_Text upgradeText;
+
+
     //Vector for range? Radius??
     bool isTemple = false;
 
@@ -73,12 +78,16 @@ public class FloorInformation : MonoBehaviour
     {
         panelStartPos = upgradePanel.transform.localPosition;
         panelTargetPos = panelStartPos + Vector3.left * moveDistance;
+
+        //Set upgrade price in the text
+        upgradeText.text = upgradeCost.ToString();
     }
 
 
     private void Update()
     {
         //Make invisible on click
+
     }
 
     // Commented out til we can fix the upgrade button to display properly
@@ -154,13 +163,16 @@ public class FloorInformation : MonoBehaviour
             sR.sprite = changeSprites[currentSprite];
 
             //Increase how much money is generated
-            if(level == 1) goldGeneratorScript.GoldPerSecond += 10;
-            if (level == 2) goldGeneratorScript.GoldPerSecond += 30;
+            if(level == 1) goldGeneratorScript.GoldPerSecond += 20; //Will make 30
+            if (level == 2) goldGeneratorScript.GoldPerSecond += 70;    //Will make 100
 
             //Increase our overall level counter
             level++;
             GameManager.money -= upgradeCost;
-            upgradeCost += 50;
+            upgradeCost += 1000;  //adjusted due to inflation (made it harder to progress)
+
+            // Update 
+            upgradeText.text = upgradeCost.ToString();
 
             HideButtons();
             ShowButtons();
@@ -198,7 +210,7 @@ public class FloorInformation : MonoBehaviour
     {
         foreach (Transform child in this.transform)
         {
-            if (child.gameObject.activeInHierarchy && (child.gameObject.name != "TowerPanel (1)" || child.gameObject.name != "TowerPanel"))
+            if (child.gameObject.activeInHierarchy && (child.gameObject.name != "Canvas" || child.gameObject.name != "TowerPanel (1)" || child.gameObject.name != "TowerPanel"))
             {
                 child.gameObject.SetActive(false);
             }
@@ -237,7 +249,7 @@ public class FloorInformation : MonoBehaviour
 
         foreach (Transform child in this.transform)
         {
-            if (child.gameObject.name == "TowerPanel (1)" || child.gameObject.name == "TowerPanel")
+            if (child.gameObject.name != "Canvas" || child.gameObject.name != "UpgradeCost" || child.gameObject.name == "TowerPanel (1)" || child.gameObject.name == "TowerPanel")
             {
                 child.gameObject.SetActive(true);
             }

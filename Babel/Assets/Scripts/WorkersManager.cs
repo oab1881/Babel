@@ -13,6 +13,20 @@ public class WorkersManager : MonoBehaviour
     uint engineerCount = 0;
     uint engineerCost = 100;
 
+    //Hover boxes logic for worker/engineer breakdown
+    [SerializeField]
+    GameObject workerBox;
+    [SerializeField]
+    GameObject workerBtn;
+    [SerializeField]
+    TMP_Text workerBreakdown;
+    [SerializeField]
+    GameObject engineerBox;
+    [SerializeField]
+    GameObject engineerBtn;
+    [SerializeField]
+    TMP_Text engineerBreakdown;
+
     public static uint EngineerCount { get; private set; }  //used to access for the particle system in Clicker
 
     [SerializeField]
@@ -114,7 +128,9 @@ public class WorkersManager : MonoBehaviour
     private IEnumerator Workers()
     {
         //Every secondincreases the count progress by total number of workers
-        Clicker.currentClickProgress += workerCount;
+        //Clicker.currentClickProgress += workerCount;
+        float scaledWorkerOutput = workerCount * Clicker.multiplyer;     //Edited to now scale with engineer's multiplyer to make sure workers stay useful in late game
+        Clicker.currentClickProgress += scaledWorkerOutput;
         //Then wait a second
         yield return new WaitForSeconds(1f);
 
@@ -141,6 +157,7 @@ public class WorkersManager : MonoBehaviour
 
             priceIncreaseWorkers += 5;
             IncreaseWorkers();
+            UpdateWorkerBreakdown();    //update UI
 
             // === Spawn TinyGuy ===
             // Generate random X,Y offset to spread them around the top of the tower
@@ -164,6 +181,8 @@ public class WorkersManager : MonoBehaviour
             GameManager.money -= engineerCost;
             engineerCost += priceIncreaseEngineers;
             Clicker.IncreaseMultiplyer();
+            GameManager.Instance.UpdateMultUI();    //format the multiplier to fix UI issues
+            UpdateEngineerBreakdown();  //update UI
             engineerCount++;
             EngineerCount = engineerCount;  //used in Clicker
         }
@@ -171,5 +190,19 @@ public class WorkersManager : MonoBehaviour
         {
             Debug.Log("Not enough money!");
         }
+    }
+
+    //Call this whenever a new worker is added
+    private void UpdateWorkerBreakdown()
+    {
+        if (workerBreakdown != null)
+            workerBreakdown.text = $"{workerCount}";
+    }
+
+    //Call this whenever the engineer multiplier changes
+    private void UpdateEngineerBreakdown()
+    {
+        if (engineerBreakdown != null)
+            engineerBreakdown.text = Clicker.multiplyer + "x";
     }
 }
