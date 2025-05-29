@@ -143,7 +143,7 @@ public class FloorInformation : MonoBehaviour
         }
         else
         {
-            Debug.Log("Cant upgrade not enough money");
+            TMPFadeWarning.Show();
             return false;
         }
     }

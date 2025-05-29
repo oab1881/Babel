@@ -170,7 +170,7 @@ public class WorkersManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not enough money!");
+            TMPFadeWarning.Show(); //Shows the text not enough to buy
         }
     }
 
@@ -188,7 +188,7 @@ public class WorkersManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not enough money!");
+            TMPFadeWarning.Show(); //Shows the text not enough to buy
         }
     }
 

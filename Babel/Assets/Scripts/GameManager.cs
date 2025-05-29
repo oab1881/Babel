@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI goldDisplay;
 
+    [SerializeField]
+    private TMPFloatingTextBlink blinkingHerecyIncreaseText;
+
 
     private void Awake()
     {
@@ -43,6 +46,7 @@ public class GameManager : MonoBehaviour
         floor++;
         money++;
         herecy+= 5;
+        blinkingHerecyIncreaseText.ShowBlink("+5");
     }
 
     //Method that increments gold and calls UpdateGoldUI

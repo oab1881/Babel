@@ -9,8 +9,14 @@ public class HerecyManager : MonoBehaviour
     [SerializeField]
     float spawnTime = 30f; //Time in between angle spawns
 
+    public static int herecyAMin = 3;
+
+    [SerializeField]
+    TMPFloatingTextBlink blinkingText;
+
     private void Start()
     {
+        StartCoroutine(HerecyAMin());
         StartCoroutine(SpawnAngles());
     }
 
@@ -36,5 +42,14 @@ public class HerecyManager : MonoBehaviour
         }
         yield return new WaitForSeconds(spawnTime);
         StartCoroutine(SpawnAngles());
+    }
+
+    private IEnumerator HerecyAMin()
+    {
+        GameManager.herecy += (uint)herecyAMin;
+        blinkingText.ShowBlink("+"+GameManager.FormatNumbers(herecyAMin));
+        yield return new WaitForSeconds(60f);
+
+        StartCoroutine(HerecyAMin());
     }
 }
