@@ -176,9 +176,6 @@ public class FloorInformation : MonoBehaviour
     {
         if (CheckUpgrade())
         {
-            //Increase our overall level counter
-            level++;
-
             //Check what sprite we are setting to
             //Check Change sprite array for the reference for this index
             if(currentSprite == -1)
@@ -194,8 +191,11 @@ public class FloorInformation : MonoBehaviour
             sR.sprite = changeSprites[currentSprite];
 
             //Increase how much money is generated
-            if(level == 0) goldGeneratorScript.GoldPerSecond += 10;
-            if (level == 1) goldGeneratorScript.GoldPerSecond += 30;
+            if(level == 1) goldGeneratorScript.GoldPerSecond += 10;
+            if (level == 2) goldGeneratorScript.GoldPerSecond += 30;
+
+            //Increase our overall level counter
+            level++;
             GameManager.money -= upgradeCost;
             upgradeCost += 50;
         }
