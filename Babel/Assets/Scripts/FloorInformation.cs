@@ -201,11 +201,19 @@ public class FloorInformation : MonoBehaviour
     {
         if (CheckUpgrade())
         {
+            isTemple = true;
+            level++;
+
             //Make the prefab switch styles match the if statements
+            GameManager.DecreaseHerecy(50); //Decreases herecy by 50
+            HerecyManager.herecyAMin += 3; //Increases total amount per minute
             goldGeneratorScript.GoldPerSecond = 0;
             GameManager.money -= upgradeCost;
-            upgradeCost += 950;
+            IncreaseCost(950);
 
+
+            HideButtons();
+            ShowButtons();
         }
     }
 
@@ -246,7 +254,7 @@ public class FloorInformation : MonoBehaviour
         if (level == 2 && isArcherTower == false)
         {
             baseUpgrade.SetActive(true);
-            //templeUpgrade.SetActive(true);
+            templeUpgrade.SetActive(true);
 
         }
 
@@ -256,6 +264,8 @@ public class FloorInformation : MonoBehaviour
             archerUpgrade.transform.position = new Vector3(0, archerUpgrade.transform.position.y, 0);
             archerUpgrade.SetActive(true);
         }
+
+        
 
         //Highlight the tower no matter the upgrade level
         towerHighlight.SetActive(true);
@@ -288,5 +298,16 @@ public class FloorInformation : MonoBehaviour
         //Actually set those sprites
         sR.sprite = changeSprites[spriteIndex];
 
+    }
+
+    //Causes damage to the floor is called in GameManager as it has a list to all floor
+    public void DamageFloor(int amount)
+    {
+        if (amount > health)
+        {
+            //This would be game over
+            Debug.Log("Game Over!");
+        }
+        else health -= (uint)amount;
     }
 }

@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     private TMPFloatingTextBlink blinkingHerecyIncreaseText;
 
 
+
+
     private void Awake()
     {
         // Singleton setup
@@ -96,6 +98,22 @@ public class GameManager : MonoBehaviour
 
          return value.ToString("0.##") + suffixes[suffixIndex];
      }
+    
+
+    public static void DecreaseHerecy(int amount)
+    {
+        if(amount > herecy) herecy = 0;
+        
+        else herecy -= (uint)amount;
+    }
+
+
+    //This uses function in FloorInfo.cs to reduce the health of a floor and is called in 
+    //AngleMovement.cs
+    public static void DecreaseFloorHealth(int index, int damageAmount)
+    {
+        floorObjects[index].DamageFloor(damageAmount);
+    }
  }
 
 

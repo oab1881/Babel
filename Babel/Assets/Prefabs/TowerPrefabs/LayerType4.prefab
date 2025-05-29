@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5033970765272954564}
   m_Layer: 0
   m_Name: LayerType4
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,7 +121,7 @@ MonoBehaviour:
   upgradeText: {fileID: 5721230524557075675}
   baseUpgrade: {fileID: 2261948076948663335}
   archerUpgrade: {fileID: 8051085138032500335}
-  templeUpgrade: {fileID: 0}
+  templeUpgrade: {fileID: 8836023034047530207}
   towerHighlight: {fileID: 2369070199749138947}
   upgradePanel: {fileID: 5271489165234503603}
   moveDistance: 5
@@ -673,7 +673,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8372631795940437957}
         m_TargetAssemblyTypeName: FloorInformation, Assembly-CSharp
-        m_MethodName: ArcherUpgrade
+        m_MethodName: TempleUpgrade
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

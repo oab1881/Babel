@@ -14,6 +14,9 @@ public class HerecyManager : MonoBehaviour
     [SerializeField]
     TMPFloatingTextBlink blinkingText;
 
+    [SerializeField]
+    GameObject AnglePrefab;
+
     private void Start()
     {
         StartCoroutine(HerecyAMin());
@@ -38,8 +41,10 @@ public class HerecyManager : MonoBehaviour
         if (spawnAngles)
         {
             int attackFloor = Random.Range(0, GameManager.floorObjects.Count); //Use this for position stuff
-                                                                               //Spawn Angle Code
+            GameObject newObj = Instantiate(AnglePrefab);
+            newObj.GetComponent<AngleMovement>().SetTarget(GameManager.floorObjects[attackFloor].transform, attackFloor);
         }
+
         yield return new WaitForSeconds(spawnTime);
         StartCoroutine(SpawnAngles());
     }
