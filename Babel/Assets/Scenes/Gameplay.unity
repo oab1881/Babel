@@ -1324,6 +1324,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cloud2 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7525633057076602046, guid: 42f2b8a3678424a49b2f85524c96a1ef, type: 3}
+      propertyPath: m_SortingOrder
+      value: -2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1683,6 +1687,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1137114739}
     m_Modifications:
+    - target: {fileID: 4253126944612031795, guid: c0c2cb3bdc662b64fac6c1da4d25b48d, type: 3}
+      propertyPath: m_SortingOrder
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 5493133365853897628, guid: c0c2cb3bdc662b64fac6c1da4d25b48d, type: 3}
       propertyPath: m_Name
       value: Cloud1 (2)
@@ -1867,6 +1875,10 @@ PrefabInstance:
     - target: {fileID: 4981169779657261606, guid: 42f2b8a3678424a49b2f85524c96a1ef, type: 3}
       propertyPath: m_Name
       value: Cloud2 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525633057076602046, guid: 42f2b8a3678424a49b2f85524c96a1ef, type: 3}
+      propertyPath: m_SortingOrder
+      value: -2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3647,6 +3659,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cloud2 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7525633057076602046, guid: 42f2b8a3678424a49b2f85524c96a1ef, type: 3}
+      propertyPath: m_SortingOrder
+      value: -2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4482,6 +4498,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cloud2 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7525633057076602046, guid: 42f2b8a3678424a49b2f85524c96a1ef, type: 3}
+      propertyPath: m_SortingOrder
+      value: -2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5115,6 +5135,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1137114739}
     m_Modifications:
+    - target: {fileID: 4253126944612031795, guid: c0c2cb3bdc662b64fac6c1da4d25b48d, type: 3}
+      propertyPath: m_SortingOrder
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 5493133365853897628, guid: c0c2cb3bdc662b64fac6c1da4d25b48d, type: 3}
       propertyPath: m_Name
       value: Cloud1 (1)
@@ -5491,6 +5515,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1137114739}
     m_Modifications:
+    - target: {fileID: 4253126944612031795, guid: c0c2cb3bdc662b64fac6c1da4d25b48d, type: 3}
+      propertyPath: m_SortingOrder
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 5493133365853897628, guid: c0c2cb3bdc662b64fac6c1da4d25b48d, type: 3}
       propertyPath: m_Name
       value: Cloud1 (4)
@@ -5657,6 +5685,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1137114739}
     m_Modifications:
+    - target: {fileID: 4253126944612031795, guid: c0c2cb3bdc662b64fac6c1da4d25b48d, type: 3}
+      propertyPath: m_SortingOrder
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 5493133365853897628, guid: c0c2cb3bdc662b64fac6c1da4d25b48d, type: 3}
       propertyPath: m_Name
       value: Cloud1 (3)
@@ -6409,6 +6441,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1137114739}
     m_Modifications:
+    - target: {fileID: 4253126944612031795, guid: c0c2cb3bdc662b64fac6c1da4d25b48d, type: 3}
+      propertyPath: m_SortingOrder
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 5493133365853897628, guid: c0c2cb3bdc662b64fac6c1da4d25b48d, type: 3}
       propertyPath: m_Name
       value: Cloud1
@@ -6598,6 +6634,10 @@ PrefabInstance:
     - target: {fileID: 4981169779657261606, guid: 42f2b8a3678424a49b2f85524c96a1ef, type: 3}
       propertyPath: m_Name
       value: Cloud2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525633057076602046, guid: 42f2b8a3678424a49b2f85524c96a1ef, type: 3}
+      propertyPath: m_SortingOrder
+      value: -2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
