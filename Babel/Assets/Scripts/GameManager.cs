@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Clicker.NewFloor += NewFloor;
+        AudioManager.SetVolume(0, 0.1f);
         AudioManager.PlayMusic("BabelAmbient", 0);
     }
 

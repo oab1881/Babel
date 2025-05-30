@@ -28,6 +28,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     List<AudioClip> soundEffectClip = new List<AudioClip>();
 
+    
+
     // Number of audio sources
     [SerializeField]
     int audioSourceCount = 1;
