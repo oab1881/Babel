@@ -42,6 +42,8 @@ public class AngleMovement : MonoBehaviour
     //Base X position used for swaying
     private float baseX;
 
+    private int health = 5;
+
     //Called externally to set the floor this angel should attack
     public void SetTarget(Transform newTarget, int targetIndex, bool spawnOnRight)
     {
@@ -106,6 +108,8 @@ public class AngleMovement : MonoBehaviour
     {
         target = null;
         GameManager.DecreaseFloorHealth(targetInd, 400000); //Temporary fixed damage value
+        //Add sound effect
+        //Add explosion effect
         Destroy(gameObject);
     }
 
@@ -116,6 +120,15 @@ public class AngleMovement : MonoBehaviour
         {
             GameManager.DecreaseFloorHealth(targetInd, 40); //Temporary fixed damage value
             
+        }
+    }
+
+    public void DecreaseAngleHealth(int damage)
+    {
+        if(damage > 5)
+        {
+            Debug.Log("Angle Dead");
+            Destroy(gameObject); 
         }
     }
 }

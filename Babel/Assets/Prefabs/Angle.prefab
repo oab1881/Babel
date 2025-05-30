@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3310089397910156683}
   m_Layer: 7
   m_Name: Angle
-  m_TagString: Angle
+  m_TagString: Angel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

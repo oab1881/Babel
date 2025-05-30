@@ -25,7 +25,7 @@ public class ShowArcherRadius : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
 
         // We want the circle to be relative to this object's transform, not world space
-        lineRenderer.useWorldSpace = false;
+        lineRenderer.useWorldSpace = true;
 
         // Ensure the circle is closed by connecting the last point to the first
         lineRenderer.loop = true;
@@ -54,26 +54,23 @@ public class ShowArcherRadius : MonoBehaviour
     // Generates a circular shape based on the detection radius and number of segments
     public void GenerateCircle()
     {
-        // Create an array to hold each point of the circle
         Vector3[] points = new Vector3[segments];
 
-        // Loop through each segment to calculate position on the circle
-        for (int i = 0; i < segments; i++)
-        {
-            // Convert segment index to angle in radians (full circle = 2 * PI)
+        for(int i = 0; i < segments; i++)
+{
             float angle = ((float)i / segments) * 2f * Mathf.PI;
-
-            // Calculate x and y using cosine and sine
             float x = Mathf.Cos(angle) * detectionRadius;
             float y = Mathf.Sin(angle) * detectionRadius;
 
-            // Set the point in local space
-            points[i] = new Vector3(x, y, 0);
+            // Center the circle around this object's world position
+            points[i] = transform.position + new Vector3(x, y, 0);
         }
 
-        // Apply the points to the LineRenderer
+
+
         lineRenderer.SetPositions(points);
     }
+
 
     // Enables the LineRenderer to make the circle visible
     public void ShowRadius()

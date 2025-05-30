@@ -251,10 +251,10 @@ public class FloorInformation : MonoBehaviour
             if(leftArcherInfoScript.DetectionRadius == 0)
             {
                 //Sets the detection radius for both right and left and also for the display radius
-                leftArcherInfoScript.DetectionRadius = 7f;
-                rightArcherInfoScript.DetectionRadius = 7f;
-                leftArcherRadiusScript.DetectionRadius = 7f;
-                rightArcherRadiusScript.DetectionRadius = 7f;
+                leftArcherInfoScript.DetectionRadius = 1.5f;
+                rightArcherInfoScript.DetectionRadius = 1.5f;
+                leftArcherRadiusScript.DetectionRadius =1.5f;
+                rightArcherRadiusScript.DetectionRadius = 1.5f;
 
                 //Adter changing detection radius we regenerate the cricles
                 rightArcherRadiusScript.GenerateCircle();
