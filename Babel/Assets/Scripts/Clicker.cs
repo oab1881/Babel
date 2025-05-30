@@ -104,8 +104,14 @@ public class Clicker : MonoBehaviour
     //Clicking anywhere on the screen calls this
     public void OnClickBuild()
     {
+        // Pick a random FastClick index (0–3) to match your system
+        int randomClickIndex = UnityEngine.Random.Range(0, 4); // 0 to 3 inclusive
+        string sfxName = "FastClick" + (randomClickIndex + 1); // Names start at 1
+
+        AudioManager.PlaySoundEffect(sfxName, randomClickIndex);
+
         //Increases click progress by one times the multiplyer or just (the multiplyer)
-        currentClickProgress+=  multiplyer;
+        currentClickProgress +=  multiplyer;
 
         lastClickTime = Time.time;
 
@@ -125,9 +131,20 @@ public class Clicker : MonoBehaviour
             var emission = clickParticles.emission;
             emission.rateOverTime = WorkersManager.EngineerCount * 2; // or tweak values
 
-            //Dynamically adjust particle size
+            // Adjust and clamp particle size
+            float engineerBasedSize = 0.1f + WorkersManager.EngineerCount * 0.01f;
+            float maxParticleSize = 1.5f;
+            float finalSize = Mathf.Clamp(engineerBasedSize, 0f, maxParticleSize);
+
             var main = clickParticles.main;
-            main.startSize = 0.1f + WorkersManager.EngineerCount * 0.01f;
+            main.startSize = finalSize;
+
+            // Adjust trail width if trails enabled
+            var trails = clickParticles.trails;
+            if (trails.enabled)
+            {
+                trails.widthOverTrail = finalSize * 0.5f;
+            }
 
             clickParticles.Play();
         }
@@ -169,6 +186,8 @@ public class Clicker : MonoBehaviour
         nextBuildPosition += new Vector3(0, buildHeightOffset, 0);
         
         NewFloor?.Invoke(); //New floor is built invoke the event to let the manager know!
+
+        AudioManager.PlaySoundEffect("Upgrade4", 7);
     }
 
 
@@ -176,7 +195,7 @@ public class Clicker : MonoBehaviour
     public static void IncreaseMultiplyer()
     {
         if (multiplyer == 1) multiplyer = 2;
-        else multiplyer *= 1.5f;                //(owen) - I changed this to balance the game better now that workers scale
+        else multiplyer *= 1.7f;                //(owen) - I changed this to balance the game better now that workers scale
     }
 
     void CheckFloorStatus()

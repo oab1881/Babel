@@ -27,6 +27,7 @@ public class TMPFadeWarning : MonoBehaviour
     {
         if (Instance != null && !Instance.isShowing)
             Instance.ShowWarning();
+        AudioManager.PlaySoundEffect("NotEnoughGold", 8);
     }
 
     private void ShowWarning()

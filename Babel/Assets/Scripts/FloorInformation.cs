@@ -193,6 +193,7 @@ public class FloorInformation : MonoBehaviour
 
             //Increase our overall level counter
             level++;
+            AudioManager.PlaySoundEffect("Upgrade", 5);
             GameManager.money -= upgradeCost;
             IncreaseCost(700);
 
@@ -252,9 +253,12 @@ public class FloorInformation : MonoBehaviour
     //Function that hides buttons that shouldn't be displayed based on level
     private void HideButtons()
     {
+        //Move panel back to the right
+        StartPanelLerp(panelStartPos);
+
         foreach (Transform child in this.transform)
         {
-            if (child.gameObject.activeInHierarchy && (child.gameObject.name != "Canvas" || child.gameObject.name != "TowerPanel (1)" || child.gameObject.name != "TowerPanel"))
+            if (child.gameObject.activeInHierarchy && (child.gameObject.name != "Canvas" && child.gameObject.name != "TowerPanel (1)" && child.gameObject.name != "TowerPanel" && child.gameObject.name != "UpgradeCost"))
             {
                 child.gameObject.SetActive(false);
             }
@@ -269,8 +273,6 @@ public class FloorInformation : MonoBehaviour
 
         towerHighlight.SetActive(false);
 
-        //Move panel back to the right
-        StartPanelLerp(panelStartPos);
     }
 
 

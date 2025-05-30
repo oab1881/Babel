@@ -11,7 +11,7 @@ public class WorkersManager : MonoBehaviour
 
     //Engineer count is strictly for ui as a multiplyer goes into effect in Clicker.cs
     uint engineerCount = 0;
-    uint engineerCost = 100;
+    uint engineerCost = 60;
 
     //Hover boxes logic for worker/engineer breakdown
     [SerializeField]
@@ -107,9 +107,21 @@ public class WorkersManager : MonoBehaviour
                 var emission = clickParticles.emission;
                 emission.rateOverTime = engineerCount * 2; // or tweak values
 
-                //Dynamically adjust particle size
+
+                // Adjust and clamp particle size
+                float engineerBasedSize = 0.1f + WorkersManager.EngineerCount * 0.01f;
+                float maxParticleSize = 0.5f;
+                float finalSize = Mathf.Clamp(engineerBasedSize, 0f, maxParticleSize);
+
                 var main = clickParticles.main;
-                main.startSize = 0.1f + engineerCount * 0.01f;
+                main.startSize = finalSize;
+
+                // Adjust trail width if trails enabled
+                var trails = clickParticles.trails;
+                if (trails.enabled)
+                {
+                    trails.widthOverTrail = finalSize * 0.5f;
+                }
 
                 clickParticles.Play();
             }
@@ -145,6 +157,7 @@ public class WorkersManager : MonoBehaviour
     private void IncreaseWorkers()
     {
         workerCount++;
+        AudioManager.PlaySoundEffect("Upgrade2", 6);
     }
 
 
@@ -161,7 +174,7 @@ public class WorkersManager : MonoBehaviour
 
             // === Spawn TinyGuy ===
             // Generate random X,Y offset to spread them around the top of the tower
-            Vector3 spawnPosition = Clicker.Instance.NextBuildPosition + new Vector3(Random.Range(-xOffset, xOffset), Random.Range(-yOffset, 0), 0f);
+            Vector3 spawnPosition = Clicker.Instance.NextBuildPosition + new Vector3(Random.Range(-xOffset, xOffset), Random.Range(-yOffset, -0.2f), 0f); ;
 
             //Spawn TinyGuy on top of the tower
             GameObject tinyGuy = Instantiate(tinyGuyPrefab, spawnPosition, Quaternion.identity, tinyGuyParent);
@@ -186,6 +199,7 @@ public class WorkersManager : MonoBehaviour
             UpdateEngineerBreakdown();  //update UI
             engineerCount++;
             EngineerCount = engineerCount;  //used in Clicker
+            AudioManager.PlaySoundEffect("Upgrade2", 6);
         }
         else
         {
@@ -204,6 +218,6 @@ public class WorkersManager : MonoBehaviour
     private void UpdateEngineerBreakdown()
     {
         if (engineerBreakdown != null)
-            engineerBreakdown.text = Clicker.multiplyer + "x";
+            engineerBreakdown.text = Clicker.multiplyer.ToString("0.#") + "x";  //clamped to fix decimal place bug
     }
 }
