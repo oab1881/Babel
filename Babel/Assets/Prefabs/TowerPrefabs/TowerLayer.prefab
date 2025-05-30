@@ -126,7 +126,7 @@ MonoBehaviour:
   templeUpgrade: {fileID: 6138417921269120148}
   towerHighlight: {fileID: 3981735172015517507}
   upgradePanel: {fileID: 7276056874978810443}
-  moveDistance: 5
+  moveDistance: 5.2
   lerpSpeed: 3
   goldGeneratorScript: {fileID: 4512851882774037152}
   sR: {fileID: 7650773570872031896}
@@ -1096,19 +1096,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7443379337468378956, guid: a61d460d0f97d624299203ebc7d120e4, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 1.0265
       objectReference: {fileID: 0}
     - target: {fileID: 7443379337468378956, guid: a61d460d0f97d624299203ebc7d120e4, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 1.0265
       objectReference: {fileID: 0}
     - target: {fileID: 7443379337468378956, guid: a61d460d0f97d624299203ebc7d120e4, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 1.0265
       objectReference: {fileID: 0}
     - target: {fileID: 7443379337468378956, guid: a61d460d0f97d624299203ebc7d120e4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.9365234
+      value: -4.02
       objectReference: {fileID: 0}
     - target: {fileID: 7443379337468378956, guid: a61d460d0f97d624299203ebc7d120e4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1145,6 +1145,10 @@ PrefabInstance:
     - target: {fileID: 7443379337468378956, guid: a61d460d0f97d624299203ebc7d120e4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8146344620553353767, guid: a61d460d0f97d624299203ebc7d120e4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -2.07
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

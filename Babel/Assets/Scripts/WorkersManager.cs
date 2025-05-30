@@ -110,7 +110,7 @@ public class WorkersManager : MonoBehaviour
 
                 // Adjust and clamp particle size
                 float engineerBasedSize = 0.1f + WorkersManager.EngineerCount * 0.01f;
-                float maxParticleSize = 0.5f;
+                float maxParticleSize = 0.01f;
                 float finalSize = Mathf.Clamp(engineerBasedSize, 0f, maxParticleSize);
 
                 var main = clickParticles.main;
