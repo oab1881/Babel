@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Clicker : MonoBehaviour
 {
     [Header("Floor Prefabs")]
-    public List<GameObject> floorPrefabs; //Assign 5 prefabs in the Inspector
+    public GameObject floorPrefab;
 
     [Header("Build Settings")]
     public float buildHeightOffset = 2.8f; //Distance between floors
@@ -161,8 +161,8 @@ public class Clicker : MonoBehaviour
             nextBuildPosition += new Vector3(0, .5f, 0); // tiny extra offset
         }
 
-        GameObject prefabToSpawn = floorPrefabs[UnityEngine.Random.Range(0, floorPrefabs.Count)];
-        GameObject newFloor = Instantiate(prefabToSpawn, nextBuildPosition, Quaternion.identity, towerBase);
+        
+        GameObject newFloor = Instantiate(floorPrefab, nextBuildPosition, Quaternion.identity, towerBase);
 
         currentFloor++;
 
