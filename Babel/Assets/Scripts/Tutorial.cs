@@ -76,7 +76,9 @@ public class Tutorial : MonoBehaviour
         Debug.Log("Tutorial done. BABEL title now active.");
 
         //Load Gameplay scene
-        SceneManager.LoadScene("Gameplay"); 
+        SceneManager.LoadScene("Gameplay");
+        AudioManager.StopSound(0);
+        AudioManager.PlayMusic("MesopotamianLullaby", 0);
     }
 
     private IEnumerator TypeLine(TextMeshProUGUI targetText, string line)
