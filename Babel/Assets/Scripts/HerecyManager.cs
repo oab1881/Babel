@@ -17,6 +17,12 @@ public class HerecyManager : MonoBehaviour
     [SerializeField]
     GameObject AnglePrefab;
 
+    [SerializeField]
+    GameObject leftSpawn;
+
+    [SerializeField]
+    GameObject rightSpawn;
+
     private void Start()
     {
         StartCoroutine(HerecyAMin());
@@ -40,9 +46,14 @@ public class HerecyManager : MonoBehaviour
     {
         if (spawnAngles)
         {
-            int attackFloor = Random.Range(0, GameManager.floorObjects.Count); //Use this for position stuff
-            GameObject newObj = Instantiate(AnglePrefab);
-            newObj.GetComponent<AngleMovement>().SetTarget(GameManager.floorObjects[attackFloor].transform, attackFloor);
+            int attackFloor = Random.Range(0, GameManager.floorObjects.Count);
+
+            // Decide spawn side
+            bool spawnRight = Random.value > 0.5f;
+            GameObject spawnPoint = spawnRight ? rightSpawn : leftSpawn;
+
+            GameObject newObj = Instantiate(AnglePrefab, spawnPoint.transform.position, Quaternion.identity);
+            newObj.GetComponent<AngleMovement>().SetTarget(GameManager.floorObjects[attackFloor].transform, attackFloor, spawnRight);
         }
 
         yield return new WaitForSeconds(spawnTime);

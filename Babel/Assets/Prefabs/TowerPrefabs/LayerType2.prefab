@@ -747,7 +747,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9180222274895011042}
-  - component: {fileID: 5532520347853076592}
+  - component: {fileID: 4270664613998719797}
   m_Layer: 0
   m_Name: ArcherRight
   m_TagString: Untagged
@@ -770,13 +770,15 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8020793925474248357}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &5532520347853076592
-SphereCollider:
+--- !u!58 &4270664613998719797
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5324502614115831343}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -785,12 +787,24 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.4}
+  serializedVersion: 2
   m_Radius: 4
-  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!1 &8171158071242315500
 GameObject:
   m_ObjectHideFlags: 0
@@ -800,7 +814,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7746562170961002422}
-  - component: {fileID: 101004007846064618}
+  - component: {fileID: 8976686162423761226}
   m_Layer: 0
   m_Name: ArcherLeft
   m_TagString: Untagged
@@ -823,13 +837,15 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8020793925474248357}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &101004007846064618
-SphereCollider:
+--- !u!58 &8976686162423761226
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8171158071242315500}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -838,12 +854,24 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.4}
+  serializedVersion: 2
   m_Radius: 4
-  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!1001 &2547486887599810215
 PrefabInstance:
   m_ObjectHideFlags: 0

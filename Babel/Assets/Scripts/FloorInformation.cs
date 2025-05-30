@@ -13,6 +13,18 @@ public class FloorInformation : MonoBehaviour
     bool isArcherTower = false;
     int archerTowerLv = -1; //Negative 1 signafies it doesn't exist *Note I may delete this later not sure of it's use*
     uint damagePerSecond = 0;
+
+    List<AngleMovement> currentAttackingAngles = new List<AngleMovement>();
+
+
+    public uint DamagePerSecond { get { return damagePerSecond; } }
+    public bool IsArcherTower { get { return isArcherTower; } }
+
+    public List<AngleMovement> CurrentAttackingAngles { 
+        get { return currentAttackingAngles; }
+        set { currentAttackingAngles = value; }
+    }
+
     //Set in create floor we can use this for progression and for effecting other floors
     int floorNum;
 
