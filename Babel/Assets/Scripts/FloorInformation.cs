@@ -11,13 +11,10 @@ public class FloorInformation : MonoBehaviour
     uint upgradeCost = 100;
     uint maxHealth;
     bool isArcherTower = false;
-    int archerTowerLv = -1; //Negative 1 signafies it doesn't exist *Note I may delete this later not sure of it's use*
-    uint damagePerSecond = 0;
 
     List<AngleMovement> currentAttackingAngles = new List<AngleMovement>();
 
 
-    public uint DamagePerSecond { get { return damagePerSecond; } }
     public bool IsArcherTower { get { return isArcherTower; } }
 
     public List<AngleMovement> CurrentAttackingAngles { 
@@ -76,6 +73,12 @@ public class FloorInformation : MonoBehaviour
     [SerializeField]
     GameObject rightArcher;
 
+    ShowArcherRadius leftArcherRadiusScript;
+    ShowArcherRadius rightArcherRadiusScript;
+
+    Archers leftArcherInfoScript;
+    Archers rightArcherInfoScript;
+
 
 
     //0 BaseUpgrade LV2
@@ -105,7 +108,13 @@ public class FloorInformation : MonoBehaviour
         upgradeCost *= (uint)floorNum;
         upgradeText.text = GameManager.FormatNumbers(upgradeCost);
 
-        
+        //We get the script to display radius from the left and right archer gameObjects
+        leftArcherRadiusScript = leftArcher.GetComponent<ShowArcherRadius>();
+        rightArcherRadiusScript = rightArcher.GetComponent<ShowArcherRadius>();
+
+        //Gets the info for so it can change information for both
+        leftArcherInfoScript = leftArcher.GetComponent<Archers>();
+        rightArcherInfoScript = rightArcher.GetComponent<Archers>();
     }
 
 
@@ -119,12 +128,24 @@ public class FloorInformation : MonoBehaviour
     private void OnMouseEnter()
     {
         ShowButtons();
+
+        if (isArcherTower)
+        {
+            leftArcherRadiusScript.ShowRadius();
+            rightArcherRadiusScript.ShowRadius();
+        }
     }
 
     //When the mouse leaves we see if the upgrade button is active and set it to not be active
     private void OnMouseExit()
     {
         HideButtons();
+
+        if (isArcherTower)
+        {
+            leftArcherRadiusScript.HideRadius();
+            rightArcherRadiusScript.HideRadius();
+        }
     }
 
     
@@ -215,12 +236,45 @@ public class FloorInformation : MonoBehaviour
             //Make the prefab switch styles match the if statements
             level++;
             goldGeneratorScript.GoldPerSecond += 10; // Will Make 20
+            AudioManager.PlaySoundEffect("Upgrade", 5);
             GameManager.money -= upgradeCost;
 
             IncreaseCost(2500); // Increases the price to 2800
 
             leftArcher.SetActive(true);
             rightArcher.SetActive(true);
+
+            //For first upgrade 
+            if(leftArcherInfoScript.DetectionRadius == 0)
+            {
+                //Sets the detection radius for both right and left and also for the display radius
+                leftArcherInfoScript.DetectionRadius = 7f;
+                rightArcherInfoScript.DetectionRadius = 7f;
+                leftArcherRadiusScript.DetectionRadius = 7f;
+                rightArcherRadiusScript.DetectionRadius = 7f;
+
+                //Adter changing detection radius we regenerate the cricles
+                rightArcherRadiusScript.GenerateCircle();
+                leftArcherRadiusScript.GenerateCircle();
+            }else
+            {
+                //Sets the detection radius for both right and left and also for the display radius
+                leftArcherInfoScript.DetectionRadius *=2;
+                rightArcherInfoScript.DetectionRadius *= 2;
+                leftArcherRadiusScript.DetectionRadius *= 2;
+                rightArcherRadiusScript.DetectionRadius *= 2;
+
+                //Adter changing detection radius we regenerate the cricles
+                rightArcherRadiusScript.GenerateCircle();
+                leftArcherRadiusScript.GenerateCircle();
+            }
+            
+
+            if (isArcherTower)
+            {
+                leftArcherRadiusScript.ShowRadius();
+                rightArcherRadiusScript.ShowRadius();
+            }
 
             HideButtons();
             ShowButtons();
@@ -238,6 +292,7 @@ public class FloorInformation : MonoBehaviour
 
             //Make the prefab switch styles match the if statements
             GameManager.DecreaseHerecy(50); //Decreases herecy by 50
+            AudioManager.PlaySoundEffect("Upgrade", 5);
             HerecyManager.herecyAMin += 3; //Increases total amount per minute
             goldGeneratorScript.GoldPerSecond = 0;
             GameManager.money -= upgradeCost;

@@ -486,8 +486,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEffectClip:
+  - {fileID: 8300000, guid: 2c4384aca07ecc04b8cafe1ac71b1dee, type: 3}
+  - {fileID: 8300000, guid: ca1aa13ba306462418ef8265d2568cf9, type: 3}
+  - {fileID: 8300000, guid: 42d160f527e3f994a9f597a0030473e7, type: 3}
+  - {fileID: 8300000, guid: 53f97afa608013347a76082aa3565a21, type: 3}
   - {fileID: 8300000, guid: 52e8a86a67f0dfc40b1c1eebf1ec2375, type: 3}
-  audioSourceCount: 3
+  - {fileID: 8300000, guid: a2e0f48218023544db37eb72b03cac43, type: 3}
+  - {fileID: 8300000, guid: a54daa2aef3624448bebb5f8ebc6ebfb, type: 3}
+  - {fileID: 8300000, guid: 4f9bdb33b86066b458f8c23cc32a3023, type: 3}
+  - {fileID: 8300000, guid: cf6fb5fbb135c2649a984519d62f6947, type: 3}
+  audioSourceCount: 10
   audioSources: []
 --- !u!4 &1112564015
 Transform:

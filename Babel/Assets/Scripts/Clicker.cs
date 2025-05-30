@@ -105,10 +105,10 @@ public class Clicker : MonoBehaviour
     public void OnClickBuild()
     {
         // Pick a random FastClick index (0–3) to match your system
-        //int randomClickIndex = UnityEngine.Random.Range(0, 4); // 0 to 3 inclusive
-        //string sfxName = "FastClick" + (randomClickIndex + 1); // Names start at 1
+        int randomClickIndex = UnityEngine.Random.Range(0, 4); // 0 to 3 inclusive
+        string sfxName = "FastClick" + (randomClickIndex + 1); // Names start at 1
 
-        //AudioManager.PlaySoundEffect(sfxName, randomClickIndex);
+        AudioManager.PlaySoundEffect(sfxName, 9);
 
         //Increases click progress by one times the multiplyer or just (the multiplyer)
         currentClickProgress +=  multiplyer;

@@ -44,6 +44,11 @@ public class GameManager : MonoBehaviour
     }
 
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M)) money += 10000;
+    }
+
     //Attached to the clicker event that recieves the signal a new floor was built
     public void NewFloor()
     {
@@ -51,7 +56,7 @@ public class GameManager : MonoBehaviour
         money++;
         herecy+= 5;
 
-        //if(blinkingHerecyIncreaseText != null)blinkingHerecyIncreaseText.ShowBlink("+5");
+        if(blinkingHerecyIncreaseText != null)blinkingHerecyIncreaseText.ShowBlink("+5");
     }
 
     //Method that increments gold and calls UpdateGoldUI

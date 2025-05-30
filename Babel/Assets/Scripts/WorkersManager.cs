@@ -77,8 +77,8 @@ public class WorkersManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //We see if we should increase our workers or our multiplyer
-        //This is temperaroy until we get buttons in then the buttons can call respective functions
+        /*We can use this for debugging purposes ===============================
+         * //We see if we should increase our workers or our multiplyer 
         if (Input.GetKeyDown(KeyCode.V))
         {
             workerCount++;
@@ -86,7 +86,7 @@ public class WorkersManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             Clicker.multiplyer++;
-        }
+        }===============================================================*/
 
         //We start the coroutine to generate clicks from workers
 
