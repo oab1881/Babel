@@ -216,6 +216,7 @@ public class FloorInformation : MonoBehaviour
             level++;
             AudioManager.PlaySoundEffect("Upgrade", 5);
             GameManager.money -= upgradeCost;
+            GameManager.Instance.UpdateGoldUI();
             IncreaseCost(700);
 
             HideButtons();
@@ -238,6 +239,8 @@ public class FloorInformation : MonoBehaviour
             goldGeneratorScript.GoldPerSecond += 10; // Will Make 20
             AudioManager.PlaySoundEffect("Upgrade", 5);
             GameManager.money -= upgradeCost;
+
+            GameManager.Instance.UpdateGoldUI();
 
             IncreaseCost(2500); // Increases the price to 2800
 
@@ -296,6 +299,7 @@ public class FloorInformation : MonoBehaviour
             HerecyManager.herecyAMin += 3; //Increases total amount per minute
             goldGeneratorScript.GoldPerSecond = 0;
             GameManager.money -= upgradeCost;
+            GameManager.Instance.UpdateGoldUI();
             IncreaseCost(950);
 
 

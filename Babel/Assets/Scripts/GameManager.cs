@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
     }
 
     //Method that updates the gold count in game
-    private void UpdateGoldUI()
+     public void UpdateGoldUI()
     {
         if (goldDisplay != null)
         {

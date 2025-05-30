@@ -166,6 +166,7 @@ public class WorkersManager : MonoBehaviour
         if(GameManager.money >= workerCost)
         {
             GameManager.money -= workerCost;
+            GameManager.Instance.UpdateGoldUI();
             workerCost += priceIncreaseWorkers;
 
             priceIncreaseWorkers += 5;
@@ -192,6 +193,7 @@ public class WorkersManager : MonoBehaviour
         if (GameManager.money >= engineerCost)
         {
             GameManager.money -= engineerCost;
+            GameManager.Instance.UpdateGoldUI();
             engineerCost += priceIncreaseEngineers;
 
             Clicker.IncreaseMultiplyer();
