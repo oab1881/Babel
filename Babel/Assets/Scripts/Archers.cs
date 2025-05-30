@@ -19,7 +19,7 @@ public class Archers : MonoBehaviour
     private bool isDamaging = false;
     private Collider2D[] hits = new Collider2D[0];
 
-    private int damageASecond = 40; //HardCoded for now
+    private int damageASecond = 1; //HardCoded for now
 
     private void Update()
     {
