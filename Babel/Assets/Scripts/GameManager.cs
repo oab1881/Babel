@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     private TextMeshProUGUI goldDisplay;
 
     [SerializeField]
+    private TextMeshProUGUI engineerDisplay;
+
+    [SerializeField]
     private TMPFloatingTextBlink blinkingHerecyIncreaseText;
 
 
@@ -56,7 +59,7 @@ public class GameManager : MonoBehaviour
         money++;
         herecy+= 5;
 
-        if(blinkingHerecyIncreaseText != null)blinkingHerecyIncreaseText.ShowBlink("+5");
+        //if(blinkingHerecyIncreaseText != null)blinkingHerecyIncreaseText.ShowBlink("+5");
     }
 
     //Method that increments gold and calls UpdateGoldUI
@@ -76,11 +79,12 @@ public class GameManager : MonoBehaviour
     }
 
     //Method that updates the multiplier count
+    //Does not do anything
     public void UpdateMultUI()
     {
-        if (goldDisplay != null)
+        if (engineerDisplay != null)
         {
-            goldDisplay.text = Clicker.multiplyer.ToString();
+            engineerDisplay.text = FormatNumbers((int)Clicker.multiplyer);
         }
     }
 

@@ -197,7 +197,7 @@ public class WorkersManager : MonoBehaviour
             engineerCost += priceIncreaseEngineers;
 
             Clicker.IncreaseMultiplyer();
-            GameManager.Instance.UpdateMultUI();    //format the multiplier to fix UI issues
+            //GameManager.Instance.UpdateMultUI();    //format the multiplier to fix UI issues
             UpdateEngineerBreakdown();  //update UI
             engineerCount++;
             EngineerCount = engineerCount;  //used in Clicker
@@ -220,6 +220,6 @@ public class WorkersManager : MonoBehaviour
     private void UpdateEngineerBreakdown()
     {
         if (engineerBreakdown != null)
-            engineerBreakdown.text = Clicker.multiplyer.ToString("0.#") + "x";  //clamped to fix decimal place bug
+            engineerBreakdown.text = GameManager.FormatNumbers((int)Clicker.multiplyer) + "x";  
     }
 }

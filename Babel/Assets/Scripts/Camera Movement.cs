@@ -1,17 +1,3 @@
-//====== 05/26/25 Jake Wardell ======
-/*
- *  Camera movement script - Handles player input and applying forces to camera character
- *  
- *  Attached to the camera
- * 
- * Dependencies: Camera RigidBody
- * 
- *  Changelog:
- *  
- * 
- */
-//===================================
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,46 +6,45 @@ public class CameraMovement : MonoBehaviour
 {
     [SerializeField] private float baseSpeed = 50f;
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private float scrollAdjuster = 10.0f;
+    [SerializeField] private float scrollAdjuster = 10f;     // A bit stronger now
+    [SerializeField] private float scrollDecay = 5f;           // How fast it slows down
 
     private float currentSpeed;
+    private float scrollVelocity = 0f;
 
     void Start()
     {
-        UpdateSpeed(); //Initialize the speed based on starting floor
+        UpdateSpeed(); // Initialize the speed based on starting floor
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
-
-        //Creates a zeroed out velocity
         Vector2 move = Vector2.zero;
 
-        //Changes it to the relative vectors
+        // Keyboard input
         if (Input.GetKey(KeyCode.W)) move += Vector2.up;
         if (Input.GetKey(KeyCode.S)) move += Vector2.down;
 
-        //Sets the velocity
+        // Apply scroll velocity as extra movement
+        move += Vector2.up * scrollVelocity;
+
+        // Apply combined movement
         rb.velocity = move * currentSpeed * Time.deltaTime;
 
+        // Gradually reduce scroll velocity (smooth stop)
+        scrollVelocity = Mathf.Lerp(scrollVelocity, 0, Time.fixedDeltaTime * scrollDecay);
     }
 
-    /*      Scroll Wheel movement not working
-    private void Update()
+    void Update()
     {
-        //Creates a zeroed out velocity
-        Vector2 move = Vector2.zero;
+        // Capture scroll input here (must be done in Update)
+        float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+        if (Mathf.Abs(scrollInput) > 0.01f)
+        {
+            scrollVelocity += scrollInput * scrollAdjuster;
+        }
+    }
 
-        //Scroll wheel movement
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        move += Vector2.up * scroll * scrollAdjuster; //sensitivity multiplier
-
-        //Sets the velocity
-        rb.velocity = move * currentSpeed * Time.deltaTime;
-    } */
-
-    //Dynamically edit camera speed based off of height level
     private void UpdateSpeed()
     {
         uint floor = GameManager.Instance.floor;
