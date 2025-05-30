@@ -63,7 +63,7 @@ public class HerecyManager : MonoBehaviour
     private IEnumerator HerecyAMin()
     {
         GameManager.herecy += (uint)herecyAMin;
-        blinkingText.ShowBlink("+"+GameManager.FormatNumbers(herecyAMin));
+        if(blinkingText != null)blinkingText.ShowBlink("+"+GameManager.FormatNumbers(herecyAMin));
         yield return new WaitForSeconds(60f);
 
         StartCoroutine(HerecyAMin());

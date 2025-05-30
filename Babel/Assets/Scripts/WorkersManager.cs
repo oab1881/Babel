@@ -180,6 +180,7 @@ public class WorkersManager : MonoBehaviour
         {
             GameManager.money -= engineerCost;
             engineerCost += priceIncreaseEngineers;
+
             Clicker.IncreaseMultiplyer();
             GameManager.Instance.UpdateMultUI();    //format the multiplier to fix UI issues
             UpdateEngineerBreakdown();  //update UI

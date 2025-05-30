@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Clicker.NewFloor += NewFloor;
+        AudioManager.PlayMusic("BabelAmbient", 0);
     }
 
 
@@ -48,7 +49,8 @@ public class GameManager : MonoBehaviour
         floor++;
         money++;
         herecy+= 5;
-        blinkingHerecyIncreaseText.ShowBlink("+5");
+
+        //if(blinkingHerecyIncreaseText != null)blinkingHerecyIncreaseText.ShowBlink("+5");
     }
 
     //Method that increments gold and calls UpdateGoldUI
@@ -72,7 +74,7 @@ public class GameManager : MonoBehaviour
     {
         if (goldDisplay != null)
         {
-            goldDisplay.text = FormatNumbers(Clicker.multiplyer);
+            goldDisplay.text = Clicker.multiplyer.ToString();
         }
     }
 

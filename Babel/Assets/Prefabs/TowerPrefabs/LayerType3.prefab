@@ -380,13 +380,14 @@ GameObject:
   m_Component:
   - component: {fileID: 6633045753543544448}
   - component: {fileID: 8458836313100884545}
+  - component: {fileID: 1364184631194565759}
   m_Layer: 0
   m_Name: ArcherRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6633045753543544448
 Transform:
   m_ObjectHideFlags: 0
@@ -437,6 +438,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.4}
   serializedVersion: 2
   m_Radius: 4
+--- !u!114 &1364184631194565759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6711064469658596953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fd51337a09d669409d644c0e806a92b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8118995775041545174
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,13 +460,14 @@ GameObject:
   m_Component:
   - component: {fileID: 7817294929675846458}
   - component: {fileID: 6300488913527693190}
+  - component: {fileID: 2712376964582648749}
   m_Layer: 0
   m_Name: ArcherLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7817294929675846458
 Transform:
   m_ObjectHideFlags: 0
@@ -504,6 +518,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.4}
   serializedVersion: 2
   m_Radius: 4
+--- !u!114 &2712376964582648749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8118995775041545174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fd51337a09d669409d644c0e806a92b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8280968635442975083
 GameObject:
   m_ObjectHideFlags: 0
@@ -634,8 +660,8 @@ MonoBehaviour:
   lerpSpeed: 3
   goldGeneratorScript: {fileID: 8066470868824739547}
   sR: {fileID: 2857067839460144134}
-  LeftCollider: {fileID: 0}
-  RightCollider: {fileID: 0}
+  leftArcher: {fileID: 8118995775041545174}
+  rightArcher: {fileID: 6711064469658596953}
   changeSprites:
   - {fileID: 21300000, guid: 7d8d8a9d3895a094185fa044793985d3, type: 3}
   - {fileID: 21300000, guid: dced1bcd0c7455545900892a0c286056, type: 3}

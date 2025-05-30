@@ -69,11 +69,12 @@ public class FloorInformation : MonoBehaviour
     [SerializeField]
     SpriteRenderer sR;
 
-    [SerializeField]
-    SphereCollider LeftCollider;
 
     [SerializeField]
-    SphereCollider RightCollider;
+    GameObject leftArcher;
+
+    [SerializeField]
+    GameObject rightArcher;
 
 
 
@@ -104,7 +105,7 @@ public class FloorInformation : MonoBehaviour
         upgradeCost *= (uint)floorNum;
         upgradeText.text = GameManager.FormatNumbers(upgradeCost);
 
-
+        
     }
 
 
@@ -217,6 +218,9 @@ public class FloorInformation : MonoBehaviour
 
             IncreaseCost(2500); // Increases the price to 2800
 
+            leftArcher.SetActive(true);
+            rightArcher.SetActive(true);
+
             HideButtons();
             ShowButtons();
         }
@@ -256,6 +260,12 @@ public class FloorInformation : MonoBehaviour
             }
         }
 
+        //Quick fix to the archers not displaying
+        if (IsArcherTower)
+        {
+            leftArcher.SetActive(true);
+            rightArcher.SetActive(true);
+        }
 
         towerHighlight.SetActive(false);
 

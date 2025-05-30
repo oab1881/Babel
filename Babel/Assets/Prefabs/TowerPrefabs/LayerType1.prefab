@@ -130,8 +130,8 @@ MonoBehaviour:
   lerpSpeed: 3
   goldGeneratorScript: {fileID: 4512851882774037152}
   sR: {fileID: 7650773570872031896}
-  LeftCollider: {fileID: 0}
-  RightCollider: {fileID: 0}
+  leftArcher: {fileID: 1769704463152887903}
+  rightArcher: {fileID: 4296453457855657625}
   changeSprites:
   - {fileID: 21300000, guid: ce0a4765917de21429c8d3c295bdf22d, type: 3}
   - {fileID: 21300000, guid: 8345f4543992243448c6e3dba6635c36, type: 3}
@@ -193,13 +193,14 @@ GameObject:
   m_Component:
   - component: {fileID: 8157707300588944007}
   - component: {fileID: 8918010199441606074}
+  - component: {fileID: 7515240208538579778}
   m_Layer: 0
   m_Name: ArcherLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8157707300588944007
 Transform:
   m_ObjectHideFlags: 0
@@ -250,6 +251,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.4}
   serializedVersion: 2
   m_Radius: 4
+--- !u!114 &7515240208538579778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769704463152887903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fd51337a09d669409d644c0e806a92b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2829685059036389492
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,13 +458,14 @@ GameObject:
   m_Component:
   - component: {fileID: 212326417072033429}
   - component: {fileID: 2004776032826715756}
+  - component: {fileID: 7380379175991508222}
   m_Layer: 0
   m_Name: ArcherRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &212326417072033429
 Transform:
   m_ObjectHideFlags: 0
@@ -502,6 +516,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.4}
   serializedVersion: 2
   m_Radius: 4
+--- !u!114 &7380379175991508222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4296453457855657625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fd51337a09d669409d644c0e806a92b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4471469229139389732
 GameObject:
   m_ObjectHideFlags: 0
