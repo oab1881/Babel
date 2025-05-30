@@ -187,7 +187,7 @@ public class Clicker : MonoBehaviour
         
         NewFloor?.Invoke(); //New floor is built invoke the event to let the manager know!
 
-        //AudioManager.PlaySoundEffect("Upgrade4", 7);
+        AudioManager.PlaySoundEffect("Upgrade4", 7);
     }
 
 
