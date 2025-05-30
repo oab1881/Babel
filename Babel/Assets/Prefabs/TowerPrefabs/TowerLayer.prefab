@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ec0f2ad396a7244886a03ae62f7df8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goldPerSecond: 10
+  goldPerSecond: 20
   coinPopupPrefab: {fileID: 2343874541718838704, guid: 02e478ff82ce9244ebfb0c16146bca1b, type: 3}
 --- !u!114 &8327750649786824672
 MonoBehaviour:

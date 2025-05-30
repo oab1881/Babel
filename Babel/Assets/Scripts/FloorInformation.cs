@@ -165,8 +165,8 @@ public class FloorInformation : MonoBehaviour
         else sR.sprite = currentStyle.baseLv3;
 
         // Increase gold per second based on level
-        if (level == 1) goldGeneratorScript.GoldPerSecond += 20;
-        if (level == 2) goldGeneratorScript.GoldPerSecond += 70;
+        if (level == 1) goldGeneratorScript.GoldPerSecond += 40;
+        if (level == 2) goldGeneratorScript.GoldPerSecond += 100;
 
         level++;
         ApplyUpgradeCost(700); // Apply cost increase and refresh UI

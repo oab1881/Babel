@@ -44,6 +44,11 @@ public class AngleMovement : MonoBehaviour
 
     private int health = 5;
 
+    //Necessary for changing angels sprite when attacked
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Sprite normalSprite;
+    [SerializeField] private Sprite damagedSprite;
+
     //Called externally to set the floor this angel should attack
     public void SetTarget(Transform newTarget, int targetIndex, bool spawnOnRight)
     {
@@ -125,10 +130,22 @@ public class AngleMovement : MonoBehaviour
 
     public void DecreaseAngleHealth(int damage)
     {
-        if(damage > 5)
+        health -= damage;
+        if (health <= 0)
         {
             Debug.Log("Angle Dead");
-            Destroy(gameObject); 
+            Destroy(gameObject);
         }
+        else
+        {
+            StartCoroutine(FlashDamage());
+        }
+    }
+
+    private IEnumerator FlashDamage()
+    {
+        spriteRenderer.sprite = damagedSprite;
+        yield return new WaitForSeconds(0.4f); //flash duration
+        spriteRenderer.sprite = normalSprite;
     }
 }
