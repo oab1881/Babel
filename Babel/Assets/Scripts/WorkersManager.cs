@@ -110,11 +110,11 @@ public class WorkersManager : MonoBehaviour
 
                 // Adjust and clamp particle size
                 float engineerBasedSize = 0.1f + WorkersManager.EngineerCount * 0.01f;
-                float maxParticleSize = 0.01f;
+                float maxParticleSize = 0.2f; // Raise this to see larger particles visually
                 float finalSize = Mathf.Clamp(engineerBasedSize, 0f, maxParticleSize);
 
                 var main = clickParticles.main;
-                main.startSize = finalSize;
+                main.startSize = new ParticleSystem.MinMaxCurve(finalSize);
 
                 // Adjust trail width if trails enabled
                 var trails = clickParticles.trails;
