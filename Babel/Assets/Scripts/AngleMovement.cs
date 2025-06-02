@@ -42,12 +42,10 @@ public class AngleMovement : MonoBehaviour
     //Base X position used for swaying
     private float baseX;
 
-    private int health = 5;
+    private float health = 5;
 
-    //Necessary for changing angels sprite when attacked
-    [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private Sprite normalSprite;
-    [SerializeField] private Sprite damagedSprite;
+    [SerializeField]
+    private GameObject explosionPrefab; //will spawn at angel's death location
 
     //Called externally to set the floor this angel should attack
     public void SetTarget(Transform newTarget, int targetIndex, bool spawnOnRight)
@@ -128,24 +126,24 @@ public class AngleMovement : MonoBehaviour
         }
     }
 
-    public void DecreaseAngleHealth(int damage)
+    public void DecreaseAngleHealth(float damage)
     {
         health -= damage;
         if (health <= 0)
         {
             Debug.Log("Angle Dead");
+
+            // Instantiate explosion prefab at this position
+            if (explosionPrefab != null)
+            {
+                GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+
+                // Optionally destroy the explosion object after it finishes
+                Destroy(explosion, 1f); // 1 second delay, adjust as needed
+            }
+
             Destroy(gameObject);
-        }
-        else
-        {
-            StartCoroutine(FlashDamage());
         }
     }
 
-    private IEnumerator FlashDamage()
-    {
-        spriteRenderer.sprite = damagedSprite;
-        yield return new WaitForSeconds(0.4f); //flash duration
-        spriteRenderer.sprite = normalSprite;
-    }
 }
