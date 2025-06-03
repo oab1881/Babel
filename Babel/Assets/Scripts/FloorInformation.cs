@@ -230,7 +230,7 @@ public class FloorInformation : MonoBehaviour
     // Increases detection radius for both archers
     private void SetDetectionRadius()
     {
-        float newRadius = (leftArcherInfoScript.DetectionRadius == 0) ? 1.5f : leftArcherInfoScript.DetectionRadius * 2;
+        float newRadius = (leftArcherInfoScript.DetectionRadius == 0) ? 1.6f : leftArcherInfoScript.DetectionRadius * 2;
 
         leftArcherInfoScript.DetectionRadius = newRadius;
         rightArcherInfoScript.DetectionRadius = newRadius;

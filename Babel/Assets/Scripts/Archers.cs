@@ -21,6 +21,7 @@ public class Archers : MonoBehaviour
     public LayerMask detectionLayer;
 
     // Public property to get/set detection radius
+    //Value set in Archers.cs
     public float DetectionRadius
     {
         set { detectionRadius = value; }
