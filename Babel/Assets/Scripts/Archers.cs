@@ -5,6 +5,11 @@ public class Archers : MonoBehaviour
 {
     //Get particle system references for arrows
     [SerializeField]
+    private GameObject leftArrowsParent; //assigned in inspector
+    [SerializeField]
+    private GameObject rightArrowsParent; //assigned in inspector
+
+    [SerializeField]
     private ParticleSystem leftArrows; //assigned in inspector
     [SerializeField]
     private ParticleSystem rightArrows; //assigned in inspector
@@ -25,7 +30,13 @@ public class Archers : MonoBehaviour
     private bool isDamaging = false;
     private Collider2D[] hits = new Collider2D[0];
 
-    private float damageASecond = 0.5f; //HardCoded for now
+    private float damageASecond = .6f; //HardCoded for now
+
+    private void Start()
+    {
+        leftArrowsParent.SetActive(true);   //used to debug, but it works
+        rightArrowsParent.SetActive(true);
+    }
 
     private void Update()
     {
@@ -80,6 +91,9 @@ public class Archers : MonoBehaviour
                 if (leftArrows != null) leftArrows.Play();
                 if (rightArrows != null) rightArrows.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             }
+
+            //Play arrow sound effect
+            AudioManager.PlaySoundEffect("arrows", 13);
         }
 
         while (true)

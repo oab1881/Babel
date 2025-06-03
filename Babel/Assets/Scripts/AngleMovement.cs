@@ -137,13 +137,30 @@ public class AngleMovement : MonoBehaviour
             if (explosionPrefab != null)
             {
                 GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                AudioManager.PlaySoundEffect("explode 3", 12);
 
                 // Optionally destroy the explosion object after it finishes
                 Destroy(explosion, 1f); // 1 second delay, adjust as needed
             }
 
+            //Resume the music when angel dies
+            ResumeMusic();
             Destroy(gameObject);
         }
+    }
+    
+    //Interrupt main theme when angel arrives to play angel theme
+    public static void PlayMusicOnSpawn()
+    {
+        AudioManager.StopSound(0);
+        AudioManager.PlayMusic("AngelAttack", 0);
+
+    }
+    //Resume music after angel dies
+    public static void ResumeMusic()
+    {
+        AudioManager.StopSound(0);
+        AudioManager.PlayMusic("MesopotamianLullaby", 0);
     }
 
 }

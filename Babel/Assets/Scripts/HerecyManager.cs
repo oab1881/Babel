@@ -46,6 +46,9 @@ public class HerecyManager : MonoBehaviour
     {
         if (spawnAngles)
         {
+            //Play Angel Theme
+            AngleMovement.PlayMusicOnSpawn();
+
             int attackFloor = Random.Range(0, GameManager.floorObjects.Count);
 
             // Decide spawn side

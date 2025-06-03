@@ -518,7 +518,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4f9bdb33b86066b458f8c23cc32a3023, type: 3}
   - {fileID: 8300000, guid: cf6fb5fbb135c2649a984519d62f6947, type: 3}
   - {fileID: 8300000, guid: 5ef04ea7f9badaa4fb485959a8f13043, type: 3}
-  audioSourceCount: 11
+  - {fileID: 8300000, guid: e556d08612b907842b31e3082b29bdbd, type: 3}
+  - {fileID: 8300000, guid: 8df7a4a0db4923849a4e4ace2dcafa94, type: 3}
+  - {fileID: 8300000, guid: a54c2f4fc5c67f14ab27d212b9cdf582, type: 3}
+  - {fileID: 8300000, guid: b4f72bd310489bf4aba1bade6bf5df30, type: 3}
+  audioSourceCount: 14
   audioSources: []
 --- !u!4 &1112564015
 Transform:
@@ -634,6 +638,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floor: 0
   goldDisplay: {fileID: 0}
+  engineerDisplay: {fileID: 0}
   blinkingHerecyIncreaseText: {fileID: 0}
 --- !u!4 &1593185465
 Transform:
@@ -895,6 +900,7 @@ MonoBehaviour:
   baseSpeed: 300
   rb: {fileID: 1768883372}
   scrollAdjuster: 100
+  scrollDecay: 5
 --- !u!50 &1768883372
 Rigidbody2D:
   serializedVersion: 4
