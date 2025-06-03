@@ -186,7 +186,7 @@ public class FloorInformation : MonoBehaviour
         sR.sprite = (level == 1) ? archerLv1Sprite : archerLv2Sprite;
 
         level++;
-        goldGeneratorScript.GoldPerSecond += 10;
+        //goldGeneratorScript.GoldPerSecond += 10; archers won't make any more money now
 
         // Show archer visuals
         leftArcher.SetActive(true);
@@ -213,7 +213,7 @@ public class FloorInformation : MonoBehaviour
         sR.sprite = templeSprite;
 
         // Temple affects Herecy mechanics
-        GameManager.DecreaseHerecy(50);
+        GameManager.DecreaseHerecy(30); //for balancing i reduced it to 30 from 50
         HerecyManager.herecyAMin += 3;
         goldGeneratorScript.GoldPerSecond = 0;
 
