@@ -796,8 +796,8 @@ MonoBehaviour:
   credits: {fileID: 125897374}
   Bashar: {fileID: 324524471}
   BABEL: {fileID: 833940280}
-  typingDelay: 0.05
-  lineDelay: 0.5
+  typingDelay: 0.1
+  lineDelay: 1.3
 --- !u!4 &1758507753
 Transform:
   m_ObjectHideFlags: 0
@@ -901,6 +901,7 @@ MonoBehaviour:
   rb: {fileID: 1768883372}
   scrollAdjuster: 100
   scrollDecay: 5
+  swipeSensitivity: 0.01
 --- !u!50 &1768883372
 Rigidbody2D:
   serializedVersion: 4

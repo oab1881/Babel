@@ -14,15 +14,19 @@ public class FloorInformation : MonoBehaviour
     bool isArcherTower = false;
     bool isTemple = false;
 
-    List<AngleMovement> currentAttackingAngles = new List<AngleMovement>();
+    
+    //*************** Need owen to check these 
+    //List<AngleMovement> currentAttackingAngles = new List<AngleMovement>();
 
     public bool IsArcherTower => isArcherTower;
 
+    /* *************** Other check
     public List<AngleMovement> CurrentAttackingAngles
     {
         get { return currentAttackingAngles; }
         set { currentAttackingAngles = value; }
     }
+    */
 
     // Set in create floor, used for progression and cost scaling
     int floorNum;
