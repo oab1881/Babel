@@ -11,8 +11,15 @@ public class FloorInformation : MonoBehaviour
     uint upgradeCost = 100;
     uint maxHealth;
 
+    //On start all floors are gonna be set to tier one
+    [SerializeField]
+    UpgradeType currentUpgrade;
+
+
+    //Will be deleted once currentUpgrade is fully implemented
     bool isArcherTower = false;
     bool isTemple = false;
+
 
     
     //*************** Need owen to check these 
@@ -35,6 +42,7 @@ public class FloorInformation : MonoBehaviour
     [SerializeField] TMP_Text upgradeText;
 
     // References to the upgrade buttons
+    //This will also be moved to upradeType Variable and will be instantiated instead
     [SerializeField] GameObject baseUpgrade;
     [SerializeField] GameObject archerUpgrade;
     [SerializeField] GameObject templeUpgrade;
@@ -50,12 +58,15 @@ public class FloorInformation : MonoBehaviour
     private Vector3 panelTargetPos;
     private Coroutine moveCoroutine;
 
+
     [SerializeField] GoldGenerator goldGeneratorScript;
     [SerializeField] SpriteRenderer sR;
 
+
+    //Should prob make these gameObjects to be instantiated
+    //Instead of always having them active
     [SerializeField] GameObject leftArcher;
     [SerializeField] GameObject rightArcher;
-
     ShowArcherRadius leftArcherRadiusScript;
     ShowArcherRadius rightArcherRadiusScript;
     Archers leftArcherInfoScript;
@@ -159,6 +170,8 @@ public class FloorInformation : MonoBehaviour
         }
     }
 
+
+    //All upgrades will be pointless in new version
     // Called by base upgrade button
     public void baseUpgreade()
     {
@@ -220,6 +233,8 @@ public class FloorInformation : MonoBehaviour
         ApplyUpgradeCost(950);
     }
 
+
+    //This will be pointless in new system
     // Plays audio, updates UI, and recalculates cost for next upgrade
     private void ApplyUpgradeCost(int baseIncrease)
     {
@@ -231,7 +246,11 @@ public class FloorInformation : MonoBehaviour
         ShowButtons();
     }
 
+
+
     // Increases detection radius for both archers
+    //Should change this to universal for other attack objects in the future
+    //Add the new params, (ArcherInfoScript object, float newRadius)
     private void SetDetectionRadius()
     {
         float newRadius = (leftArcherInfoScript.DetectionRadius == 0) ? 1.6f : leftArcherInfoScript.DetectionRadius * 2;

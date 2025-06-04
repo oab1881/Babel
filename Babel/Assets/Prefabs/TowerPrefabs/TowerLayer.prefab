@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0362184bfafc1a94f952c0a6eabbc40d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentUpgrade: {fileID: 11400000, guid: 763ab6094a1cf5946b36ddfc4421f9a5, type: 2}
   upgradeText: {fileID: 7112393839932948771}
   baseUpgrade: {fileID: 4471469229139389732}
   archerUpgrade: {fileID: 2829685059036389492}

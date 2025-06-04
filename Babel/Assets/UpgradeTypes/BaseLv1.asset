@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51fc131ee16ab5043a1947eb1b8c6f8d, type: 3}
+  m_Name: BaseLv1
+  m_EditorClassIdentifier: 
+  upgradeName: BaseType1Lv1
+  upgradeSprite: {fileID: 21300000, guid: b88e3896db92cd7408b2ebe0f4d41502, type: 3}
+  upgradeTier: 1
+  nextUpgradecost: 100
+  goldPerSecondBonus: 20
+  herecyPerSecond: 0
+  currectType: 0
+  dps: 0
+  attackRange: 0
+  nextUpgrades:
+  - {fileID: 11400000, guid: 86b230896baa16c498e0919bda07599e, type: 2}
+  - {fileID: 11400000, guid: a67f21b294fbc1e4d92b52561fdddb96, type: 2}
