@@ -20,6 +20,10 @@ public class FloorInformation : MonoBehaviour
     bool isArcherTower = false;
     bool isTemple = false;
 
+    //Get reference to TowerExplode prefab which triggers when the tower is destroyed.
+    [SerializeField]
+    GameObject TowerExplosion;
+
 
     
     //*************** Need owen to check these 
@@ -344,10 +348,62 @@ public class FloorInformation : MonoBehaviour
         {
             // This would be game over
             Debug.Log("Game Over!");
+            FloorInformation.ExplodeEntireTower(); //Kaboom
         }
         else
         {
             health -= (uint)amount;
         }
     }
+
+    //Method to explode the whole tower upon game Over
+    public static void ExplodeEntireTower()
+    {
+        FloorInformation[] allFloors = FindObjectsOfType<FloorInformation>();
+
+        //Sort from top to bottom (highest explodes first)
+        System.Array.Sort(allFloors, (a, b) => b.floorNum.CompareTo(a.floorNum));
+
+        GameManager.Instance.StartCoroutine(ExplodeFloorsWithDelay(allFloors, 0.2f));
+        GameManager.Instance.GameOver();
+    }
+
+    public static IEnumerator ExplodeFloorsWithDelay(FloorInformation[] floors, float delay)
+    {
+        foreach (FloorInformation floor in floors)
+        {
+            if (floor != null)
+            {
+                floor.ExplodeFloor();
+                yield return new WaitForSeconds(delay);
+            }
+        }
+    }
+
+    //Method to destroy each floor
+    public void ExplodeFloor()
+    {
+        if (TowerExplosion != null)
+        {
+            TowerExplosion.SetActive(true);
+            TowerExplosion.transform.SetParent(null); //Detach explosion so it's not destroyed with the floor
+        }
+
+        //Hide visuals
+        sR.enabled = false;
+
+        if (goldGeneratorScript != null)
+            goldGeneratorScript.enabled = false;
+
+        upgradePanel.SetActive(false);
+        towerHighlight.SetActive(false);
+
+        //Disable this script so nothing else runs
+        this.enabled = false;
+
+        //Actually destroy the entire floor GameObject after delay
+        Destroy(gameObject, 1f); //Adjust delay as needed for explosion effect to finish
+    }
+
+
 }

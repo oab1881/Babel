@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private TMPFloatingTextBlink blinkingHerecyIncreaseText;
 
+    private bool isGameOver = false;
+
 
 
 
@@ -126,6 +128,49 @@ public class GameManager : MonoBehaviour
     {
         floorObjects[index].DamageFloor(damageAmount);
     }
- }
+    
+    //Global gameover logic
+    public void GameOver()
+    {
+        if (isGameOver) return;
+        isGameOver = true;
+
+        Debug.Log("GAME OVER - Tower destroyed");
+
+        //Freeze all gold generation
+        FloorInformation[] allFloors = FindObjectsOfType<FloorInformation>();
+        foreach (var floor in allFloors)
+        {
+            var goldGen = floor.GetComponent<GoldGenerator>();
+            if (goldGen != null) goldGen.enabled = false;
+        }
+
+        //Disable all CoinPopups
+        CoinPopup[] coinPopups = FindObjectsOfType<CoinPopup>();
+        foreach (var popup in coinPopups)
+        {
+            popup.gameObject.SetActive(false);
+        }
+
+        //Stop player interaction (clicking)
+        Clicker clicker = FindObjectOfType<Clicker>();
+        if (clicker != null) clicker.enabled = false;
+
+        //Disable Hammering
+        WorkersManager workMgr = FindObjectOfType<WorkersManager>();
+        if (workMgr != null)
+        {
+            workMgr.hammerAnimObject.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("WorkersManager not found in scene.");
+        }
+
+        //Trigger UI Game Over screen or scene reload
+        
+    }
+
+}
 
 

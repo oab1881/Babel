@@ -3571,6 +3571,7 @@ MonoBehaviour:
   rb: {fileID: 1585496250}
   scrollAdjuster: 30
   scrollDecay: 5
+  swipeSensitivity: 0.01
 --- !u!50 &1585496250
 Rigidbody2D:
   serializedVersion: 4
