@@ -31,11 +31,19 @@ public class HerecyManager : MonoBehaviour
 
     private void Update()
     {
-        //We only spawn anagles if herecy is over 50
-        if(GameManager.herecy >= 50)
+        //end game if heresy hits 100
+        if (GameManager.herecy >= 100)
         {
+            FloorInformation.ExplodeEntireTower();
+        }
+
+        //We only spawn anagles if herecy is over 50
+        else if (GameManager.herecy >= 50)
+        {
+            //Debug.Log(GameManager.herecy);
             spawnAngles = true;
         }
+        
         else
         {
             spawnAngles = false;

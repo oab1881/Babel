@@ -160,7 +160,8 @@ public class GameManager : MonoBehaviour
         WorkersManager workMgr = FindObjectOfType<WorkersManager>();
         if (workMgr != null)
         {
-            workMgr.hammerAnimObject.SetActive(false);
+            workMgr.hammerAnimObject.SetActive(false);  //shut off hammer
+            workMgr.clickParticles.gameObject.SetActive(false); //shut off particles
         }
         else
         {
