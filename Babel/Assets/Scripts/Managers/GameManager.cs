@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     public  static uint money = 0;
     public static uint herecy = 0;
+    public static int health = 3;
 
     [SerializeField]
     private TextMeshProUGUI goldDisplay;
@@ -26,7 +27,7 @@ public class GameManager : MonoBehaviour
 
     private bool isGameOver = false;
 
-
+    
 
 
     private void Awake()
@@ -130,11 +131,17 @@ public class GameManager : MonoBehaviour
     }
 
 
-    //This uses function in FloorInfo.cs to reduce the health of a floor and is called in 
+    //This uses function in FloorInfo.cs to reduce the health and is called in 
     //AngleMovement.cs
-    public static void DecreaseFloorHealth(int index, int damageAmount)
+    public static void DecreaseHealth(int damageAmount) //Keeping damage amount differnet angles may do different damage
     {
-        floorObjects[index].DamageFloor(damageAmount);
+        health-= damageAmount;
+
+        Debug.Log(health);
+        if (health == 0)
+        {
+            FloorInformation.ExplodeEntireTower(); //Kaboom
+        }
     }
     
     //Global gameover logic
@@ -144,6 +151,8 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
 
         Debug.Log("GAME OVER - Tower destroyed");
+
+        HerecyManager.Instance.gameObject.SetActive(false); //Temp adding this in so game doesn't crash when game ends
 
         //Freeze all gold generation
         FloorInformation[] allFloors = FindObjectsOfType<FloorInformation>();
@@ -175,6 +184,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("WorkersManager not found in scene.");
         }
+
 
         //Trigger UI Game Over screen or scene reload
         

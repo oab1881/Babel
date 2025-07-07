@@ -87,12 +87,12 @@ public class AngleMovement : MonoBehaviour
         else if (GameManager.herecy >= 70)
         {
             health = 6.5f;
-            transform.localScale = new Vector3(0.2f, 0.2f, 0);
+            transform.localScale = new Vector3(0.25f, 0.25f, 0);
             Debug.Log("Angle tier 1");
         }
         else if(GameManager.herecy < 70)
         {
-            transform.localScale = new Vector3(0.1f, 0.1f, 0);
+            transform.localScale = new Vector3(0.2f, 0.2f, 0);
         }
     }
 
@@ -143,21 +143,22 @@ private void Update()
     private void OnArrive()
     {
         target = null;
-        GameManager.DecreaseFloorHealth(targetInd, 400000); //Temporary fixed damage value
+        GameManager.DecreaseHealth(1); //Temporary fixed damage value
         //Add sound effect
         //Add explosion effect
+        CameraShake.Shake();
         Destroy(gameObject);
     }
 
     //Detect collision with tower and deal damage
-    private void OnCollisionEnter2D(Collision2D collision)
+    /*private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Tower"))
         {
-            GameManager.DecreaseFloorHealth(targetInd, 40); //Temporary fixed damage value
+            GameManager.DecreaseHealth(1); //Temporary fixed damage value
             
         }
-    }
+    }*/
 
     public void DecreaseAngleHealth(float damage)
     {

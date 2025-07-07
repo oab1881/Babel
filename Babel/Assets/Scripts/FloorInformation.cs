@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class FloorInformation : MonoBehaviour
 {
-    // Reference to health and current level of this floor
-    uint health;
+    // Reference to  current level of this floor
     uint level = 1;
     uint upgradeCost = 100;
-    uint maxHealth;
+    
 
     //On start all floors are gonna be set to tier one
     [SerializeField]
@@ -89,9 +88,7 @@ public class FloorInformation : MonoBehaviour
     // Called from GameManager when a new floor is created
     public void CreateFloor(uint health, int floorNum)
     {
-        this.health = health;
         this.floorNum = floorNum;
-        maxHealth = health;
 
         // Randomly pick a visual style from the list and assign the base level 1 sprite
         currentStyle = availableStyles[Random.Range(0, availableStyles.Length)];
@@ -341,21 +338,6 @@ public class FloorInformation : MonoBehaviour
         upgradeText.text = GameManager.FormatNumbers(upgradeCost);
     }
 
-    // Called by GameManager to apply damage to this floor
-    public void DamageFloor(int amount)
-    {
-        if (amount > health)
-        {
-            // This would be game over
-            Debug.Log("Game Over!");
-            FloorInformation.ExplodeEntireTower(); //Kaboom
-        }
-        else
-        {
-            health -= (uint)amount;
-        }
-    }
-
     //Method to explode the whole tower upon game Over
     public static void ExplodeEntireTower()
     {
@@ -363,7 +345,6 @@ public class FloorInformation : MonoBehaviour
 
         //Sort from top to bottom (highest explodes first)
         System.Array.Sort(allFloors, (a, b) => b.floorNum.CompareTo(a.floorNum));
-
         GameManager.Instance.StartCoroutine(ExplodeFloorsWithDelay(allFloors, 0.2f));
         GameManager.Instance.GameOver();
     }
@@ -375,9 +356,13 @@ public class FloorInformation : MonoBehaviour
             if (floor != null)
             {
                 floor.ExplodeFloor();
+
+
+                CameraShake.Shake();
                 yield return new WaitForSeconds(delay);
             }
         }
+        
     }
 
     //Method to destroy each floor
@@ -397,6 +382,7 @@ public class FloorInformation : MonoBehaviour
 
         upgradePanel.SetActive(false);
         towerHighlight.SetActive(false);
+         
 
         //Disable this script so nothing else runs
         this.enabled = false;
