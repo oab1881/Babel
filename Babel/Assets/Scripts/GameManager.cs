@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -52,6 +53,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.M)) money += 10000;
+        if (Input.GetKeyDown(KeyCode.R)) RestartGame();
     }
 
     //Attached to the clicker event that recieves the signal a new floor was built
@@ -170,6 +172,26 @@ public class GameManager : MonoBehaviour
 
         //Trigger UI Game Over screen or scene reload
         
+    }
+
+    //Function to reload the scene to restart
+    public void RestartGame()
+    {
+        // Reset all static game variables
+        money = 0;
+        herecy = 0;
+        floor = 0;
+        floorObjects.Clear();
+        Clicker.multiplyer = 1; // If you have a multiplier, reset it too
+
+        // Reset any other persistent game objects or singletons
+        isGameOver = false;
+
+        // If you have player prefs or saved state, clear those too
+        // PlayerPrefs.DeleteAll(); // Optional
+
+        // Reload the scene
+        SceneManager.LoadScene("Gameplay");
     }
 
 }
