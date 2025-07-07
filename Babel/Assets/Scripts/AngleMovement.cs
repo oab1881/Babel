@@ -47,6 +47,9 @@ public class AngleMovement : MonoBehaviour
     [SerializeField]
     private GameObject explosionPrefab; //will spawn at angel's death location
 
+    //Makes all the angles sway in different patterns
+    private float swayOffset;
+
     //Called externally to set the floor this angel should attack
     public void SetTarget(Transform newTarget, int targetIndex, bool spawnOnRight)
     {
@@ -61,9 +64,39 @@ public class AngleMovement : MonoBehaviour
 
         //Save current X as base position for swaying
         baseX = transform.position.x;
+        
+        //Adds an offset to sway so the angles don't move the exact same
+        swayOffset = Random.Range(0f, 2f * Mathf.PI); // Random phase offset between 0 and 2 PI
+
+        
+        //Arbitrary scaling based on current herecy
+        //Makes the angle bigger and gives more health
+        if (GameManager.herecy >= 90)
+        {
+            health = 8.5f;
+            transform.localScale = new Vector3(0.4f, 0.4f, 0);
+            Debug.Log("Angle tier 3");
+        }
+        else if (GameManager.herecy >= 80)
+        {
+            health = 7f;
+            transform.localScale = new Vector3(0.3f, 0.3f, 0);
+            Debug.Log("Angle tier 2");
+        }
+
+        else if (GameManager.herecy >= 70)
+        {
+            health = 6.5f;
+            transform.localScale = new Vector3(0.2f, 0.2f, 0);
+            Debug.Log("Angle tier 1");
+        }
+        else if(GameManager.herecy < 70)
+        {
+            transform.localScale = new Vector3(0.1f, 0.1f, 0);
+        }
     }
 
-    private void Update()
+private void Update()
     {
         if (target == null) return;
 
@@ -78,7 +111,7 @@ public class AngleMovement : MonoBehaviour
                 pos.y = Mathf.MoveTowards(pos.y, targetY, descendSpeed * Time.deltaTime);
 
                 //Sway left/right during descent
-                pos.x = baseX + Mathf.Sin(Time.time * swayFrequency) * swayAmplitude;
+                pos.x = baseX + Mathf.Sin(Time.time * swayFrequency + swayOffset) * swayAmplitude;
             }
             else
             {

@@ -63,6 +63,12 @@ public class GameManager : MonoBehaviour
         money++;
         herecy+= 5;
 
+        //Every 20 floors make the number that spawn in a group increase
+        if(floorObjects.Count % 20 == 0)
+        {
+            HerecyManager.spawnNumber++;
+        }
+
         //if(blinkingHerecyIncreaseText != null)blinkingHerecyIncreaseText.ShowBlink("+5");
     }
 

@@ -268,6 +268,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Angle
       objectReference: {fileID: 0}
+    - target: {fileID: 2650652582369335042, guid: 28bc190babfb1c449a900ad7b1b3d4f7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5500654728114165805, guid: 28bc190babfb1c449a900ad7b1b3d4f7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 33.65046
@@ -4365,11 +4369,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b686189608fa194bab699536b42471a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnTime: 30
+  spawnTime: 15
   blinkingText: {fileID: 96120987}
   AnglePrefab: {fileID: 2650652582369335042, guid: 28bc190babfb1c449a900ad7b1b3d4f7, type: 3}
   leftSpawn: {fileID: 1608145669}
   rightSpawn: {fileID: 653103200}
+  spawnDiff: 2
 --- !u!1 &1812639164
 GameObject:
   m_ObjectHideFlags: 0
@@ -5910,6 +5915,10 @@ PrefabInstance:
     - target: {fileID: 880958427461158923, guid: d4fd6bc37c1ca214eb5feb63fe540b36, type: 3}
       propertyPath: m_Name
       value: TowerLayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 880958427461158923, guid: d4fd6bc37c1ca214eb5feb63fe540b36, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5504789627536311793, guid: d4fd6bc37c1ca214eb5feb63fe540b36, type: 3}
       propertyPath: m_LocalPosition.x
