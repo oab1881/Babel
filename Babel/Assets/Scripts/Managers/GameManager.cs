@@ -25,9 +25,38 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private TMPFloatingTextBlink blinkingHerecyIncreaseText;
 
+    [SerializeField]
+    private GameObject restartButton;
+
+    [SerializeField]
+    private TextMeshProUGUI restartText;
+
     private bool isGameOver = false;
 
-    
+    string[] defeatMessages = new string[] {
+    "You Lose",          // English
+    "Perdiste",          // Spanish
+    "Tu as perdu",       // French
+    "Du hast verloren",  // German
+    "Hai perso",         // Italian
+    "Você perdeu",       // Portuguese
+    "Tu has perdut",     // Catalan
+    "Zure galera",       // Basque
+    "Jij verliest",      // Dutch
+    "Sen kaybettin",     // Turkish
+    "Pierdeti",          // Romanian
+    "Tu caiste",         // Galician
+    "Izgubio si",        // Croatian
+    "Ti si izgubio",     // Serbian (Latin script)
+    "Du tapte",          // Norwegian
+    "Você esta derrotado", // Portuguese (formal)
+    "Te ves vencido",    // Spanish (formal)
+    "Tu ai pierdut",     // Romanian (alt)
+    "Tu as echoué",      // French (You failed)
+    "Porazka",           // Polish
+    };
+
+
 
 
     private void Awake()
@@ -185,20 +214,44 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("WorkersManager not found in scene.");
         }
 
+        //Set You Lose text in a foreign language
+        string chosenMessage = defeatMessages[Random.Range(0, defeatMessages.Length)];
+
+        // Set the message
+        if (restartText != null)
+        {
+            restartText.text = chosenMessage;
+        }
+        else
+        {
+            Debug.LogWarning("restartText reference not set in inspector.");
+        }
+
+
 
         //Trigger UI Game Over screen or scene reload
+        restartButton.SetActive(true);
         
     }
 
     //Function to reload the scene to restart
     public void RestartGame()
     {
+        Debug.Log("RESET GAME");
         // Reset all static game variables
         money = 0;
         herecy = 0;
         floor = 0;
+        health = 3;
         floorObjects.Clear();
         Clicker.multiplyer = 1; // If you have a multiplier, reset it too
+
+        // Destroy current towers manually
+        FloorInformation[] floors = FindObjectsOfType<FloorInformation>();
+        foreach (var floor in floors)
+        {
+            Destroy(floor.gameObject);
+        }
 
         // Reset any other persistent game objects or singletons
         isGameOver = false;
@@ -206,7 +259,13 @@ public class GameManager : MonoBehaviour
         // If you have player prefs or saved state, clear those too
         // PlayerPrefs.DeleteAll(); // Optional
 
-        // Reload the scene
+        // Reload scene after small delay
+        StartCoroutine(ReloadSceneWithDelay(0.3f));
+    }
+
+    private IEnumerator ReloadSceneWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         SceneManager.LoadScene("Gameplay");
     }
 

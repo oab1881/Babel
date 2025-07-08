@@ -42,7 +42,7 @@ public class AngleMovement : MonoBehaviour
     //Base X position used for swaying
     private float baseX;
 
-    private float health = 5;
+    private float health = 3;
 
     [SerializeField]
     private GameObject explosionPrefab; //will spawn at angel's death location
@@ -86,7 +86,7 @@ public class AngleMovement : MonoBehaviour
 
         else if (GameManager.herecy >= 70)
         {
-            health = 6.5f;
+            health = 5f;
             transform.localScale = new Vector3(0.25f, 0.25f, 0);
             Debug.Log("Angle tier 1");
         }

@@ -13,7 +13,7 @@ public class HerecyManager : MonoBehaviour
 
     //Reference to the script that says angles incoming
     [SerializeField]
-    TMPFloatingTextBlink AnglesIncomingText;
+    TMPFloatingTextBlink AngelsIncomingText;
 
     [SerializeField]
     TMPFloatingTextBlink blinkingText;
@@ -77,7 +77,7 @@ public class HerecyManager : MonoBehaviour
         {
             //Play Angel Theme
             AngleMovement.PlayMusicOnSpawn();
-            AnglesIncomingText.ShowBlink("Angles Incoming!");
+            AngelsIncomingText.ShowBlink("A herald approaches!");
 
             //Uses spawn number to loop and at the bottom figures out if it should wait a few extra seconds
             for (int i = 0; i < spawnNumber; i++)

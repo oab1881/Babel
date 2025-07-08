@@ -5,17 +5,22 @@ using UnityEngine;
 public class HealthPopulating : MonoBehaviour
 {
     List<GameObject> children;
+    HashSet<GameObject> pendingDestruction = new HashSet<GameObject>();
 
     [SerializeField]
     GameObject heartPrefab;
-    
 
-    // Update is called once per frame
     void Update()
     {
         children = GetAllChildren(gameObject);
-        if(GameManager.health > children.Count) AddHearts();
-        if(GameManager.health < children.Count) RemoveHearts();
+        if (GameManager.health > children.Count)
+        {
+            AddHearts();
+        }
+        else if (GameManager.health < children.Count)
+        {
+            RemoveHearts();
+        }
     }
 
     //From forums
@@ -33,18 +38,58 @@ public class HealthPopulating : MonoBehaviour
 
     void AddHearts()
     {
-        for(int i = 0; i < GameManager.health - children.Count; i++)
+        for (int i = 0; i < GameManager.health - children.Count; i++)
         {
             Instantiate(heartPrefab, gameObject.transform);
         }
     }
-    
+
     void RemoveHearts()
     {
-        int decrease = children.Count - GameManager.health;
-        for(int i = 0; i < decrease; i++)
+        int toRemove = children.Count - GameManager.health;
+        int removed = 0;
+
+        //Remove from the beginning (leftmost first)
+        for (int i = 0; i < children.Count && removed < toRemove; i++)
         {
-            Destroy(children[children.Count - 1]);
+            GameObject heart = children[i];
+            if (!pendingDestruction.Contains(heart))
+            {
+                pendingDestruction.Add(heart);
+                StartCoroutine(FlashAndDestroy(heart));
+                removed++;
+            }
         }
+    }
+
+    IEnumerator FlashAndDestroy(GameObject heart)
+    {
+        SpriteRenderer sr = heart.GetComponent<SpriteRenderer>();
+        if (sr == null)
+        {
+            Destroy(heart);
+            pendingDestruction.Remove(heart);
+            yield break;
+        }
+
+        float flashDuration = 1f;
+        float flashSpeed = 0.1f;
+        float elapsed = 0f;
+
+        while (elapsed < flashDuration)
+        {
+            if (sr != null)
+                sr.enabled = !sr.enabled;
+
+            yield return new WaitForSeconds(flashSpeed);
+            elapsed += flashSpeed;
+        }
+
+        if (heart != null)
+        {
+            Destroy(heart);
+        }
+
+        pendingDestruction.Remove(heart);
     }
 }
