@@ -101,28 +101,6 @@ public class WorkersManager : MonoBehaviour
             // Move the particles to match hammer and play
             if (clickParticles != null && !clickParticles.isPlaying)
             {
-                clickParticles.transform.position = hammerAnimObject.transform.position;
-
-                //Dynamically adjust particle emission based on engineer count
-                var emission = clickParticles.emission;
-                emission.rateOverTime = engineerCount * 2; // or tweak values
-
-
-                // Adjust and clamp particle size
-                float engineerBasedSize = 0.1f + WorkersManager.EngineerCount * 0.01f;
-                float maxParticleSize = 0.2f; // Raise this to see larger particles visually
-                float finalSize = Mathf.Clamp(engineerBasedSize, 0f, maxParticleSize);
-
-                var main = clickParticles.main;
-                main.startSize = new ParticleSystem.MinMaxCurve(finalSize);
-
-                // Adjust trail width if trails enabled
-                var trails = clickParticles.trails;
-                if (trails.enabled)
-                {
-                    trails.widthOverTrail = finalSize * 0.5f;
-                }
-
                 clickParticles.Play();
             }
         }
