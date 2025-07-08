@@ -101,7 +101,7 @@ public class CameraMovement : MonoBehaviour
     private void UpdateSpeed()
     {
         // Get current floor from GameManager (can’t compile unless GameManager.Instance.floor exists)
-        uint floor = GameManager.Instance.floor;
+        uint floor = FloorManager.floor;
 
         // Adjust movement speed based on floor height — makes controls more responsive as the tower gets taller
         if (floor >= 200)

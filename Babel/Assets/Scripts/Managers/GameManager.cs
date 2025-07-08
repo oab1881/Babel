@@ -8,8 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public uint floor = 0;
-    public static List<FloorInformation> floorObjects = new List<FloorInformation>();
+    
 
 
     public  static uint money = 0;
@@ -21,9 +20,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI engineerDisplay;
-
-    [SerializeField]
-    private TMPFloatingTextBlink blinkingHerecyIncreaseText;
 
     [SerializeField]
     private GameObject restartButton;
@@ -74,7 +70,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Clicker.NewFloor += NewFloor;
         AudioManager.SetVolume(0, 0.1f);
         AudioManager.PlayMusic("BabelAmbient", 0);
     }
@@ -86,21 +81,7 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R)) RestartGame();
     }
 
-    //Attached to the clicker event that recieves the signal a new floor was built
-    public void NewFloor()
-    {
-        floor++;
-        money++;
-        herecy+= 5;
-
-        //Every 20 floors make the number that spawn in a group increase
-        if(floorObjects.Count % 20 == 0)
-        {
-            HerecyManager.spawnNumber++;
-        }
-
-        //if(blinkingHerecyIncreaseText != null)blinkingHerecyIncreaseText.ShowBlink("+5");
-    }
+    
 
     //Method that increments gold and calls UpdateGoldUI
     public void AddGold(float amount)
@@ -241,10 +222,11 @@ public class GameManager : MonoBehaviour
         // Reset all static game variables
         money = 0;
         herecy = 0;
-        floor = 0;
         health = 3;
-        floorObjects.Clear();
+        FloorManager.floor = 0;
+        FloorManager.floorObjects.Clear();
         Clicker.multiplyer = 1; // If you have a multiplier, reset it too
+        //Need to reset size of multiplyer particles here ****
 
         // Destroy current towers manually
         FloorInformation[] floors = FindObjectsOfType<FloorInformation>();

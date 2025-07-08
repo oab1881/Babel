@@ -2059,6 +2059,7 @@ GameObject:
   - component: {fileID: 917380432}
   - component: {fileID: 917380431}
   - component: {fileID: 917380433}
+  - component: {fileID: 917380434}
   m_Layer: 0
   m_Name: GameplayManager
   m_TagString: Untagged
@@ -2115,12 +2116,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 177212c812185f342ba9938ac1b5f556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floor: 0
   goldDisplay: {fileID: 602062536}
   engineerDisplay: {fileID: 87070519}
-  blinkingHerecyIncreaseText: {fileID: 64337657}
   restartButton: {fileID: 1325783591}
   restartText: {fileID: 1688547048}
+--- !u!114 &917380434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 917380430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cea0d33b70fcd7c4598ee0e52e6df122, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blinkingHerecyIncreaseText: {fileID: 64337657}
 --- !u!1 &946175931
 GameObject:
   m_ObjectHideFlags: 0
@@ -2713,7 +2725,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -112.42999, y: -161.03299}
+  m_AnchoredPosition: {x: -112.42993, y: -161.03299}
   m_SizeDelta: {x: 8, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1057728486

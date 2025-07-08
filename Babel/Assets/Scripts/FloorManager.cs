@@ -9,6 +9,12 @@ public class FloorManager : MonoBehaviour
     //Set up singleton
     public static FloorManager Instance { get; private set; }
 
+    public static uint floor = 0;
+    public static List<FloorInformation> floorObjects = new List<FloorInformation>();
+
+    [SerializeField]
+    private TMPFloatingTextBlink blinkingHerecyIncreaseText;
+
 
     private void Awake()
     {
@@ -27,7 +33,7 @@ public class FloorManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Clicker.NewFloor += NewFloor;
     }
 
     // Update is called once per frame
@@ -36,11 +42,27 @@ public class FloorManager : MonoBehaviour
         
     }
 
+    //Attached to the clicker event that recieves the signal a new floor was built
+    public void NewFloor()
+    {
+        floor++;
+        GameManager.money++;
+        GameManager.herecy += 5;
+
+        //Every 20 floors make the number that spawn in a group increase
+        if (floorObjects.Count % 20 == 0)
+        {
+            HerecyManager.spawnNumber++;
+        }
+
+        if(blinkingHerecyIncreaseText != null)blinkingHerecyIncreaseText.ShowBlink("+5");
+    }
+
 
     // Checks if the player has enough money to upgrade
     //From floor information will have to find a way to figure out floor number then get it's values from the list
     /*
-    public bool CheckUpgrade()
+    public static bool CheckUpgrade(int floorNum)
     {
         if (GameManager.money >= GameManager.floorObjects[Number of the floor once we have it])
         {

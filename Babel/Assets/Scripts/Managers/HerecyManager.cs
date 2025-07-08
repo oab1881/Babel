@@ -82,14 +82,14 @@ public class HerecyManager : MonoBehaviour
             //Uses spawn number to loop and at the bottom figures out if it should wait a few extra seconds
             for (int i = 0; i < spawnNumber; i++)
             {
-                int attackFloor = Random.Range(0, GameManager.floorObjects.Count);
+                int attackFloor = Random.Range(0, FloorManager.floorObjects.Count);
 
                 // Decide spawn side
                 bool spawnRight = Random.value > 0.5f;
                 GameObject spawnPoint = spawnRight ? rightSpawn : leftSpawn;
 
                 GameObject newObj = Instantiate(AnglePrefab, spawnPoint.transform.position, Quaternion.identity);
-                newObj.GetComponent<AngleMovement>().SetTarget(GameManager.floorObjects[attackFloor].transform, attackFloor, spawnRight);
+                newObj.GetComponent<AngleMovement>().SetTarget(FloorManager.floorObjects[attackFloor].transform, attackFloor, spawnRight);
 
 
 

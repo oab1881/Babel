@@ -175,7 +175,7 @@ public class Clicker : MonoBehaviour
         floorInfo.CreateFloor((uint)currentClickProgress, currentFloor);
 
         //Adds the new floor to list of floor
-        GameManager.floorObjects.Add(floorInfo);
+        FloorManager.floorObjects.Add(floorInfo);
 
         
 
