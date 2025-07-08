@@ -31,7 +31,7 @@ public class Archers : MonoBehaviour
     private bool isDamaging = false;
     private Collider2D[] hits = new Collider2D[0];
 
-    private float damageASecond = .6f; //HardCoded for now
+    private float damageASecond = 1.5f; //HardCoded for now
 
     private void Start()
     {
@@ -65,6 +65,7 @@ public class Archers : MonoBehaviour
 
         //Determine which side to fire from based on the first angel in range
         bool angelOnRight = false;
+        bool angelOnLeft = false;
         bool angelFound = false;
 
         //Archer particle System Logic - set up so that arrows fire only on the side with an angel
@@ -73,9 +74,13 @@ public class Archers : MonoBehaviour
         {
             if (hit != null && hit.CompareTag("Angel"))
             {
-                angelFound = true;
+                
                 angelOnRight = hit.transform.position.x > transform.position.x;
-                break;
+            }
+            if(hit != null && hit.CompareTag("Angel"))
+            {
+               
+                angelOnLeft = hit.transform.position.x < transform.position.x;
             }
         }
 
@@ -85,12 +90,10 @@ public class Archers : MonoBehaviour
             if (angelOnRight)
             {
                 if (rightArrows != null) rightArrows.Play();
-                if (leftArrows != null) leftArrows.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             }
-            else
+            if(angelOnLeft)
             {
                 if (leftArrows != null) leftArrows.Play();
-                if (rightArrows != null) rightArrows.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             }
 
             //Play arrow sound effect
@@ -104,6 +107,8 @@ public class Archers : MonoBehaviour
 
             bool hasAngels = false;
 
+            
+
             foreach (var hit in hits)
             {
                 if (hit != null && hit.CompareTag("Angel"))
@@ -111,20 +116,38 @@ public class Archers : MonoBehaviour
                     hasAngels = true;
                     Debug.Log("Damaging angel: " + hit.name);
 
-                    // Damage angel
-                    var angelMovement = hit.GetComponent<AngleMovement>();
-                    if (angelMovement != null)
+                    if (angelOnRight)
                     {
-                        angelMovement.DecreaseAngleHealth(damageASecond);
+                        if (rightArrows != null) rightArrows.Play();
+                    }
+                    if (angelOnLeft)
+                    {
+                        if (leftArrows != null) leftArrows.Play();
+                    }
 
-                        // Trigger the angel's animator
-                        var animator = hit.GetComponent<Animator>();
-                        if (animator != null)
+                    yield return new WaitForSeconds(.2f);
+
+                    if (hit != null)
+                    {
+
+                        // Damage angel
+                        var angelMovement = hit.GetComponent<AngleMovement>();
+                        if (angelMovement != null)
                         {
-                            animator.SetTrigger("AngelHit");
-                        }
+                            angelMovement.DecreaseAngleHealth(damageASecond);
 
-                        hit.GetComponent<AngleMovement>().DecreaseAngleHealth(damageASecond);
+
+
+
+                            // Trigger the angel's animator
+                            var animator = hit.GetComponent<Animator>();
+                            if (animator != null)
+                            {
+                                animator.SetTrigger("AngelHit");
+                            }
+
+                            hit.GetComponent<AngleMovement>().DecreaseAngleHealth(damageASecond);
+                        }
                     }
 
                 }
@@ -132,7 +155,7 @@ public class Archers : MonoBehaviour
 
             if (!hasAngels)
             {
-                //Stop and deactivate particle systems
+                /*//Stop and deactivate particle systems
                 if (leftArrows != null)
                 {
                     leftArrows.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
@@ -140,13 +163,13 @@ public class Archers : MonoBehaviour
                 if (rightArrows != null)
                 {
                     rightArrows.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-                }
+                }*/
 
                 isDamaging = false;
                 yield break;
             }
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2.5f);
         }
     }
 
