@@ -247,6 +247,19 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Gameplay");
     }
 
+    //From Unity forums
+    //Goes through the parent getting children recursively
+    public static List<GameObject> GetAllChildren(GameObject obj)
+    {
+        List<GameObject> children = new List<GameObject>();
+        foreach (Transform child in obj.transform)
+        {
+            children.Add(child.gameObject);
+            children.AddRange(GetAllChildren(child.gameObject));
+        }
+        return children;
+    }
+
 }
 
 

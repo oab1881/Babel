@@ -15,7 +15,7 @@ public class HealthPopulating : MonoBehaviour
     void Update()
     {
         //Every fram we get all the children 
-        children = GetAllChildren(gameObject);
+        children = GameManager.GetAllChildren(gameObject);
 
         //We test if the health is greater then the children count
         //We then need to populate more hearts
@@ -31,18 +31,7 @@ public class HealthPopulating : MonoBehaviour
         }
     }
 
-    //From Unity forums
-    //Goes through the parent getting children recursively
-    List<GameObject> GetAllChildren(GameObject obj)
-    {
-        List<GameObject> children = new List<GameObject>();
-        foreach (Transform child in obj.transform)
-        {
-            children.Add(child.gameObject);
-            children.AddRange(GetAllChildren(child.gameObject));
-        }
-        return children;
-    }
+    
 
     /// <summary>
     /// Adds new hearts to the UI
