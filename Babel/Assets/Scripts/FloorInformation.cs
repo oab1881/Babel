@@ -39,7 +39,7 @@ public class FloorInformation : MonoBehaviour
     */
 
     // Set in create floor, used for progression and cost scaling
-    int floorNum;
+    public int floorNum;
 
     // Reference to the upgrade text (child of upgradePanel on all prefab towers)
     [SerializeField] TMP_Text upgradeText;

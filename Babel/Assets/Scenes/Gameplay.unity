@@ -2120,6 +2120,27 @@ MonoBehaviour:
   engineerDisplay: {fileID: 87070519}
   restartButton: {fileID: 1325783591}
   restartText: {fileID: 1688547048}
+  defeatMessages:
+  - You Lose
+  - Perdiste
+  - Tu as perdu
+  - Du hast verloren
+  - Hai perso
+  - "Voc\xEA perdeu"
+  - Tu has perdut
+  - Zure galera
+  - Jij verliest
+  - Sen kaybettin
+  - Pierdeti
+  - Tu caiste
+  - Izgubio si
+  - Ti si izgubio
+  - Du tapte
+  - "Voc\xEA esta derrotado"
+  - Te ves vencido
+  - Tu ai pierdut
+  - "Tu as echou\xE9"
+  - Porazka
 --- !u!114 &917380434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3244,6 +3265,19 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 9023018942591832178, guid: 1e57ec5b52cee014abdf6d733caaec3b, type: 3}
   m_PrefabInstance: {fileID: 7621761834424016132}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1325783599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325783591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1731b2ace620344ba2b16f9b5385f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonText: {fileID: 1688547048}
 --- !u!1 &1367262533
 GameObject:
   m_ObjectHideFlags: 0
@@ -6698,7 +6732,10 @@ PrefabInstance:
     - {fileID: 3441850244706875196, guid: 1e57ec5b52cee014abdf6d733caaec3b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3499129497930402162, guid: 1e57ec5b52cee014abdf6d733caaec3b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1325783599}
   m_SourcePrefab: {fileID: 100100000, guid: 1e57ec5b52cee014abdf6d733caaec3b, type: 3}
 --- !u!1001 &7741934795902153569
 PrefabInstance:

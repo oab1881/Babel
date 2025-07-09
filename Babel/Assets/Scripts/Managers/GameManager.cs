@@ -29,13 +29,13 @@ public class GameManager : MonoBehaviour
 
     private bool isGameOver = false;
 
-    string[] defeatMessages = new string[] {
+    public string[] defeatMessages = new string[] {
     "You Lose",          // English
     "Perdiste",          // Spanish
     "Tu as perdu",       // French
     "Du hast verloren",  // German
     "Hai perso",         // Italian
-    "Você perdeu",       // Portuguese
+    "Voce perdeu",       // Portuguese
     "Tu has perdut",     // Catalan
     "Zure galera",       // Basque
     "Jij verliest",      // Dutch
@@ -45,10 +45,6 @@ public class GameManager : MonoBehaviour
     "Izgubio si",        // Croatian
     "Ti si izgubio",     // Serbian (Latin script)
     "Du tapte",          // Norwegian
-    "Você esta derrotado", // Portuguese (formal)
-    "Te ves vencido",    // Spanish (formal)
-    "Tu ai pierdut",     // Romanian (alt)
-    "Tu as echoué",      // French (You failed)
     "Porazka",           // Polish
     };
 

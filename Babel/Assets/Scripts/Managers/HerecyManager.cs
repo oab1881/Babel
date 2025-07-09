@@ -55,6 +55,23 @@ public class HerecyManager : MonoBehaviour
         //end game if heresy hits 100
         if (GameManager.herecy >= 100)
         {
+            // Find the top floor and enable its Lightning child
+            FloorInformation[] allFloors = FindObjectsOfType<FloorInformation>();
+            if (allFloors.Length > 0)
+            {
+                // Sort from top to bottom
+                System.Array.Sort(allFloors, (a, b) => b.floorNum.CompareTo(a.floorNum));
+                Transform lightning = allFloors[0].transform.Find("Lightning");
+                if (lightning != null)
+                {
+                    lightning.gameObject.SetActive(true);
+                }
+                else
+                {
+                    Debug.LogWarning("No 'Lightning' child found on top floor.");
+                }
+            }
+
             FloorInformation.ExplodeEntireTower();
         }
 

@@ -100,4 +100,11 @@ public class Tutorial : MonoBehaviour
 
         skipRequested = false;
     }
+
+    public void SkipTutorial()
+    {
+        AudioManager.StopSound(0);
+        AudioManager.PlayMusic("MesopotamianLullaby", 0);
+        SceneManager.LoadScene("Gameplay");
+    }
 }
