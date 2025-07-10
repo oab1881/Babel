@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FloorInformation : MonoBehaviour
 {
@@ -63,7 +64,7 @@ public class FloorInformation : MonoBehaviour
 
 
     [SerializeField] GoldGenerator goldGeneratorScript;
-    [SerializeField] SpriteRenderer sR;
+    [SerializeField] Image imageComponenet;
 
 
     //Should prob make these gameObjects to be instantiated
@@ -92,7 +93,7 @@ public class FloorInformation : MonoBehaviour
 
         // Randomly pick a visual style from the list and assign the base level 1 sprite
         currentStyle = availableStyles[Random.Range(0, availableStyles.Length)];
-        sR.sprite = currentStyle.baseLv1;
+        imageComponenet.sprite = currentStyle.baseLv1;
     }
 
     void Start()
@@ -179,8 +180,8 @@ public class FloorInformation : MonoBehaviour
         if (!CheckUpgrade()) return;
 
         // Change sprite based on current level (uses selected style)
-        if (level == 1) sR.sprite = currentStyle.baseLv2;
-        else sR.sprite = currentStyle.baseLv3;
+        if (level == 1) imageComponenet.sprite = currentStyle.baseLv2;
+        else imageComponenet.sprite = currentStyle.baseLv3;
 
         // Increase gold per second based on level
         if (level == 1) goldGeneratorScript.GoldPerSecond += 40;
@@ -197,7 +198,7 @@ public class FloorInformation : MonoBehaviour
         isArcherTower = true;
 
         // Archer towers use shared sprites regardless of initial base style
-        sR.sprite = (level == 1) ? archerLv1Sprite : archerLv2Sprite;
+        imageComponenet.sprite = (level == 1) ? archerLv1Sprite : archerLv2Sprite;
 
         level++;
         //goldGeneratorScript.GoldPerSecond += 10; archers won't make any more money now
@@ -224,7 +225,7 @@ public class FloorInformation : MonoBehaviour
         isTemple = true;
         level++;
 
-        sR.sprite = templeSprite;
+        imageComponenet.sprite = templeSprite;
 
         // Temple affects Herecy mechanics
         GameManager.DecreaseHerecy(30); //for balancing i reduced it to 30 from 50
@@ -276,7 +277,8 @@ public class FloorInformation : MonoBehaviour
                 child.gameObject.name != "Canvas" &&
                 child.gameObject.name != "TowerPanel (1)" &&
                 child.gameObject.name != "TowerPanel" &&
-                child.gameObject.name != "UpgradeCost")
+                child.gameObject.name != "UpgradeCost" &&
+                child.gameObject.name != "TowerImage")
             {
                 child.gameObject.SetActive(false);
             }
@@ -314,6 +316,7 @@ public class FloorInformation : MonoBehaviour
 
         if (level < 3 || (level == 3 && isTemple))
         {
+            upgradePanel.SetActive(true);
             StartPanelLerp(panelTargetPos);
         }
 
@@ -375,12 +378,11 @@ public class FloorInformation : MonoBehaviour
         }
 
         //Hide visuals
-        sR.enabled = false;
+        imageComponenet.enabled = false;
 
         if (goldGeneratorScript != null)
             goldGeneratorScript.enabled = false;
 
-        upgradePanel.SetActive(false);
         towerHighlight.SetActive(false);
          
 

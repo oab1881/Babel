@@ -41,8 +41,8 @@ public class ShowArcherRadius : MonoBehaviour
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
 
         // Set the color of the line to semi-transparent green
-        lineRenderer.startColor = new Color(0f, 1f, 0f, 0.5f);
-        lineRenderer.endColor = new Color(0f, 1f, 0f, 0.5f);
+        lineRenderer.startColor = new Color(0f, 1f, 0f, 1f);
+        lineRenderer.endColor = new Color(0f, 1f, 0f, 1f);
 
         // Hide the circle initially
         lineRenderer.enabled = false;
