@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,6 +27,11 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI restartText;
+
+    //An event for when the game is reset
+    //Subscribers: FloorManager(UnSubscribe())
+    //Invoked in RestartGame()
+    public static event Action Reset;
 
     private bool isGameOver = false;
 
@@ -192,7 +198,7 @@ public class GameManager : MonoBehaviour
         }
 
         //Set You Lose text in a foreign language
-        string chosenMessage = defeatMessages[Random.Range(0, defeatMessages.Length)];
+        string chosenMessage = defeatMessages[UnityEngine.Random.Range(0, defeatMessages.Length)];
 
         // Set the message
         if (restartText != null)
@@ -221,7 +227,12 @@ public class GameManager : MonoBehaviour
         health = 3;
         FloorManager.floor = 0;
         FloorManager.floorObjects.Clear();
+        Reset?.Invoke();
+
+        
         Clicker.multiplyer = 1; // If you have a multiplier, reset it too
+        //HerecyManager.Instance.StopAllCoroutines();
+
         //Need to reset size of multiplyer particles here ****
 
         //Destroy current towers manually
@@ -239,13 +250,7 @@ public class GameManager : MonoBehaviour
 
         //Stop all gameplay-related coroutines and systems
         StopAllCoroutines(); // Stop any running here
-        if (HerecyManager.Instance != null)
-        {
-            HerecyManager.Instance.StopAllCoroutines();
-            Destroy(HerecyManager.Instance.gameObject); // Kill it entirely
-        }
-
-
+        
 
         // Reload scene after small delay
         StartCoroutine(ReloadSceneWithDelay(0.3f));

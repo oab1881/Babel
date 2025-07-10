@@ -21,6 +21,8 @@ public class CameraMovement : MonoBehaviour
     // For swipe detection
     private Vector2 touchStartPos;                                // Where the finger first touched
     private bool isSwiping = false;                               // Whether we’re actively tracking a swipe
+    private float touchScrollVelocity = 0f;                       // Continuous scroll velocity from touch drag
+
 
     void Start()
     {
@@ -35,15 +37,18 @@ public class CameraMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.W)) move += Vector2.up;
         if (Input.GetKey(KeyCode.S)) move += Vector2.down;
 
-        // Scroll momentum from scroll wheel or swipe (acts as an extra up/down force)
-        move += Vector2.up * scrollVelocity;
+        // Add momentum from both scroll wheel and touch
+        float combinedScroll = scrollVelocity + touchScrollVelocity;
+        move += Vector2.up * combinedScroll;
 
-        // Apply movement to Rigidbody (frame-rate independent with Time.deltaTime)
+        // Apply movement to Rigidbody
         rb.velocity = move * currentSpeed * Time.fixedDeltaTime;
 
-        // Gradually reduce scroll momentum toward 0 over time
+        // Decay both momentum sources
         scrollVelocity = Mathf.Lerp(scrollVelocity, 0, Time.fixedDeltaTime * scrollDecay);
+        touchScrollVelocity = Mathf.Lerp(touchScrollVelocity, 0, Time.fixedDeltaTime * scrollDecay);
     }
+
 
     void Update()
     {
@@ -62,41 +67,36 @@ public class CameraMovement : MonoBehaviour
 
     private void HandleTouchInput()
     {
-        // No active touch — skip
-        if (Input.touchCount == 0) return;
+        if (Input.touchCount == 0)
+        {
+            isSwiping = false;
+            return;
+        }
 
-        Touch touch = Input.GetTouch(0); // Only handle first finger (1-touch system)
+        Touch touch = Input.GetTouch(0);
 
         switch (touch.phase)
         {
             case TouchPhase.Began:
-                touchStartPos = touch.position;  // Record where the touch started
+                touchStartPos = touch.position;
                 isSwiping = true;
                 break;
 
             case TouchPhase.Moved:
                 if (!isSwiping) break;
 
-                Vector2 delta = touch.position - touchStartPos;
-
-                // Only count if vertical movement is dominant and large enough
-                if (Mathf.Abs(delta.y) > Mathf.Abs(delta.x) && Mathf.Abs(delta.y) > Screen.height * swipeSensitivity)
-                {
-                    float direction = -Mathf.Sign(delta.y); // 1 = up swipe, -1 = down swipe
-
-                    // Add to scroll velocity (positive = up, negative = down)
-                    scrollVelocity += direction * (scrollAdjuster / 4); //Divided the scrollAdjuster to stop it from launching to the top of the tower
-
-                    isSwiping = false; // Prevents multiple swipes from one gesture
-                }
+                // Continuous scroll based on finger drag delta
+                float verticalDelta = touch.deltaPosition.y / Screen.height;
+                touchScrollVelocity += verticalDelta * scrollAdjuster;
                 break;
 
             case TouchPhase.Ended:
             case TouchPhase.Canceled:
-                isSwiping = false; // Reset swipe state
+                isSwiping = false;
                 break;
         }
     }
+
 
     private void UpdateSpeed()
     {

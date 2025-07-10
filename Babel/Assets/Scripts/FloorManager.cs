@@ -28,6 +28,8 @@ public class FloorManager : MonoBehaviour
             Instance = this;
         }
         //=================
+
+        GameManager.Reset += UnSubscribe;
     }
 
     // Start is called before the first frame update
@@ -75,4 +77,10 @@ public class FloorManager : MonoBehaviour
         }
     }
     */
+
+    void UnSubscribe()
+    {
+        Clicker.NewFloor -= NewFloor;
+        GameManager.Reset -= UnSubscribe;
+    }
 }

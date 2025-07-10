@@ -52,13 +52,16 @@ public class HerecyManager : MonoBehaviour
 
     private void Start()
     {
+        StopAllCoroutines();
         //Starts both the loops for spawning angles and increasing herecy
         StartCoroutine(HerecyAMin());
         StartCoroutine(SpawnAngles());
+
     }
 
     private void Update()
     {
+        
         //end game if heresy hits 100
         if (GameManager.herecy >= 100)
         {

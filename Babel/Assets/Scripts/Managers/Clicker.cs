@@ -30,6 +30,7 @@ public class Clicker : MonoBehaviour
     [SerializeField]
     GameObject topBorder; //For dynamically moving the top border
 
+    //Subscribers: FloorManager(NewFloor)
     public static event Action NewFloor; //Listener for when a new floor is created
 
     public static float multiplyer = 1;
