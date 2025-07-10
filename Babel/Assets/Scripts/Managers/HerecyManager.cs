@@ -27,6 +27,13 @@ public class HerecyManager : MonoBehaviour
     [SerializeField]
     GameObject rightSpawn;
 
+    [SerializeField]
+    GameObject heresyBar;
+
+    private Coroutine blinkCoroutine;
+    private bool isBlinking = false;
+
+
     public static HerecyManager Instance;
 
     //A static varialbe increased in GameManager AddFloor function
@@ -86,7 +93,39 @@ public class HerecyManager : MonoBehaviour
         {
             spawnAngles = false;
         }
+
+        // Heresy bar blinking logic
+        if (GameManager.herecy > 85)
+        {
+            if (!isBlinking)
+            {
+                blinkCoroutine = StartCoroutine(BlinkHeresyBar());
+                isBlinking = true;
+            }
+        }
+        else
+        {
+            if (isBlinking)
+            {
+                StopCoroutine(blinkCoroutine);
+                heresyBar.SetActive(true); //Ensure it's visible when done
+                isBlinking = false;
+            }
+        }
+
+
     }
+
+    //Method to make the heresy bar blink when you almost max out
+    private IEnumerator BlinkHeresyBar()
+    {
+        while (true)
+        {
+            heresyBar.SetActive(!heresyBar.activeSelf);
+            yield return new WaitForSeconds(0.1f); //Adjust blink speed here 
+        }
+    }
+
 
     private IEnumerator SpawnAngles()
     {
@@ -127,11 +166,11 @@ public class HerecyManager : MonoBehaviour
         GameManager.herecy += (uint)herecyAMin;
         
         //Uses custom blinking text to make herecy fade in and display the increase
-        if(blinkingText != null)blinkingText.ShowBlink("+"+GameManager.FormatNumbers(herecyAMin));
+        if(blinkingText != null) blinkingText.ShowBlink("+"+GameManager.FormatNumbers(herecyAMin));
 
         //Waits 60 seconds before doing it again
         yield return new WaitForSeconds(60f);
 
-        StartCoroutine(HerecyAMin());
+        StartCoroutine(HerecyAMin()); //this might be causing a bug
     }
 }

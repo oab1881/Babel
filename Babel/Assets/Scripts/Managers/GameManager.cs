@@ -224,18 +224,28 @@ public class GameManager : MonoBehaviour
         Clicker.multiplyer = 1; // If you have a multiplier, reset it too
         //Need to reset size of multiplyer particles here ****
 
-        // Destroy current towers manually
+        //Destroy current towers manually
         FloorInformation[] floors = FindObjectsOfType<FloorInformation>();
         foreach (var floor in floors)
         {
             Destroy(floor.gameObject);
         }
 
-        // Reset any other persistent game objects or singletons
+        //Reset any other persistent game objects or singletons
+        AudioManager.StopSound(0);
+        AudioManager.PlayMusic("MesopotamianLullaby", 0);
         isGameOver = false;
 
-        // If you have player prefs or saved state, clear those too
-        // PlayerPrefs.DeleteAll(); // Optional
+
+        //Stop all gameplay-related coroutines and systems
+        StopAllCoroutines(); // Stop any running here
+        if (HerecyManager.Instance != null)
+        {
+            HerecyManager.Instance.StopAllCoroutines();
+            Destroy(HerecyManager.Instance.gameObject); // Kill it entirely
+        }
+
+
 
         // Reload scene after small delay
         StartCoroutine(ReloadSceneWithDelay(0.3f));
