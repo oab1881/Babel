@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de209d64db5b4e845a09f04220f2af8c, type: 3}
   m_Name: Style2
   m_EditorClassIdentifier: 
-  baseLv1: {fileID: 21300000, guid: 02e007fdf68b4794eafc905fd7357f4b, type: 3}
-  baseLv2: {fileID: 21300000, guid: ad34d407d91258f47ad722818a235789, type: 3}
-  baseLv3: {fileID: 21300000, guid: da5935a7eea065941828f6da9b592f4e, type: 3}
+  baseLv1: {fileID: 21300000, guid: 4dc239f3ea1cefd4cab7b0514de5f046, type: 3}
+  baseLv2: {fileID: 21300000, guid: b432a2c22afdb994c839480ec883f771, type: 3}
+  baseLv3: {fileID: 21300000, guid: b049ed077facdd3489afc259ea39fba5, type: 3}

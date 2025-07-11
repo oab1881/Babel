@@ -209,8 +209,11 @@ public class FloorInformation : MonoBehaviour
 
         SetDetectionRadius();
 
+
         if (isArcherTower)
         {
+            leftArcherRadiusScript.GenerateCircle();
+            rightArcherRadiusScript.GenerateCircle();
             leftArcherRadiusScript.ShowRadius();
             rightArcherRadiusScript.ShowRadius();
         }

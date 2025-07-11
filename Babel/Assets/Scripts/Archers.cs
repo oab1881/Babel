@@ -5,6 +5,14 @@ using System.Collections.Generic;
 
 public class Archers : MonoBehaviour
 {
+    /*This can be overhauled instead of detecting side each Archer position covers a certain point.
+    Use a bool which says which side it covers
+    Doesn't need a reference to both parents
+
+    Bugs possible line 153
+    */
+
+
     //Get particle system references for arrows
     [SerializeField]
     private GameObject leftArrowsParent; //assigned in inspector
@@ -146,6 +154,8 @@ public class Archers : MonoBehaviour
 
             if (!hasAngels)
             {
+                //I think this code could be messing things up where archers stop shooting
+
                 //Goes through all the children of the parent shooters and deletes their children
                 List<GameObject> Lchildren = GameManager.GetAllChildren(leftArrowsParent);
                 for (int i = 0; i < Lchildren.Count; i++)

@@ -46,9 +46,6 @@ public class ShowArcherRadius : MonoBehaviour
 
         // Hide the circle initially
         lineRenderer.enabled = false;
-
-        // Generate the initial circle points
-        GenerateCircle();
     }
 
     // Generates a circular shape based on the detection radius and number of segments
