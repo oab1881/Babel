@@ -145,6 +145,7 @@ private void Update()
         target = null;
         GameManager.DecreaseHealth(1); //Temporary fixed damage value
         //Add sound effect
+        AudioManager.PlaySoundEffect("explode 3", 12);
         //Add explosion effect
         CameraShake.Shake();
         Destroy(gameObject);

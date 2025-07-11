@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public static uint herecy = 0;
     public static int health = 3;
 
+    public int finalScore;
+
     [SerializeField]
     private TextMeshProUGUI goldDisplay;
 
@@ -162,12 +164,17 @@ public class GameManager : MonoBehaviour
         if (isGameOver) return;
         isGameOver = true;
 
+        // Before destroying anything:
+        FloorInformation[] allFloors = FindObjectsOfType<FloorInformation>();
+        finalScore = allFloors.Length; // or use loop to get highest floorNum
+
         Debug.Log("GAME OVER - Tower destroyed");
 
         HerecyManager.Instance.gameObject.SetActive(false); //Temp adding this in so game doesn't crash when game ends
 
+
         //Freeze all gold generation
-        FloorInformation[] allFloors = FindObjectsOfType<FloorInformation>();
+        //FloorInformation[] allFloors = FindObjectsOfType<FloorInformation>();
         foreach (var floor in allFloors)
         {
             var goldGen = floor.GetComponent<GoldGenerator>();

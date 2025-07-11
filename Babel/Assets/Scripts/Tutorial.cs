@@ -81,7 +81,7 @@ public class Tutorial : MonoBehaviour
         AudioManager.PlayMusic("MesopotamianLullaby", 0);
     }
 
-    private IEnumerator TypeLine(TextMeshProUGUI targetText, string line)
+    public IEnumerator TypeLine(TextMeshProUGUI targetText, string line)
     {
         targetText.text = "";
         skipRequested = false;

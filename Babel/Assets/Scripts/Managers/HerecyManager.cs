@@ -75,6 +75,7 @@ public class HerecyManager : MonoBehaviour
                 if (lightning != null)
                 {
                     lightning.gameObject.SetActive(true);
+                    AudioManager.PlaySoundEffect("lightning", 14);
                 }
                 else
                 {

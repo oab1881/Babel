@@ -371,6 +371,7 @@ public class FloorInformation : MonoBehaviour
     //Method to destroy each floor
     public void ExplodeFloor()
     {
+        AudioManager.PlaySoundEffect("explode 3", 12);
         if (TowerExplosion != null)
         {
             TowerExplosion.SetActive(true);

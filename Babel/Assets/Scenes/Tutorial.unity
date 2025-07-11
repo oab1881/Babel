@@ -522,7 +522,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8df7a4a0db4923849a4e4ace2dcafa94, type: 3}
   - {fileID: 8300000, guid: a54c2f4fc5c67f14ab27d212b9cdf582, type: 3}
   - {fileID: 8300000, guid: b4f72bd310489bf4aba1bade6bf5df30, type: 3}
-  audioSourceCount: 14
+  - {fileID: 8300000, guid: 40f673827c4b5ba42a85bf667364892b, type: 3}
+  audioSourceCount: 15
   audioSources: []
 --- !u!4 &1112564015
 Transform:
@@ -770,10 +771,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 177212c812185f342ba9938ac1b5f556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  finalScore: 0
   goldDisplay: {fileID: 0}
   engineerDisplay: {fileID: 0}
   restartButton: {fileID: 0}
   restartText: {fileID: 0}
+  defeatMessages:
+  - You Lose
+  - Perdiste
+  - Tu as perdu
+  - Du hast verloren
+  - Hai perso
+  - Voce perdeu
+  - Tu has perdut
+  - Zure galera
+  - Jij verliest
+  - Sen kaybettin
+  - Pierdeti
+  - Tu caiste
+  - Izgubio si
+  - Ti si izgubio
+  - Du tapte
+  - Porazka
 --- !u!4 &1593185465
 Transform:
   m_ObjectHideFlags: 0
