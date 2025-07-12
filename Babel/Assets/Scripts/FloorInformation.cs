@@ -231,7 +231,7 @@ public class FloorInformation : MonoBehaviour
         imageComponenet.sprite = templeSprite;
 
         // Temple affects Herecy mechanics
-        GameManager.DecreaseHerecy(30); //for balancing i reduced it to 30 from 50
+        GameManager.DecreaseHerecy(20); //for balancing i reduced it to 20 (should be lower while sacrificng will do more like 30 or 40)
         HerecyManager.herecyAMin += 3;
         goldGeneratorScript.GoldPerSecond = 0;
 

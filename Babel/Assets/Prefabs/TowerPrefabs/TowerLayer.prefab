@@ -277,8 +277,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dd4a6f002a73646458f13eaec8918b9f, type: 2}
   archerLv1Sprite: {fileID: 21300000, guid: bbe5a1b4b6efa4544ad73459d8ae9551, type: 3}
   archerLv2Sprite: {fileID: 21300000, guid: a475c031f5d59c1409c951ae66657913, type: 3}
-  templeSprite: {fileID: 21300000, guid: 981ffba1efd556b45aff58907cbb445b, type: 3}
-  cathedralSprite: {fileID: 0}
+  templeSprite: {fileID: 21300000, guid: 41ff62ed2a3fd4b47af291b7d8994efa, type: 3}
+  cathedralSprite: {fileID: 21300000, guid: 981ffba1efd556b45aff58907cbb445b, type: 3}
 --- !u!114 &4811842510868427891
 MonoBehaviour:
   m_ObjectHideFlags: 0
