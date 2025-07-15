@@ -10136,7 +10136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b686189608fa194bab699536b42471a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnTime: 25
+  spawnTime: 5
   AngelsIncomingText: {fileID: 1450652378}
   blinkingText: {fileID: 96120987}
   AnglePrefab: {fileID: 2650652582369335042, guid: 28bc190babfb1c449a900ad7b1b3d4f7, type: 3}

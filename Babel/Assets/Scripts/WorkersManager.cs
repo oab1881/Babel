@@ -143,8 +143,7 @@ public class WorkersManager : MonoBehaviour
     {
         if(GameManager.money >= workerCost)
         {
-            GameManager.money -= workerCost;
-            GameManager.Instance.UpdateGoldUI();
+            GameManager.AddGold(-workerCost);
             workerCost += priceIncreaseWorkers;
 
             priceIncreaseWorkers += 5;
@@ -166,16 +165,14 @@ public class WorkersManager : MonoBehaviour
         }
     }
 
+    //Attached to the engineer button's onClick event
     public void BuyEngineer()
     {
         if (GameManager.money >= engineerCost)
         {
-            GameManager.money -= engineerCost;
-            GameManager.Instance.UpdateGoldUI();
+            GameManager.AddGold(-engineerCost); ;
             engineerCost += priceIncreaseEngineers;
-
             Clicker.IncreaseMultiplyer();
-            //GameManager.Instance.UpdateMultUI();    //format the multiplier to fix UI issues
             UpdateEngineerBreakdown();  //update UI
             engineerCount++;
             EngineerCount = engineerCount;  //used in Clicker

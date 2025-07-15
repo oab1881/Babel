@@ -28,7 +28,7 @@ public class GoldGenerator : MonoBehaviour
     {
         while (true)
         {
-            GameManager.Instance.AddGold(goldPerSecond);
+            GameManager.AddGold(goldPerSecond);
 
             //Debug.Log("Gold generated. Current gold: " + GameManager.Instance.money);
 

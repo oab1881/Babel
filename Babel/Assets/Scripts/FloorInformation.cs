@@ -244,8 +244,7 @@ public class FloorInformation : MonoBehaviour
     private void ApplyUpgradeCost(int baseIncrease)
     {
         AudioManager.PlaySoundEffect("Upgrade", 5);
-        GameManager.money -= upgradeCost;
-        GameManager.Instance.UpdateGoldUI();
+        GameManager.AddGold(-upgradeCost);
         IncreaseCost(baseIncrease);
         HideButtons();
         ShowButtons();
@@ -258,7 +257,7 @@ public class FloorInformation : MonoBehaviour
     //Add the new params, (ArcherInfoScript object, float newRadius)
     private void SetDetectionRadius()
     {
-        float newRadius = (leftArcherInfoScript.DetectionRadius == 0) ? 1.6f : leftArcherInfoScript.DetectionRadius * 2;
+        float newRadius = (leftArcherInfoScript.DetectionRadius == 0) ? 3f : leftArcherInfoScript.DetectionRadius * 1.3f;
 
         leftArcherInfoScript.DetectionRadius = newRadius;
         rightArcherInfoScript.DetectionRadius = newRadius;

@@ -9,9 +9,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    
-
-
     public  static uint money = 0;
     public static uint herecy = 0;
     public static int health = 3;
@@ -81,17 +78,18 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M)) money += 10000;
+        if (Input.GetKeyDown(KeyCode.M)) AddGold(10000);
         if (Input.GetKeyDown(KeyCode.R)) RestartGame();
     }
 
     
 
     //Method that increments gold and calls UpdateGoldUI
-    public void AddGold(float amount)
+    //Everywhere where gold is changed uses this function either through passing in positive or negative amount
+    public static void AddGold(float amount)
     {
         money += (uint)amount;
-        UpdateGoldUI();
+        Instance.UpdateGoldUI();
     }
 
     //Method that updates the gold count in game
@@ -102,17 +100,6 @@ public class GameManager : MonoBehaviour
             goldDisplay.text = FormatNumbers(money);
         }
     }
-
-    //Method that updates the multiplier count
-    //Does not do anything
-    public void UpdateMultUI()
-    {
-        if (engineerDisplay != null)
-        {
-            engineerDisplay.text = FormatNumbers((int)Clicker.multiplyer);
-        }
-    }
-
 
     //Formats currency using suffixes
     public static string FormatNumbers(float curr)

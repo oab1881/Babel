@@ -1,25 +1,9 @@
-using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 
-
 public class Archers : MonoBehaviour
 {
-    /*This can be overhauled instead of detecting side each Archer position covers a certain point.
-    Use a bool which says which side it covers
-    Doesn't need a reference to both parents
-
-    Bugs possible line 153
-    */
-
-
-    //Get particle system references for arrows
-    [SerializeField]
-    private GameObject leftArrowsParent; //assigned in inspector
-    [SerializeField]
-    private GameObject rightArrowsParent; //assigned in inspector
-
-    //THe particle prefab
+    // The particle prefab
     [SerializeField]
     GameObject GO_Particles;
 
@@ -30,33 +14,143 @@ public class Archers : MonoBehaviour
     public LayerMask detectionLayer;
 
     // Public property to get/set detection radius
-    //Value set in Archers.cs
+    // Value set in Archers.cs
     public float DetectionRadius
     {
         set { detectionRadius = value; }
         get { return detectionRadius; }
     }
 
-    private bool isDamaging = false;
-    private Collider2D[] hits = new Collider2D[0];
+    // Hardcoded damage value per tick for now
+    private float damageASecond = 1.7f;
 
-    private float damageASecond = 1.7f; //HardCoded for now
+    // Cooldowns between damage and visual arrow firing
+    private float attackCooldown = 1.3f;
+    private float arrowEffectCooldown = 0.9f;
 
-    private void Start()
-    {
-        leftArrowsParent.SetActive(true);   //used to debug, but it works
-        rightArrowsParent.SetActive(true);
-    }
+    // Internal timers
+    private float attackTimer = 0f;
+    private float arrowTimer = 0f;
 
     private void Update()
     {
         // Check for all colliders within detection radius that match the layer mask
-        hits = Physics2D.OverlapCircleAll(transform.position, detectionRadius, detectionLayer);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, detectionRadius, detectionLayer);
 
-        // If there are angels in range and we're not already damaging, start the coroutine
-        if (hits.Length > 0 && !isDamaging)
+        // Prepare a list of valid targets on the correct side
+        List<Collider2D> validTargets = new List<Collider2D>();
+        float archerX = transform.position.x;
+        bool isLeftSideArcher = archerX < 0f;
+
+        foreach (var hit in hits)
         {
-            StartCoroutine(DamageAngelsLoop());
+            if (hit != null && hit.CompareTag("Angel"))
+            {
+                float angelX = hit.transform.position.x;
+
+                // Only include angels on the correct side
+                if ((isLeftSideArcher && angelX < archerX) || (!isLeftSideArcher && angelX > archerX))
+                {
+                    validTargets.Add(hit);
+                }
+            }
+        }
+
+        // No valid targets — reset timers and clean up
+        if (validTargets.Count == 0)
+        {
+            attackTimer = 0f;
+            arrowTimer = 0f;
+
+            // Goes through all the children of the parent shooters and deletes their children if they're done playing
+            List<GameObject> children = GameManager.GetAllChildren(gameObject);
+            for (int i = 0; i < children.Count; i++)
+            {
+                if (!children[i].GetComponent<ParticleSystem>().isPlaying)
+                {
+                    Destroy(children[i]);
+                    i++;
+                }
+            }
+
+            return;
+        }
+
+        // Update countdown timers
+        attackTimer -= Time.deltaTime;
+        arrowTimer -= Time.deltaTime;
+
+        // Archer particle system logic — arrows fire only on the side with an angel
+        if (arrowTimer <= 0f)
+        {
+            FireArrows(validTargets);
+            arrowTimer = arrowEffectCooldown;
+        }
+
+        // Deals damage to angels at a timed interval
+        if (attackTimer <= 0f)
+        {
+            DamageAngels(validTargets);
+            attackTimer = attackCooldown;
+        }
+    }
+
+
+    private void FireArrows(List<Collider2D> hits)
+    {
+        foreach (var hit in hits)
+        {
+            if (hit != null && hit.CompareTag("Angel"))
+            {
+                // Spawn the arrow in world space at the archer's position
+                GameObject particle = Instantiate(GO_Particles, transform.position, Quaternion.identity);
+
+                // Get 3D direction from archer to angel
+                Vector3 targetPosition = hit.transform.position;
+                Vector3 direction = (targetPosition - transform.position).normalized;
+
+                // Map 2D to 3D — use X and Y from 2D, but Z instead of Y for vertical aiming
+                Vector3 lookDirection = new Vector3(direction.x, direction.y, 0f);
+
+                if (lookDirection != Vector3.zero)
+                {
+                    // Rotate the particle to face the angel in 3D space (handles both yaw and pitch)
+                    particle.transform.rotation = Quaternion.LookRotation(lookDirection, Vector3.back);
+                    // Use Vector3.back as "up" to make Z-forward arrows pitch up/down
+                }
+
+                // Play arrow visual + sound
+                particle.GetComponent<ParticleSystem>().Play();
+                AudioManager.PlaySoundEffect("arrows", 13);
+            }
+        }
+    }
+
+
+
+
+    private void DamageAngels(List<Collider2D> hits)
+    {
+        foreach (var hit in hits)
+        {
+            if (hit != null && hit.CompareTag("Angel"))
+            {
+                Debug.Log("Damaging angel: " + hit.name);
+
+                var angelMovement = hit.GetComponent<AngleMovement>();
+                if (angelMovement != null)
+                {
+                    // Damage angel
+                    angelMovement.DecreaseAngleHealth(damageASecond);
+
+                    // Trigger the angel's animator
+                    var animator = hit.GetComponent<Animator>();
+                    if (animator != null)
+                    {
+                        animator.SetTrigger("AngelHit");
+                    }
+                }
+            }
         }
     }
 
@@ -66,120 +160,4 @@ public class Archers : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
-
-    // Continuously damage Angels in range once per second
-    private IEnumerator DamageAngelsLoop()
-    {
-        isDamaging = true;
-
-        while (true)
-        {
-
-            //Archer particle System Logic - set up so that arrows fire only on the side with an angel
-            foreach (var hit in hits)
-            {
-                //Determines if that their are angels in the list
-                //Checks to make sure they are actually angels based on tag
-                //Then checks which side they are for firing either right or left
-
-                //For right
-                if (hit != null && hit.CompareTag("Angel") && hit.transform.position.x > transform.position.x)
-                {
-                    GameObject particle = Instantiate(GO_Particles, rightArrowsParent.transform);
-                    
-
-                    //Add rotations for aiming here **************
-                    particle.GetComponent<ParticleSystem>().Play();
-
-                    //Play arrow sound effect
-                    AudioManager.PlaySoundEffect("arrows", 13);
-                }
-
-                //For Left
-                if (hit != null && hit.CompareTag("Angel") && hit.transform.position.x < transform.position.x)
-                {
-                    GameObject particle = Instantiate(GO_Particles, leftArrowsParent.transform);
-                    
-
-                    //Rotates to the left side
-                    //CAN ADD AIMING HERE
-                    particle.transform.Rotate(new Vector3(0, 180, 0));
-                    particle.GetComponent<ParticleSystem>().Play();
-
-       
-                    //Play arrow sound effect
-                    AudioManager.PlaySoundEffect("arrows", 13);
-
-                }
-            }
-
-            yield return new WaitForSeconds(.2f);
-
-
-            // Refresh hit list every loop
-            hits = Physics2D.OverlapCircleAll(transform.position, detectionRadius, detectionLayer);
-
-            bool hasAngels = false;
-
-            foreach (var hit in hits)
-            {
-                if (hit != null && hit.CompareTag("Angel"))
-                {
-                    hasAngels = true;
-                    Debug.Log("Damaging angel: " + hit.name);
-
-
-                    if (hit != null)
-                    {
-
-                        // Damage angel
-                        var angelMovement = hit.GetComponent<AngleMovement>();
-                        if (angelMovement != null)
-                        {
-                            angelMovement.DecreaseAngleHealth(damageASecond);
-
-                            // Trigger the angel's animator
-                            var animator = hit.GetComponent<Animator>();
-                            if (animator != null)
-                            {
-                                animator.SetTrigger("AngelHit");
-                            }
-
-                            hit.GetComponent<AngleMovement>().DecreaseAngleHealth(damageASecond);
-                        }
-                    }
-
-                }
-            }
-
-            if (!hasAngels)
-            {
-                //I think this code could be messing things up where archers stop shooting
-
-                //Goes through all the children of the parent shooters and deletes their children
-                List<GameObject> Lchildren = GameManager.GetAllChildren(leftArrowsParent);
-                for (int i = 0; i < Lchildren.Count; i++)
-                {
-                    Destroy(Lchildren[i]);
-                    i++;
-                }
-
-                List<GameObject> Rchildren = GameManager.GetAllChildren(rightArrowsParent);
-                for (int i = 0; i < Rchildren.Count; i++)
-                {
-                    Destroy(Rchildren[i]);
-                    i++;
-                }
-
-
-                //Stops damaging and breaks the while loop
-                isDamaging = false;
-                yield break;
-            }
-
-            //Time between attacks
-            yield return new WaitForSeconds(1.3f);
-        }
-    }
-
 }

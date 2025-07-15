@@ -29,7 +29,7 @@ public class FloorManager : MonoBehaviour
         }
         //=================
 
-        GameManager.Reset += UnSubscribe;
+        GameManager.Reset += Restart;
     }
 
     // Start is called before the first frame update
@@ -38,11 +38,7 @@ public class FloorManager : MonoBehaviour
         Clicker.NewFloor += NewFloor;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 
     //Attached to the clicker event that recieves the signal a new floor was built
     public void NewFloor()
@@ -61,6 +57,9 @@ public class FloorManager : MonoBehaviour
     }
 
 
+
+
+
     // Checks if the player has enough money to upgrade
     //From floor information will have to find a way to figure out floor number then get it's values from the list
     /*
@@ -77,6 +76,12 @@ public class FloorManager : MonoBehaviour
         }
     }
     */
+
+
+    private void Restart()
+    {
+        UnSubscribe();
+    }
 
     void UnSubscribe()
     {
