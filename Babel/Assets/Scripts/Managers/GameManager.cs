@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+        Utilities.Initialize(this);
     }
 
     private void Start()

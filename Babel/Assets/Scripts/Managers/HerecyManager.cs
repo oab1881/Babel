@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HerecyManager : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class HerecyManager : MonoBehaviour
     //Reference to the script that says angles incoming
     [SerializeField]
     TMPFloatingTextBlink AngelsIncomingText;
+
+    [SerializeField]
+    Image AngelsIncomingBox;
 
     [SerializeField]
     TMPFloatingTextBlink blinkingText;
@@ -137,6 +141,7 @@ public class HerecyManager : MonoBehaviour
         {
             //Play Angel Theme
             AngleMovement.PlayMusicOnSpawn();
+            Utilities.Flash(AngelsIncomingBox, 2.5f);
             AngelsIncomingText.ShowBlink("A herald approaches!");
 
             //Uses spawn number to loop and at the bottom figures out if it should wait a few extra seconds
