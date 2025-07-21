@@ -6,7 +6,7 @@ public class SkipTutorialHover : MonoBehaviour, IPointerEnterHandler, IPointerEx
 {
     [SerializeField] private TextMeshProUGUI buttonText;
 
-    private string defaultText = "Skip Tutorial";
+    private string defaultText = "Skip Intro";
     private string hoverText = "Disgrace his Majesty";
 
     public void OnPointerEnter(PointerEventData eventData)
