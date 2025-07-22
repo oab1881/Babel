@@ -9,6 +9,11 @@ public class Tutorial : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private TextMeshProUGUI basharBox; //text from bashar
     [SerializeField] private TextMeshProUGUI beliorBox; //text from belior
+    [SerializeField] private TextMeshProUGUI basharBox2; //text from bashar
+    [SerializeField] private TextMeshProUGUI beliorBox2; //text from belior
+    [SerializeField] private GameObject basharBox2Parent;   
+    [SerializeField] private GameObject beliorBox2Parent;
+    [SerializeField] private GameObject singleBoxParent; //Parent of speakerBox
     [SerializeField] private GameObject textBackdrop;
     [SerializeField] private GameObject creditsBackdrop;
     [SerializeField] private TextMeshProUGUI credits;
@@ -22,17 +27,6 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private float lineDelay = 0.5f;    // Delay after each line
 
     private bool skipRequested = false;
-
-    // Your lines
-    //private string[] lines = {
-    //    "Greetings underling, I am Lord Bashar.",
-    //    "You must be my new overseer.",
-    //    "Our goal here is to build a tower to reach the heavens.",
-    //    "You must hire workers to build for you,",
-    //    "and engineers to increase our efficiency.",
-    //    "You must click to build, and use W/S to scroll",
-    //    "Now get out there and begin building my tower, my kingdom,... my"
-    //};
 
     private string[] creditsLine =
     {
@@ -114,21 +108,35 @@ public class Tutorial : MonoBehaviour
         // Both active
         if (Bashar != null) Bashar.SetActive(true);
 
-        yield return Speak(Speaker.Bashar, "We build to reach the heavens…");
+        //SPLIT TEXTBOX LOGIC WILL GO HERE
+        //yield return Speak(Speaker.Bashar, "We build to reach the heavens…");
+        //yield return new WaitForSeconds(lineDelay * 1.2f);
+        //
+        //yield return Speak(Speaker.Bashar, "—to conquer the sky, to seize God’s crown!");
+        //yield return new WaitForSeconds(lineDelay);
+        //
+        //yield return Speak(Speaker.Belior, "—to ascend in spirit, to bask in His eternal light!");
+        //yield return new WaitForSeconds(lineDelay);
+        //
+        //yield return Speak(Speaker.Bashar, "To rule creation with mortal hands.");
+        //yield return new WaitForSeconds(lineDelay);
+        //
+        //yield return Speak(Speaker.Belior, "To kneel before it in divine awe.");
+        //yield return new WaitForSeconds(lineDelay);
+
+        // SPLIT TEXTBOX LOGIC
+        yield return SpeakTogether("We build to reach the heavens…", "We build to reach the heavens…");
         yield return new WaitForSeconds(lineDelay * 1.2f);
 
-        yield return Speak(Speaker.Bashar, "—to conquer the sky, to seize God’s crown!");
+        yield return SpeakTogether("—to conquer the sky, to seize God’s crown!", "—to ascend in spirit, to bask in His eternal light!");
         yield return new WaitForSeconds(lineDelay);
 
-        yield return Speak(Speaker.Belior, "—to ascend in spirit, to bask in His eternal light!");
+        yield return SpeakTogether("To rule creation with mortal hands.", "To kneel before it in divine awe.");
         yield return new WaitForSeconds(lineDelay);
 
-        yield return Speak(Speaker.Bashar, "To rule creation with mortal hands.");
-        yield return new WaitForSeconds(lineDelay);
 
-        yield return Speak(Speaker.Belior, "To kneel before it in divine awe.");
-        yield return new WaitForSeconds(lineDelay);
-
+        //Split dialogue logic ends here
+        ReturnToSingleBox();
         yield return Speak(Speaker.Bashar, "Then let us build, old man.");
         yield return new WaitForSeconds(lineDelay);
 
@@ -205,6 +213,32 @@ public class Tutorial : MonoBehaviour
 
         yield return TypeLine(activeBox, line);
     }
+
+    private IEnumerator SpeakTogether(string basharLine, string beliorLine)
+    {
+        // Switch to split mode
+        if (singleBoxParent != null) singleBoxParent.SetActive(false);
+        if (basharBox2Parent != null) basharBox2Parent.SetActive(true);
+        if (beliorBox2Parent != null) beliorBox2Parent.SetActive(true);
+
+        basharBox2.text = "";
+        beliorBox2.text = "";
+
+        Coroutine basharTyping = StartCoroutine(TypeLine(basharBox2, basharLine));
+        Coroutine beliorTyping = StartCoroutine(TypeLine(beliorBox2, beliorLine));
+
+        yield return basharTyping;
+        yield return beliorTyping;
+    }
+
+    private void ReturnToSingleBox()
+    {
+        if (basharBox2Parent != null) basharBox2Parent.SetActive(false);
+        if (beliorBox2Parent != null) beliorBox2Parent.SetActive(false);
+        if (singleBoxParent != null) singleBoxParent.SetActive(true);
+    }
+
+
 
     private void ScreenShake()
     {

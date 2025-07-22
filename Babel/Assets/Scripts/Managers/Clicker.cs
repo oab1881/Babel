@@ -119,7 +119,7 @@ public class Clicker : MonoBehaviour
         //Move and trigger hammer animation
         if (hammerAnimator != null)
         {
-            hammerAnimObject.transform.position = nextBuildPosition;    //Move hammer to the build position
+            hammerAnimObject.transform.position = nextBuildPosition + new Vector3(0, .3f,0);    //Move hammer to the build position (with tiny offset)
             hammerAnimator.SetBool("isHammering", true);
         }
 
