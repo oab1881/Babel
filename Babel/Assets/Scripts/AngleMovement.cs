@@ -55,7 +55,18 @@ public class AngleMovement : MonoBehaviour
     {
         target = newTarget;
         targetInd = targetIndex;
-        targetY = target.position.y;
+        float baseTargetY = target.position.y;
+
+        // Higher tiers lock in earlier (higher up)
+        if (GameManager.herecy >= 90)
+            targetY = baseTargetY + 1.5f;
+        else if (GameManager.herecy >= 80)
+            targetY = baseTargetY + 1.0f;
+        else if (GameManager.herecy >= 70)
+            targetY = baseTargetY + 0.5f;
+        else
+            targetY = baseTargetY;
+
         movingRight = spawnOnRight;
 
         //Set X target to the side of the tower
@@ -73,20 +84,20 @@ public class AngleMovement : MonoBehaviour
         //Makes the angle bigger and gives more health
         if (GameManager.herecy >= 90)
         {
-            health = 8.5f;
+            health = 9.5f;
             transform.localScale = new Vector3(0.4f, 0.4f, 0);
             Debug.Log("Angle tier 3");
         }
         else if (GameManager.herecy >= 80)
         {
-            health = 7f;
+            health = 8f;
             transform.localScale = new Vector3(0.3f, 0.3f, 0);
             Debug.Log("Angle tier 2");
         }
 
         else if (GameManager.herecy >= 70)
         {
-            health = 5f;
+            health = 6f;
             transform.localScale = new Vector3(0.25f, 0.25f, 0);
             Debug.Log("Angle tier 1");
         }

@@ -257,7 +257,7 @@ public class FloorInformation : MonoBehaviour
     //Add the new params, (ArcherInfoScript object, float newRadius)
     private void SetDetectionRadius()
     {
-        float newRadius = (leftArcherInfoScript.DetectionRadius == 0) ? 3f : leftArcherInfoScript.DetectionRadius * 1.3f;
+        float newRadius = (leftArcherInfoScript.DetectionRadius == 0) ? 2f : leftArcherInfoScript.DetectionRadius * 1.2f;
 
         leftArcherInfoScript.DetectionRadius = newRadius;
         rightArcherInfoScript.DetectionRadius = newRadius;
