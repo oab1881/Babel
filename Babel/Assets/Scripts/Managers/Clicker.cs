@@ -69,7 +69,7 @@ public class Clicker : MonoBehaviour
     {
         //Starting click requirement is 5 for now
         currentClickRequirement = startingClickRequirement;
-        nextBuildPosition = towerBase.position;
+        nextBuildPosition = towerBase.position - new Vector3(0,0.5f,0); //tiny offset to improve look of tower start point
 
         //Get hammer animator object
         if (hammerAnimObject != null)
