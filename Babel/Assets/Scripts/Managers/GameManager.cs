@@ -224,11 +224,17 @@ public class GameManager : MonoBehaviour
         FloorManager.floorObjects.Clear();
         Reset?.Invoke();
 
-        
         Clicker.multiplyer = 1; // If you have a multiplier, reset it too
         //HerecyManager.Instance.StopAllCoroutines();
 
         //Need to reset size of multiplyer particles here ****
+        Clicker clicker = FindObjectOfType<Clicker>();
+        if (clicker != null)
+        {
+            Clicker.Instance.particlesEnabled = false;
+            clicker.ResetParticles(); //Reset hammer particles  (STILL BROKEN)
+        }
+
 
         //Destroy current towers manually
         FloorInformation[] floors = FindObjectsOfType<FloorInformation>();

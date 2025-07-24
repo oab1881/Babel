@@ -20,7 +20,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private GameObject Bashar;
     [SerializeField] private GameObject Belior;
     [SerializeField] private GameObject BABEL;
-    private enum Speaker { Bashar, Belior } //Enums for who is currently speaking
+    public enum Speaker { Bashar, Belior } //Enums for who is currently speaking
 
     [Header("Typing Settings")]
     [SerializeField] private float typingDelay = 0.05f; // Delay between characters
@@ -167,7 +167,7 @@ public class Tutorial : MonoBehaviour
         AudioManager.PlayMusic("MesopotamianLullaby", 0);
     }
 
-    private IEnumerator TypeLine(TextMeshProUGUI targetText, string line)
+    public IEnumerator TypeLine(TextMeshProUGUI targetText, string line)
     {
         targetText.text = "";
         skipRequested = false;
@@ -188,7 +188,7 @@ public class Tutorial : MonoBehaviour
     }
 
     //Toggles text boxes depending on who is speaking
-    private IEnumerator Speak(Speaker who, string line)
+    public IEnumerator Speak(Speaker who, string line)
     {
         TextMeshProUGUI activeBox;
         GameObject activeGO;
@@ -214,7 +214,7 @@ public class Tutorial : MonoBehaviour
         yield return TypeLine(activeBox, line);
     }
 
-    private IEnumerator SpeakTogether(string basharLine, string beliorLine)
+    public IEnumerator SpeakTogether(string basharLine, string beliorLine)
     {
         // Switch to split mode
         if (singleBoxParent != null) singleBoxParent.SetActive(false);
@@ -231,7 +231,7 @@ public class Tutorial : MonoBehaviour
         yield return beliorTyping;
     }
 
-    private void ReturnToSingleBox()
+    public void ReturnToSingleBox()
     {
         if (basharBox2Parent != null) basharBox2Parent.SetActive(false);
         if (beliorBox2Parent != null) beliorBox2Parent.SetActive(false);

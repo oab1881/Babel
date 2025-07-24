@@ -26,6 +26,7 @@ public class Clicker : MonoBehaviour
     private float currentClickRequirement;
     public static float currentClickProgress = 0f;
     private Vector3 nextBuildPosition;
+    public bool particlesEnabled = true;
 
     [SerializeField]
     GameObject topBorder; //For dynamically moving the top border
@@ -73,6 +74,10 @@ public class Clicker : MonoBehaviour
         //Get hammer animator object
         if (hammerAnimObject != null)
             hammerAnimator = hammerAnimObject.GetComponent<Animator>();
+
+        //Turn clickParticles back on after reset
+        Clicker.Instance.particlesEnabled = true;
+
     }
 
     private void Update()
@@ -124,26 +129,21 @@ public class Clicker : MonoBehaviour
         }
 
         // Move the particles to match hammer and play
-        if (clickParticles != null)
+        // Only handle particles if enabled
+        if (particlesEnabled && clickParticles != null)
         {
             clickParticles.transform.position = hammerAnimObject.transform.position;
 
-            //Dynamically adjust particle emission based on engineer count
+            // Configure and play particles
             var emission = clickParticles.emission;
-            emission.rateOverTime = WorkersManager.EngineerCount * 2; // or tweak values
+            emission.rateOverTime = WorkersManager.EngineerCount * 2;
 
-            // Adjust and clamp particle size
             float engineerBasedSize = 0.1f + WorkersManager.EngineerCount * 0.01f;
-            float maxParticleSize = 0.2f;
-            
-
-
-            float finalSize = Mathf.Clamp(engineerBasedSize, 0f, maxParticleSize);
+            float finalSize = Mathf.Clamp(engineerBasedSize, 0f, 0.2f);
 
             var main = clickParticles.main;
             main.startSize = finalSize;
 
-            // Adjust trail width if trails enabled
             var trails = clickParticles.trails;
             if (trails.enabled)
             {
@@ -152,6 +152,7 @@ public class Clicker : MonoBehaviour
 
             clickParticles.Play();
         }
+
 
         CheckFloorStatus();
     }
@@ -212,4 +213,31 @@ public class Clicker : MonoBehaviour
             hammerAnimObject.transform.position = nextBuildPosition;
         }
     }
+
+    //Method to reset particles ***********STILL NOT WORKING*************
+    public void ResetParticles()
+    {
+        if (clickParticles == null) return;
+
+        clickParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        clickParticles.Clear(true);
+
+        //Trying literally everything but nothing is resetting the size or emission
+        var emission = clickParticles.emission;
+        emission.enabled = false;
+        emission.rateOverTime = 1f;
+        emission.rateOverTimeMultiplier = 1f;
+        emission.rateOverDistanceMultiplier = 1f;
+        emission.rateOverDistance = 1f;
+
+        var main = clickParticles.main;
+        main.startSize = 0.08f;
+        main.startSpeed = 3f; // Optional sanity reset
+        main.simulationSpeed = 1f;
+
+        var trails = clickParticles.trails;
+        trails.enabled = true;
+        trails.widthOverTrail = 0.36f;
+    }
+
 }
