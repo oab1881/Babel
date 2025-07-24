@@ -162,7 +162,7 @@ public class Tutorial : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         //Load Gameplay scene
-        SceneManager.LoadScene("Gameplay");
+        SceneManager.LoadScene("Tutorial");
         AudioManager.StopSound(0);
         AudioManager.PlayMusic("MesopotamianLullaby", 0);
     }
@@ -252,6 +252,6 @@ public class Tutorial : MonoBehaviour
     {
         AudioManager.StopSound(0);
         AudioManager.PlayMusic("MesopotamianLullaby", 0);
-        SceneManager.LoadScene("Gameplay");
+        SceneManager.LoadScene("Tutorial");
     }
 }
