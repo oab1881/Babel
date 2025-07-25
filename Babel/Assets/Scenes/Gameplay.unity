@@ -7257,7 +7257,7 @@ MonoBehaviour:
   - Tu as perdu
   - Du hast verloren
   - Hai perso
-  - "Voc\xEA perdeu"
+  - Voce perdeu
   - Tu has perdut
   - Zure galera
   - Jij verliest
@@ -7267,7 +7267,6 @@ MonoBehaviour:
   - Izgubio si
   - Ti si izgubio
   - Du tapte
-  - "Voc\xEA esta derrotado"
   - Te ves vencido
   - Tu ai pierdut
   - "Tu as echou\xE9"
@@ -10089,6 +10088,8 @@ MonoBehaviour:
   leftSpawn: {fileID: 1608145669}
   rightSpawn: {fileID: 653103200}
   heresyBar: {fileID: 2104076766}
+  CanSpawnAngels: 1
+  CanHeresyAMin: 1
   spawnTime: 25
   spawnDiff: 2
   maxHeresy: 10
