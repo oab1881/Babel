@@ -41,17 +41,19 @@ public class HerecyManager : MonoBehaviour
 
 
     [Header("Configs")]
-    public static bool CanSpawnAngels = true;
-    public static bool CanHeresyAMin = true;
+    [SerializeField]
+    private bool CanSpawnAngels = true;
+    [SerializeField]
+    private bool CanHeresyAMin = true;
     bool spawnAngles = false;
     private bool isBlinking = false;
 
 
-    [Header("SpawnInfo")]
+    
     //A static varialbe increased in GameManager AddFloor function
     //It is increased there so that it happens only once and doesn't cause the bug of multiple spawning when testing floor count
     public static int spawnNumber = 1;
-
+    [Header("SpawnInfo")]
     [SerializeField]
     float spawnTime = 30f; //Time in between angle spawns
 

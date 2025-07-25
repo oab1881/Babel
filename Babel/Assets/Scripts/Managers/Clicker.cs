@@ -36,8 +36,6 @@ public class Clicker : MonoBehaviour
 
     public static float multiplyer = 1;
 
-    List<GameObject> floorsList = new List<GameObject>(); //List containing all built floors in the heirarchy
-
     public static Clicker Instance { get; private set; }
 
     void Awake()

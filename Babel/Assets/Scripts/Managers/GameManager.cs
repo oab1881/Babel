@@ -221,6 +221,8 @@ public class GameManager : MonoBehaviour
         herecy = 0;
         health = 3;
         FloorManager.floor = 0;
+        WorkersManager.EngineerCount = 0;
+
         FloorManager.floorObjects.Clear();
         Reset?.Invoke();
         HerecyManager.HeresyAMin = 3;

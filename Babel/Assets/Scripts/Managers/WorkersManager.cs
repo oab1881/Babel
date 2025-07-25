@@ -27,7 +27,7 @@ public class WorkersManager : MonoBehaviour
     [SerializeField]
     TMP_Text engineerBreakdown;
 
-    public static uint EngineerCount { get; private set; }  //used to access for the particle system in Clicker
+    public static uint EngineerCount { get;  set; }  //used to access for the particle system in Clicker
 
     [SerializeField]
     uint priceIncreaseEngineers = 100;

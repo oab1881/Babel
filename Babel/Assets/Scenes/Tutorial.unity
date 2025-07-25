@@ -11106,6 +11106,7 @@ MonoBehaviour:
   heresyBar: {fileID: 2104076766}
   spawnTime: 25
   spawnDiff: 2
+  maxHeresy: 10
 --- !u!1 &1812639164
 GameObject:
   m_ObjectHideFlags: 0
