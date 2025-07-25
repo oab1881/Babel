@@ -223,6 +223,7 @@ public class GameManager : MonoBehaviour
         FloorManager.floor = 0;
         FloorManager.floorObjects.Clear();
         Reset?.Invoke();
+        HerecyManager.HeresyAMin = 3;
 
         Clicker.multiplyer = 1; // If you have a multiplier, reset it too
         //HerecyManager.Instance.StopAllCoroutines();

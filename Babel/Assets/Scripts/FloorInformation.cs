@@ -232,7 +232,7 @@ public class FloorInformation : MonoBehaviour
 
         // Temple affects Herecy mechanics
         GameManager.DecreaseHerecy(20); //for balancing i reduced it to 20 (should be lower while sacrificng will do more like 30 or 40)
-        HerecyManager.herecyAMin += 3;
+        HerecyManager.HeresyAMin += 3;
         goldGeneratorScript.GoldPerSecond = 0;
 
         ApplyUpgradeCost(950);

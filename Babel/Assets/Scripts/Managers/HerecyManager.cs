@@ -10,7 +10,8 @@ public class HerecyManager : MonoBehaviour
 
     
 
-    public static int herecyAMin = 3;
+    private int herecyAMin = 3;
+
 
     //Reference to the script that says angles incoming
     [SerializeField]
@@ -36,6 +37,7 @@ public class HerecyManager : MonoBehaviour
 
     private Coroutine blinkCoroutine;
     
+    
 
 
     [Header("Configs")]
@@ -58,6 +60,24 @@ public class HerecyManager : MonoBehaviour
     private float spawnDiff = 2f;
 
 
+    [Header("Heresy")]
+    [SerializeField]
+    private int maxHeresy;
+
+
+    /// <summary>
+    /// Getter and setter for heresy
+    /// Doesn't let it go over the max heresy value set in heresy manager
+    /// </summary>
+    public static int HeresyAMin
+    {
+        get { return Instance.herecyAMin; }
+        set 
+        {
+            Instance.herecyAMin = value;
+            if (Instance.herecyAMin > Instance.maxHeresy) Instance.herecyAMin = Instance.maxHeresy;
+        }
+    }
     private void Awake()
     {
         Instance= this;
@@ -181,11 +201,12 @@ public class HerecyManager : MonoBehaviour
     //Generates herecy every minute
     private IEnumerator HerecyAMin()
     {
+        //Waits 60 seconds before doing it
+        yield return new WaitForSeconds(60f);
+
+
 
         if (CanHeresyAMin) IncreaseHeresy(herecyAMin);
-
-        //Waits 60 seconds before doing it again
-        yield return new WaitForSeconds(60f);
 
         StartCoroutine(HerecyAMin()); //this might be causing a bug
     }
