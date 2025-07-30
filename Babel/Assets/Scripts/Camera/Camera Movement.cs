@@ -36,6 +36,8 @@ public class CameraMovement : MonoBehaviour
         // PC Keyboard movement
         if (Input.GetKey(KeyCode.W)) move += Vector2.up;
         if (Input.GetKey(KeyCode.S)) move += Vector2.down;
+        if (Input.GetKey(KeyCode.UpArrow)) move += Vector2.up;
+        if (Input.GetKey(KeyCode.DownArrow)) move += Vector2.down;
 
         // Add momentum from both scroll wheel and touch
         float combinedScroll = scrollVelocity + touchScrollVelocity;

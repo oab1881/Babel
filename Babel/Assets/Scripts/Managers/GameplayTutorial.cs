@@ -8,6 +8,7 @@ public class GameplayTutorial : MonoBehaviour
     private bool hasShownStartDialogue = false;
     private bool hasShownThreeFloorsDialogue = false;
     private bool hasShownFiveFloorsDialogue = false;
+    private bool hasShownMaxHeresyDialogue = false;
 
     [Header("UI References")]
     [SerializeField] private TextMeshProUGUI basharBox;
@@ -55,6 +56,12 @@ public class GameplayTutorial : MonoBehaviour
         if (!isDialoguePlaying && dialogueQueue.Count > 0)
         {
             StartCoroutine(RunDialogueQueue());
+        }
+
+        if (GameManager.herecy > 85 && !hasShownMaxHeresyDialogue)
+        {
+            hasShownMaxHeresyDialogue = true;
+            EnqueueDialogue(MaxHeresyDialogue());
         }
     }
 
@@ -108,9 +115,20 @@ public class GameplayTutorial : MonoBehaviour
     {
         bashar.SetActive(true);
         belior.SetActive(false);
-        yield return Speak(Speaker.Bashar, "Hire archers to combat any entities that are sent to halt my ascent.");
+        yield return Speak(Speaker.Bashar, "Upgrade towers to produce more gold");
+        yield return Speak(Speaker.Bashar, "And hire archers to combat any entities that are sent to halt my ascent.");        
         yield return Speak(Speaker.Bashar, "Now get on with it, I expect progress, not excuses.");
         bashar.SetActive(false);
+    }
+    private IEnumerator MaxHeresyDialogue()
+    {
+        bashar.SetActive(false);
+        belior.SetActive(true);
+        yield return Speak(Speaker.Belior, "ABOMINATION");
+        yield return Speak(Speaker.Belior, "Your heresy has grown out of hand!");
+        yield return Speak(Speaker.Belior, "The Lord will smite us for our transgressions");
+        yield return Speak(Speaker.Belior, "You must build a temple to lower your heresy NOW!");
+        belior.SetActive(false);
     }
 
     private IEnumerator Speak(Speaker who, string line)
