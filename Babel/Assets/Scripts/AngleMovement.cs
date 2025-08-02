@@ -160,6 +160,7 @@ private void Update()
         //Add explosion effect
         CameraShake.Shake();
         Destroy(gameObject);
+        ResumeMusic();
     }
 
     //Detect collision with tower and deal damage

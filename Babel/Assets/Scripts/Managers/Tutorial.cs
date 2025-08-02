@@ -71,7 +71,8 @@ public class Tutorial : MonoBehaviour
         // Belior enters
         //if (Bashar != null) Bashar.SetActive(false);
         if (Belior != null) Belior.SetActive(true);
-        ScreenShake();
+        //shake screen
+        CameraShake.Shake();
 
         yield return Speak(Speaker.Belior, "HERESY!!!");
         yield return new WaitForSeconds(0.6f);
@@ -100,7 +101,8 @@ public class Tutorial : MonoBehaviour
         // Belior reacts
         //if (Bashar != null) Bashar.SetActive(false);
         //if (Belior != null) Belior.SetActive(true);
-        ScreenShake();
+        //shake screen
+        CameraShake.Shake();
 
         yield return Speak(Speaker.Belior, "BLASPHEMY!!!");
         yield return new WaitForSeconds(lineDelay * 2);
@@ -151,7 +153,8 @@ public class Tutorial : MonoBehaviour
         if (Bashar != null) Bashar.SetActive(false);
         if (Belior != null) Belior.SetActive(false);
 
-        ScreenShake();
+        //shake screen
+        CameraShake.Shake();
 
         if (BABEL != null) BABEL.SetActive(true);
 
@@ -236,16 +239,6 @@ public class Tutorial : MonoBehaviour
         if (basharBox2Parent != null) basharBox2Parent.SetActive(false);
         if (beliorBox2Parent != null) beliorBox2Parent.SetActive(false);
         if (singleBoxParent != null) singleBoxParent.SetActive(true);
-    }
-
-
-
-    private void ScreenShake()
-    {
-        // Basic camera jolt — replace with your custom logic or Cinemachine impulse
-        Camera mainCam = Camera.main;
-        if (mainCam != null)
-            mainCam.transform.position += Random.insideUnitSphere * 0.15f;
     }
 
     public void SkipTutorial()

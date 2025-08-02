@@ -124,6 +124,7 @@ public class GameplayTutorial : MonoBehaviour
     {
         bashar.SetActive(false);
         belior.SetActive(true);
+        CameraShake.Shake();
         yield return Speak(Speaker.Belior, "ABOMINATION");
         yield return Speak(Speaker.Belior, "Your heresy has grown out of hand!");
         yield return Speak(Speaker.Belior, "The Lord will smite us for our transgressions");
