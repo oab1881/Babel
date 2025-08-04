@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51fc131ee16ab5043a1947eb1b8c6f8d, type: 3}
+  m_Name: Temple
+  m_EditorClassIdentifier: 
+  upgradeName: Temple
+  upgradeTier: 0
+  currectType: 2
+  nextUpgradecost: 0
+  floorStyle:
+  - {fileID: 11400000, guid: 0b12d4283fc594641b5b95af0a5e8791, type: 2}
+  goldPerSecond: 0
+  herecyChange: 20
+  herecyPerSecond: 3
+  populationChange: 0
+  dps: 0
+  attackRange: 0
+  buttons: {fileID: 11400000, guid: 3671b8fa8fb15504bbfd69a5dc434f6f, type: 2}
+  nextUpgrades: []

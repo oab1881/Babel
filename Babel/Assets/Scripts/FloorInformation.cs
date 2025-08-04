@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class FloorInformation : MonoBehaviour
 {
-    // Reference to  current level of this floor
-    uint level = 1;
     uint upgradeCost = 100;
     
 
@@ -16,28 +14,9 @@ public class FloorInformation : MonoBehaviour
     UpgradeType currentUpgrade;
 
 
-    //Will be deleted once currentUpgrade is fully implemented
-    bool isArcherTower = false;
-    bool isTemple = false;
-
     //Get reference to TowerExplode prefab which triggers when the tower is destroyed.
     [SerializeField]
     GameObject TowerExplosion;
-
-
-    
-    //*************** Need owen to check these 
-    //List<AngleMovement> currentAttackingAngles = new List<AngleMovement>();
-
-    public bool IsArcherTower => isArcherTower;
-
-    /* *************** Other check
-    public List<AngleMovement> CurrentAttackingAngles
-    {
-        get { return currentAttackingAngles; }
-        set { currentAttackingAngles = value; }
-    }
-    */
 
     // Set in create floor, used for progression and cost scaling
     public int floorNum;
@@ -46,10 +25,9 @@ public class FloorInformation : MonoBehaviour
     [SerializeField] TMP_Text upgradeText;
 
     // References to the upgrade buttons
-    //This will also be moved to upradeType Variable and will be instantiated instead
-    [SerializeField] GameObject baseUpgrade;
-    [SerializeField] GameObject archerUpgrade;
-    [SerializeField] GameObject templeUpgrade;
+    [SerializeField] GameObject buttonPrefab;
+    List<GameObject> buttons;
+
 
     // Highlight outline for when mouse hovers
     [SerializeField] GameObject towerHighlight;
@@ -76,15 +54,12 @@ public class FloorInformation : MonoBehaviour
     Archers leftArcherInfoScript;
     Archers rightArcherInfoScript;
 
-    // Style definitions used for base upgrade levels (each FloorStyle has 3 sprites)
-    [SerializeField] FloorStyle[] availableStyles; // Drag 5 ScriptableObjects here in Inspector
-    private FloorStyle currentStyle; // Randomly chosen style assigned when floor is created
 
-    // Shared sprites for all archer/tower/temple upgrades (same across styles)
-    [SerializeField] Sprite archerLv1Sprite;
-    [SerializeField] Sprite archerLv2Sprite;
-    [SerializeField] Sprite templeSprite;
-    [SerializeField] Sprite cathedralSprite;
+    // Style definitions used for base upgrade levels (each FloorStyle has 3 sprites)
+    private FloorStyle currentStyle; // Randomly chosen style assigned when floor is created
+    private int styleIndex = 0;
+
+
 
     // Called from GameManager when a new floor is created
     public void CreateFloor(uint health, int floorNum)
@@ -92,12 +67,17 @@ public class FloorInformation : MonoBehaviour
         this.floorNum = floorNum;
 
         // Randomly pick a visual style from the list and assign the base level 1 sprite
-        currentStyle = availableStyles[Random.Range(0, availableStyles.Length)];
-        imageComponenet.sprite = currentStyle.baseLv1;
+        currentStyle = currentUpgrade.floorStyle[Random.Range(0, currentUpgrade.floorStyle.Count)];
+        imageComponenet.sprite = currentStyle.styles[styleIndex];
+        styleIndex++;
+
+
+        goldGeneratorScript.GoldPerSecond = 20;
     }
 
     void Start()
     {
+        buttons = new List<GameObject>();
         panelStartPos = upgradePanel.transform.localPosition;
         panelTargetPos = panelStartPos + Vector3.left * moveDistance;
 
@@ -110,28 +90,37 @@ public class FloorInformation : MonoBehaviour
         rightArcherRadiusScript = rightArcher.GetComponent<ShowArcherRadius>();
         leftArcherInfoScript = leftArcher.GetComponent<Archers>();
         rightArcherInfoScript = rightArcher.GetComponent<Archers>();
+
+        //Creates buttons on creation
+        CreateButtons();
+    }
+
+    private void Update()
+    {
+        //Basic update state machine for specific functionality of each floor
+        if (currentUpgrade.currectType == floorType.baseFloor)
+        {
+            
+        }
+        else if (currentUpgrade.currectType == floorType.archer)
+        {
+            leftArcherInfoScript.CanAttack = true;
+            rightArcherInfoScript.CanAttack = true;
+        }
+        else if (currentUpgrade.currectType == floorType.temple)
+        {
+
+        }
     }
 
     private void OnMouseEnter()
     {
         ShowButtons();
-
-        if (isArcherTower)
-        {
-            leftArcherRadiusScript.ShowRadius();
-            rightArcherRadiusScript.ShowRadius();
-        }
     }
 
     private void OnMouseExit()
     {
         HideButtons();
-
-        if (isArcherTower)
-        {
-            leftArcherRadiusScript.HideRadius();
-            rightArcherRadiusScript.HideRadius();
-        }
     }
 
     // Moves the upgrade panel UI to target position smoothly
@@ -173,92 +162,85 @@ public class FloorInformation : MonoBehaviour
     }
 
 
-    //All upgrades will be pointless in new version
-    // Called by base upgrade button
-    public void baseUpgreade()
+    public void Upgrade(GameObject buttonReference)
     {
+        //Checks if we can upgrade indicates if not and returns so below doesn't run
         if (!CheckUpgrade()) return;
 
-        // Change sprite based on current level (uses selected style)
-        if (level == 1) imageComponenet.sprite = currentStyle.baseLv2;
-        else imageComponenet.sprite = currentStyle.baseLv3;
-
-        // Increase gold per second based on level
-        if (level == 1) goldGeneratorScript.GoldPerSecond += 40;
-        if (level == 2) goldGeneratorScript.GoldPerSecond += 100;
-
-        level++;
-        ApplyUpgradeCost(700); // Apply cost increase and refresh UI
-    }
-
-    public void ArcherUpgrade()
-    {
-        if (!CheckUpgrade()) return;
-
-        isArcherTower = true;
-
-        // Archer towers use shared sprites regardless of initial base style
-        imageComponenet.sprite = (level == 1) ? archerLv1Sprite : archerLv2Sprite;
-
-        level++;
-        //goldGeneratorScript.GoldPerSecond += 10; archers won't make any more money now
-
-        // Show archer visuals
-        leftArcher.SetActive(true);
-        rightArcher.SetActive(true);
-
-        SetDetectionRadius();
-
-
-        if (isArcherTower)
-        {
-            leftArcherRadiusScript.GenerateCircle();
-            rightArcherRadiusScript.GenerateCircle();
-            leftArcherRadiusScript.ShowRadius();
-            rightArcherRadiusScript.ShowRadius();
-        }
-
-        ApplyUpgradeCost(2500);
-    }
-
-    public void TempleUpgrade()
-    {
-        if (!CheckUpgrade()) return;
-
-        isTemple = true;
-        level++;
-
-        imageComponenet.sprite = templeSprite;
-
-        // Temple affects Herecy mechanics
-        GameManager.DecreaseHerecy(20); //for balancing i reduced it to 20 (should be lower while sacrificng will do more like 30 or 40)
-        HerecyManager.HeresyAMin += 3;
-        goldGeneratorScript.GoldPerSecond = 0;
-
-        ApplyUpgradeCost(950);
-    }
-
-
-    //This will be pointless in new system
-    // Plays audio, updates UI, and recalculates cost for next upgrade
-    private void ApplyUpgradeCost(int baseIncrease)
-    {
+        //Plays the upgrade sound, changes the gold value and 
         AudioManager.PlaySoundEffect("Upgrade", 5);
         GameManager.AddGold(-upgradeCost);
-        IncreaseCost(baseIncrease);
+        
+        //Used to figure out what button was clicked
+        int index = 0;
+        //Deletes all current buttons
+        for(int i = 0;  i < buttons.Count; i++)
+        {
+            if (buttonReference == buttons[i]) index = i; //Checks to see if it was the clicked button
+            Destroy(buttons[i]);
+        }
+        buttons.Clear();
+
+ 
+        //Sets the current upgrade to the next one based on index and list of upgrades
+        currentUpgrade = currentUpgrade.nextUpgrades[index];
+       
+        //Increases the cost of upgrade TO the value that is passed in
+        IncreaseCost(currentUpgrade.nextUpgradecost);
+
+        //Change the sprite
+        //Checks if the there are any floor styles
+        if(currentUpgrade.floorStyle.Count != 0)
+        {
+            //Copyies above where it will select a random floor style of the options it is given
+            currentStyle = currentUpgrade.floorStyle[Random.Range(0, currentUpgrade.floorStyle.Count)];
+            //Style index 0 is the first one
+            styleIndex = 0;
+
+            //Sets the sprite to this new image
+            imageComponenet.sprite = currentStyle.styles[styleIndex];
+            //Increases the styleindex for next time
+            styleIndex++;
+        }
+        else
+        {
+            //Sets the sprite using the style index that was increased in the last upgrade run
+            imageComponenet.sprite = currentStyle.styles[styleIndex];
+            //Increases styleindex for next time
+            styleIndex++;
+        }
+
+        //Hide buttons -> Create the new buttons dynamically -> Show Buttons
         HideButtons();
+        CreateButtons();
         ShowButtons();
+
+        //Update stats
+        goldGeneratorScript.GoldPerSecond = currentUpgrade.goldPerSecond;
+        GameManager.DecreaseHerecy(currentUpgrade.herecyChange);
+        HerecyManager.HeresyAMin += currentUpgrade.herecyPerSecond;
+        //Insert population stuff here
+
+        //Set up attacking details
+        SetDetectionRadius(currentUpgrade.attackRange);
+        rightArcherInfoScript.DamageASecond = currentUpgrade.dps;
+        leftArcherInfoScript.DamageASecond = currentUpgrade.dps;
+
     }
 
-
+    // Increases upgrade cost and updates the display text
+    private void IncreaseCost(int amount)
+    {
+        upgradeCost = (uint)(amount + (30 * floorNum));
+        upgradeText.text = GameManager.FormatNumbers(upgradeCost);
+    }
 
     // Increases detection radius for both archers
     //Should change this to universal for other attack objects in the future
     //Add the new params, (ArcherInfoScript object, float newRadius)
-    private void SetDetectionRadius()
-    {
-        float newRadius = (leftArcherInfoScript.DetectionRadius == 0) ? 2f : leftArcherInfoScript.DetectionRadius * 1.2f;
-
+    private void SetDetectionRadius(float newRadius) 
+    { 
+    
         leftArcherInfoScript.DetectionRadius = newRadius;
         rightArcherInfoScript.DetectionRadius = newRadius;
         leftArcherRadiusScript.DetectionRadius = newRadius;
@@ -268,80 +250,78 @@ public class FloorInformation : MonoBehaviour
         leftArcherRadiusScript.GenerateCircle();
     }
 
+    // Shows relevant upgrade buttons based on current level
+    private void ShowButtons()
+    {
+        //If there are more upgrades show the price panel
+        if (currentUpgrade.nextUpgrades.Count != 0) StartPanelLerp(panelTargetPos);
+
+        //Highlight the tower
+        towerHighlight.SetActive(true);
+
+        //For every button show it
+        foreach (GameObject btn in buttons)
+        {
+            btn.SetActive(true);
+        }
+
+        //Display the radius
+        leftArcherRadiusScript.ShowRadius();
+        rightArcherRadiusScript.ShowRadius();
+    }
+
+
     // Hides upgrade buttons and resets display
     private void HideButtons()
     {
         StartPanelLerp(panelStartPos);
 
-        foreach (Transform child in transform)
-        {
-            if (child.gameObject.activeInHierarchy &&
-                child.gameObject.name != "Canvas" &&
-                child.gameObject.name != "TowerPanel (1)" &&
-                child.gameObject.name != "TowerPanel" &&
-                child.gameObject.name != "UpgradeCost" &&
-                child.gameObject.name != "TowerImage")
-            {
-                child.gameObject.SetActive(false);
-            }
-        }
-
-        if (IsArcherTower)
-        {
-            leftArcher.SetActive(true);
-            rightArcher.SetActive(true);
-        }
-
+        //Highlight the tower
         towerHighlight.SetActive(false);
+
+        foreach (GameObject btn in buttons)
+        {
+            btn.SetActive(false);
+        }
+
+        leftArcherRadiusScript.HideRadius();
+        rightArcherRadiusScript.HideRadius();
     }
 
-    // Shows relevant upgrade buttons based on current level
-    private void ShowButtons()
+    /// <summary>
+    /// Helper function for creating buttons dynamically for each upgrade
+    /// </summary>
+    void CreateButtons()
     {
-        if (level == 1)
+        //For every upgrade the current upgrade can upgrade to
+        for (int i = 0; i < currentUpgrade.nextUpgrades.Count; i++)
         {
-            baseUpgrade.SetActive(true);
-            archerUpgrade.SetActive(true);
-        }
+            //Creates a button and makes it parent the the image of the tower gameobject
+            //Do this because the it dynamically positions the buttons
+            buttons.Add(Instantiate(buttonPrefab, imageComponenet.gameObject.transform));
 
-        if (level == 2 && !isArcherTower)
-        {
-            baseUpgrade.SetActive(true);
-            templeUpgrade.SetActive(true);
-        }
+            //Gets the hoverStyle from the current upgrade
+            //Base State
+            //Hover state
+            HoverButtons buttonStyle = buttons[i].GetComponent<HoverButtons>();
 
-        if (level == 2 && isArcherTower)
-        {
-            archerUpgrade.transform.position = new Vector3(0, archerUpgrade.transform.position.y, 0);
-            archerUpgrade.SetActive(true);
-        }
+            //Sets the buttons button styles to the button Script that each button prefab has 
+            buttonStyle.normalSprite = currentUpgrade.nextUpgrades[i].buttons.Default;
+            buttonStyle.hoverSprite = currentUpgrade.nextUpgrades[i].buttons.Click;
 
-        if (level < 3 || (level == 3 && isTemple))
-        {
-            upgradePanel.SetActive(true);
-            StartPanelLerp(panelTargetPos);
-        }
+            //Sets the starting button image to the base
+            buttonStyle.targetImage.sprite = buttonStyle.normalSprite;
 
-        towerHighlight.SetActive(true);
-
-        foreach (Transform child in transform)
-        {
-            if (child.gameObject.name == "Canvas" ||
-                child.gameObject.name == "UpgradeCost" ||
-                child.gameObject.name == "TowerPanel (1)" ||
-                child.gameObject.name == "TowerPanel")
-            {
-                child.gameObject.SetActive(true);
-            }
+            //We then create an arrow function so we can pass a value to the called function which is the current index
+            //Index represents the link between the button and the upgrade it is attached to
+            //Need this index = i for the lambda function using just i causes an error
+            int index = i;
+            buttons[i].GetComponent<Button>().onClick.AddListener(() => { Upgrade(buttons[index]); });
         }
     }
 
-    // Increases upgrade cost and updates the display text
-    private void IncreaseCost(int amount)
-    {
-        upgradeCost += (uint)(amount + (30 * floorNum));
-        upgradeText.text = GameManager.FormatNumbers(upgradeCost);
-    }
+
+
 
     //Method to explode the whole tower upon game Over
     public static void ExplodeEntireTower()
@@ -395,6 +375,4 @@ public class FloorInformation : MonoBehaviour
         //Actually destroy the entire floor GameObject after delay
         Destroy(gameObject, 1f); //Adjust delay as needed for explosion effect to finish
     }
-
-
 }

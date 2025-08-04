@@ -4,12 +4,11 @@ using UnityEngine.UI;
 
 //This script replaces Unity's buggy sprite swap feature (fixed a bug with the hovering shutting off after pressing a button)
 
-public class HoverButtons : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
+public class HoverButtons : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler
 {
     public Image targetImage;
     public Sprite normalSprite;
     public Sprite hoverSprite;
-    public Sprite pressedSprite;
 
     private bool isHovering = false;
 
@@ -23,11 +22,6 @@ public class HoverButtons : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         isHovering = false;
         targetImage.sprite = normalSprite;
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        targetImage.sprite = pressedSprite;
     }
 
     public void OnPointerUp(PointerEventData eventData)

@@ -13,12 +13,17 @@ MonoBehaviour:
   m_Name: BaseLv2
   m_EditorClassIdentifier: 
   upgradeName: BaseType1Lv2
-  upgradeSprite: {fileID: 21300000, guid: ce0a4765917de21429c8d3c295bdf22d, type: 3}
   upgradeTier: 2
-  nextUpgradecost: 0
-  goldPerSecondBonus: 60
-  herecyPerSecond: 0
   currectType: 0
-  allStylesList: []
+  nextUpgradecost: 700
+  floorStyle: []
+  goldPerSecond: 60
+  herecyChange: 0
+  herecyPerSecond: 0
+  populationChange: 0
+  dps: 0
+  attackRange: 0
+  buttons: {fileID: 11400000, guid: 6a26abc81a3aa9d43b4b642924a15fc6, type: 2}
   nextUpgrades:
   - {fileID: 11400000, guid: ffa2e643226df4246bab14be4c0252bf, type: 2}
+  - {fileID: 11400000, guid: a67f21b294fbc1e4d92b52561fdddb96, type: 2}

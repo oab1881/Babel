@@ -15,7 +15,7 @@ public class HealthPopulating : MonoBehaviour
     void Update()
     {
         //Every fram we get all the children 
-        children = GameManager.GetAllChildren(gameObject);
+        children = Utilities.GetAllChildren(gameObject);
 
         //We test if the health is greater then the children count
         //We then need to populate more hearts

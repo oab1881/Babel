@@ -32,6 +32,12 @@ public class Archers : MonoBehaviour
     private float attackTimer = 0f;
     private float arrowTimer = 0f;
 
+    private bool canAttack = false;
+
+    public bool CanAttack { set { canAttack = value; } get { return canAttack; } }
+
+    public float DamageASecond { set { damageASecond = value; } }
+
     private void Update()
     {
         // Check for all colliders within detection radius that match the layer mask
@@ -41,17 +47,20 @@ public class Archers : MonoBehaviour
         List<Collider2D> validTargets = new List<Collider2D>();
         float archerX = transform.position.x;
         bool isLeftSideArcher = archerX < 0f;
-
+        
         foreach (var hit in hits)
         {
-            if (hit != null && hit.CompareTag("Angel"))
+            if (canAttack)
             {
-                float angelX = hit.transform.position.x;
-
-                // Only include angels on the correct side
-                if ((isLeftSideArcher && angelX < archerX) || (!isLeftSideArcher && angelX > archerX))
+                if (hit != null && hit.CompareTag("Angel"))
                 {
-                    validTargets.Add(hit);
+                    float angelX = hit.transform.position.x;
+
+                    // Only include angels on the correct side
+                    if ((isLeftSideArcher && angelX < archerX) || (!isLeftSideArcher && angelX > archerX))
+                    {
+                        validTargets.Add(hit);
+                    }
                 }
             }
         }
@@ -63,7 +72,7 @@ public class Archers : MonoBehaviour
             arrowTimer = 0f;
 
             // Goes through all the children of the parent shooters and deletes their children if they're done playing
-            List<GameObject> children = GameManager.GetAllChildren(gameObject);
+            List<GameObject> children = Utilities.GetAllChildren(gameObject);
             for (int i = 0; i < children.Count; i++)
             {
                 if (!children[i].GetComponent<ParticleSystem>().isPlaying)

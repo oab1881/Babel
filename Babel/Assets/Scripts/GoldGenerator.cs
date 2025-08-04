@@ -6,7 +6,7 @@ using UnityEngine;
 //THis script is attached to each floor prefab to track gold generation
 public class GoldGenerator : MonoBehaviour
 {
-    public float goldPerSecond = 10f;
+    private float goldPerSecond;
     public GameObject coinPopupPrefab;
     GameObject uiCanvas;
 
@@ -26,29 +26,32 @@ public class GoldGenerator : MonoBehaviour
     //Each tower piece will generate 10 gold per 5 seconds
     private IEnumerator GenerateGold()
     {
-        while (true)
-        {
-            GameManager.AddGold(goldPerSecond);
-
-            //Debug.Log("Gold generated. Current gold: " + GameManager.Instance.money);
-
-            //Instantiate popup (uses coinPopup script)
-            if (coinPopupPrefab != null)
+            while (true)
             {
-                Vector3 popupPosition = transform.position + new Vector3(2.5f, 0.0f, 0);
+            if (goldPerSecond != 0)
+            {
+                GameManager.AddGold(goldPerSecond);
 
-                //We instantiate the coin and set parent to the uiCanvas
-                GameObject popup = Instantiate(coinPopupPrefab, popupPosition, Quaternion.identity, uiCanvas.transform);
-                popup.transform.localScale = Vector3.one; // Force proper scale
-                
+                //Debug.Log("Gold generated. Current gold: " + GameManager.Instance.money);
 
-                TMP_Text text = popup.GetComponentInChildren<TMP_Text>();
-                if (text != null)
+                //Instantiate popup (uses coinPopup script)
+                if (coinPopupPrefab != null)
                 {
-                    text.text = $"+{goldPerSecond}";
-                }
-            }
+                    Vector3 popupPosition = transform.position + new Vector3(2.5f, 0.0f, 0);
 
+                    //We instantiate the coin and set parent to the uiCanvas
+                    GameObject popup = Instantiate(coinPopupPrefab, popupPosition, Quaternion.identity, uiCanvas.transform);
+                    popup.transform.localScale = Vector3.one; // Force proper scale
+
+
+                    TMP_Text text = popup.GetComponentInChildren<TMP_Text>();
+                    if (text != null)
+                    {
+                        text.text = $"+{goldPerSecond}";
+                    }
+                }
+
+            }
             yield return new WaitForSeconds(5f);
         }
     }

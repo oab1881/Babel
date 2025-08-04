@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Utilities : MonoBehaviour
 {
@@ -142,5 +143,18 @@ public class Utilities : MonoBehaviour
         }
 
         image.color = original; // restore original alpha
+    }
+
+    //From Unity forums
+    //Goes through the parent getting children recursively
+    public static List<GameObject> GetAllChildren(GameObject obj)
+    {
+        List<GameObject> children = new List<GameObject>();
+        foreach (Transform child in obj.transform)
+        {
+            children.Add(child.gameObject);
+            children.AddRange(GetAllChildren(child.gameObject));
+        }
+        return children;
     }
 }
