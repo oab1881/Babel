@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class HerecyManager : MonoBehaviour
 {
-    
+
     public static HerecyManager Instance;
 
-    
+
 
     private int herecyAMin = 3;
 
@@ -36,20 +36,20 @@ public class HerecyManager : MonoBehaviour
     GameObject heresyBar;
 
     private Coroutine blinkCoroutine;
-    
-    
+
+
 
 
     [Header("Configs")]
     [SerializeField]
-    private bool CanSpawnAngels = true;
+    private bool canSpawnAngels = true;
     [SerializeField]
-    private bool CanHeresyAMin = true;
+    private bool canHeresyAMin = true;
     bool spawnAngles = false;
     private bool isBlinking = false;
 
 
-    
+
     //A static varialbe increased in GameManager AddFloor function
     //It is increased there so that it happens only once and doesn't cause the bug of multiple spawning when testing floor count
     public static int spawnNumber = 1;
@@ -74,12 +74,23 @@ public class HerecyManager : MonoBehaviour
     public static int HeresyAMin
     {
         get { return Instance.herecyAMin; }
-        set 
+        set
         {
             Instance.herecyAMin = value;
             if (Instance.herecyAMin > Instance.maxHeresy) Instance.herecyAMin = Instance.maxHeresy;
         }
     }
+
+    public bool CanSpawnAngels
+    {
+        set { canSpawnAngels = value; }
+    }
+
+    public bool CanHeresyAMin
+    {
+        set { canHeresyAMin = value;}
+    }
+
     private void Awake()
     {
         Instance= this;
@@ -162,7 +173,7 @@ public class HerecyManager : MonoBehaviour
     private IEnumerator SpawnAngles()
     {
         //If we even want angels to spawn
-        if (CanSpawnAngels)
+        if (canSpawnAngels)
         {
 
             //Checks for if heresy is over 50
@@ -208,7 +219,7 @@ public class HerecyManager : MonoBehaviour
 
 
 
-        if (CanHeresyAMin) IncreaseHeresy(herecyAMin);
+        if (canHeresyAMin) IncreaseHeresy(herecyAMin);
 
         StartCoroutine(HerecyAMin()); //this might be causing a bug
     }

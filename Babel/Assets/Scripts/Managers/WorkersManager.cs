@@ -13,6 +13,8 @@ public class WorkersManager : MonoBehaviour
     uint engineerCount = 0;
     uint engineerCost = 60;
 
+    public static bool canBuy = true;
+
     //Hover boxes logic for worker/engineer breakdown
     [SerializeField]
     GameObject workerBox;
@@ -77,17 +79,7 @@ public class WorkersManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*We can use this for debugging purposes ===============================
-         * //We see if we should increase our workers or our multiplyer 
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            workerCount++;
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            Clicker.multiplyer++;
-        }===============================================================*/
-
+        
         //We start the coroutine to generate clicks from workers
 
         //Move and trigger hammer animation & starts particles
@@ -141,46 +133,52 @@ public class WorkersManager : MonoBehaviour
 
     public void BuyWorker()
     {
-        if(GameManager.money >= workerCost)
+        if (canBuy)
         {
-            GameManager.AddGold(-workerCost);
-            workerCost += priceIncreaseWorkers;
+            if (GameManager.money >= workerCost)
+            {
+                GameManager.AddGold(-workerCost);
+                workerCost += priceIncreaseWorkers;
 
-            priceIncreaseWorkers += 5;
-            IncreaseWorkers();
-            UpdateWorkerBreakdown();    //update UI
+                priceIncreaseWorkers += 5;
+                IncreaseWorkers();
+                UpdateWorkerBreakdown();    //update UI
 
-            // === Spawn TinyGuy ===
-            // Generate random X,Y offset to spread them around the top of the tower
-            Vector3 spawnPosition = Clicker.Instance.NextBuildPosition + new Vector3(Random.Range(-xOffset, xOffset), Random.Range(-yOffset, -0.2f), 0f); ;
+                // === Spawn TinyGuy ===
+                // Generate random X,Y offset to spread them around the top of the tower
+                Vector3 spawnPosition = Clicker.Instance.NextBuildPosition + new Vector3(Random.Range(-xOffset, xOffset), Random.Range(-yOffset, -0.2f), 0f); ;
 
-            //Spawn TinyGuy on top of the tower
-            GameObject tinyGuy = Instantiate(tinyGuyPrefab, spawnPosition, Quaternion.identity, tinyGuyParent);
-            tinyGuys.Add(tinyGuy);
+                //Spawn TinyGuy on top of the tower
+                GameObject tinyGuy = Instantiate(tinyGuyPrefab, spawnPosition, Quaternion.identity, tinyGuyParent);
+                tinyGuys.Add(tinyGuy);
 
-        }
-        else
-        {
-            TMPFadeWarning.Show(); //Shows the text not enough to buy
+            }
+            else
+            {
+                TMPFadeWarning.Show(); //Shows the text not enough to buy
+            }
         }
     }
 
     //Attached to the engineer button's onClick event
     public void BuyEngineer()
     {
-        if (GameManager.money >= engineerCost)
+        if (canBuy)
         {
-            GameManager.AddGold(-engineerCost); ;
-            engineerCost += priceIncreaseEngineers;
-            Clicker.IncreaseMultiplyer();
-            UpdateEngineerBreakdown();  //update UI
-            engineerCount++;
-            EngineerCount = engineerCount;  //used in Clicker
-            AudioManager.PlaySoundEffect("Upgrade2", 6);
-        }
-        else
-        {
-            TMPFadeWarning.Show(); //Shows the text not enough to buy
+            if (GameManager.money >= engineerCost)
+            {
+                GameManager.AddGold(-engineerCost); ;
+                engineerCost += priceIncreaseEngineers;
+                Clicker.IncreaseMultiplyer();
+                UpdateEngineerBreakdown();  //update UI
+                engineerCount++;
+                EngineerCount = engineerCount;  //used in Clicker
+                AudioManager.PlaySoundEffect("Upgrade2", 6);
+            }
+            else
+            {
+                TMPFadeWarning.Show(); //Shows the text not enough to buy
+            }
         }
     }
 

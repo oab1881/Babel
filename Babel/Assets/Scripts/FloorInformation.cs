@@ -320,7 +320,37 @@ public class FloorInformation : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Pauses archers and gold generation
+    /// </summary>
+    public void Pause()
+    {
+        //If floor is archer type stop attacking
+        if(currentUpgrade.currectType == floorType.archer)
+        {
+            leftArcherInfoScript.CanAttack = false;
+            rightArcherInfoScript.CanAttack = false;
+        }
 
+        //Stop generating gold
+        goldGeneratorScript.enabled = false;
+    }
+
+    /// <summary>
+    /// Resumes archers and gold generation
+    /// </summary>
+    public void Resume()
+    {
+        //If floor is archer type then resume attacking
+        if (currentUpgrade.currectType == floorType.archer)
+        {
+            leftArcherInfoScript.CanAttack = true;
+            rightArcherInfoScript.CanAttack = true;
+        }
+
+        //Stop generating gold
+        goldGeneratorScript.enabled = true;
+    }
 
 
     //Method to explode the whole tower upon game Over

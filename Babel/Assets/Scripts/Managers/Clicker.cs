@@ -12,6 +12,7 @@ public class Clicker : MonoBehaviour
     public Transform towerBase; //The base position where floors stack
     public int startingClickRequirement = 5;
     public float clickRequirementMultiplier = 1.5f;
+    public static bool canBuild = true;
 
     [Header("Hammer Animation")]
     public GameObject hammerAnimObject; //Assigned in inspector
@@ -83,7 +84,7 @@ public class Clicker : MonoBehaviour
         //Check for click input
         if (Input.GetMouseButtonDown(0)) // Left click
         {
-            OnClickBuild();
+            if (canBuild)OnClickBuild();
         }
 
         CheckFloorStatus();
@@ -212,28 +213,28 @@ public class Clicker : MonoBehaviour
         }
     }
 
-    //Method to reset particles ***********STILL NOT WORKING*************
-    public void ResetParticles()
+    //Method to reset particles
+    public static void ResetParticles()
     {
-        if (clickParticles == null) return;
+        if (Instance.clickParticles == null) return;
 
-        clickParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-        clickParticles.Clear(true);
+        Instance.clickParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        Instance.clickParticles.Clear(true);
 
         //Trying literally everything but nothing is resetting the size or emission
-        var emission = clickParticles.emission;
+        var emission = Instance.clickParticles.emission;
         emission.enabled = false;
         emission.rateOverTime = 1f;
         emission.rateOverTimeMultiplier = 1f;
         emission.rateOverDistanceMultiplier = 1f;
         emission.rateOverDistance = 1f;
 
-        var main = clickParticles.main;
+        var main = Instance.clickParticles.main;
         main.startSize = 0.08f;
         main.startSpeed = 3f; // Optional sanity reset
         main.simulationSpeed = 1f;
 
-        var trails = clickParticles.trails;
+        var trails = Instance.clickParticles.trails;
         trails.enabled = true;
         trails.widthOverTrail = 0.36f;
     }

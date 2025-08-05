@@ -145,6 +145,31 @@ public class GameManager : MonoBehaviour
             FloorInformation.ExplodeEntireTower(); //Kaboom
         }
     }
+
+    //Pauses all activity in the game
+    public static void PauseGame()
+    {
+        Camera.main.gameObject.GetComponent<CameraMovement>().enabled = false;
+        foreach (FloorInformation floor in FloorManager.floorObjects) floor.Pause();
+        HerecyManager.Instance.CanSpawnAngels = false;
+        HerecyManager.Instance.CanHeresyAMin = false;
+        Clicker.canBuild = false;
+        WorkersManager.canBuy = false;
+    }
+
+
+    //Resumes all activity in the game
+    public static void ResumeGame()
+    {
+        Camera.main.gameObject.GetComponent<CameraMovement>().enabled = true;
+        foreach (FloorInformation floor in FloorManager.floorObjects) floor.Resume();
+        HerecyManager.Instance.CanSpawnAngels = true;
+        HerecyManager.Instance.CanHeresyAMin = true;
+        Clicker.canBuild = true;
+        WorkersManager.canBuy = true;
+    }
+
+
     
     //Global gameover logic
     public void GameOver()
@@ -161,24 +186,7 @@ public class GameManager : MonoBehaviour
         HerecyManager.Instance.gameObject.SetActive(false); //Temp adding this in so game doesn't crash when game ends
 
 
-        //Freeze all gold generation
-        //FloorInformation[] allFloors = FindObjectsOfType<FloorInformation>();
-        foreach (var floor in allFloors)
-        {
-            var goldGen = floor.GetComponent<GoldGenerator>();
-            if (goldGen != null) goldGen.enabled = false;
-        }
-
-        //Disable all CoinPopups
-        CoinPopup[] coinPopups = FindObjectsOfType<CoinPopup>();
-        foreach (var popup in coinPopups)
-        {
-            popup.gameObject.SetActive(false);
-        }
-
-        //Stop player interaction (clicking)
-        Clicker clicker = FindObjectOfType<Clicker>();
-        if (clicker != null) clicker.enabled = false;
+        PauseGame();
 
         //Disable Hammering
         WorkersManager workMgr = FindObjectOfType<WorkersManager>();
@@ -228,15 +236,10 @@ public class GameManager : MonoBehaviour
         HerecyManager.HeresyAMin = 3;
 
         Clicker.multiplyer = 1; // If you have a multiplier, reset it too
-        //HerecyManager.Instance.StopAllCoroutines();
+        Clicker.Instance.particlesEnabled = false;
+        Clicker.ResetParticles();
 
-        //Need to reset size of multiplyer particles here ****
-        Clicker clicker = FindObjectOfType<Clicker>();
-        if (clicker != null)
-        {
-            Clicker.Instance.particlesEnabled = false;
-            clicker.ResetParticles(); //Reset hammer particles  (STILL BROKEN)
-        }
+        ResumeGame();
 
 
         //Destroy current towers manually
