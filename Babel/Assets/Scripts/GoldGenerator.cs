@@ -30,7 +30,7 @@ public class GoldGenerator : MonoBehaviour
             {
             if (goldPerSecond != 0)
             {
-                GameManager.AddGold(goldPerSecond);
+                GameManager.ChangeGold(goldPerSecond);
 
                 //Debug.Log("Gold generated. Current gold: " + GameManager.Instance.money);
 

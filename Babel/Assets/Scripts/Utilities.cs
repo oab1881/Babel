@@ -157,4 +157,19 @@ public class Utilities : MonoBehaviour
         }
         return children;
     }
+
+    /// <summary>
+    /// Either activates or deactivates all children of a gameobject
+    /// </summary>
+    /// <param name="parent">The parent gameobject</param>
+    /// <param name="show">True to show false to hide</param>
+    public static void DisplayAllChildren(GameObject parent, bool show)
+    {
+        List<GameObject> children = GetAllChildren(parent);
+
+        foreach (GameObject chld in children)
+        {
+            chld.SetActive(show);
+        }
+    }
 }

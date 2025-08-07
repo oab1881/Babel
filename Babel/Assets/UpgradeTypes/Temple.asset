@@ -19,7 +19,7 @@ MonoBehaviour:
   floorStyle:
   - {fileID: 11400000, guid: 0b12d4283fc594641b5b95af0a5e8791, type: 2}
   goldPerSecond: 0
-  herecyChange: 20
+  herecyChange: -20
   herecyPerSecond: 3
   populationChange: 0
   dps: 0

@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M)) AddGold(10000);
+        if (Input.GetKeyDown(KeyCode.M)) ChangeGold(10000);
         if (Input.GetKeyDown(KeyCode.R)) RestartGame();
     }
 
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
 
     //Method that increments gold and calls UpdateGoldUI
     //Everywhere where gold is changed uses this function either through passing in positive or negative amount
-    public static void AddGold(float amount)
+    public static void ChangeGold(float amount)
     {
         money += (uint)amount;
         Instance.UpdateGoldUI();
@@ -125,11 +125,11 @@ public class GameManager : MonoBehaviour
      }
     
 
-    public static void DecreaseHerecy(int amount)
+    public static void UpdateHeresy(int amount)
     {
         if(amount > herecy) herecy = 0;
         
-        else herecy -= (uint)amount;
+        else herecy += (uint)amount;
     }
 
 
@@ -150,7 +150,11 @@ public class GameManager : MonoBehaviour
     public static void PauseGame()
     {
         Camera.main.gameObject.GetComponent<CameraMovement>().enabled = false;
-        foreach (FloorInformation floor in FloorManager.floorObjects) floor.Pause();
+        foreach (FloorInformation floor in FloorManager.floorObjects)
+        {
+            floor.Pause();
+            floor.enabled = false;
+        }
         HerecyManager.Instance.CanSpawnAngels = false;
         HerecyManager.Instance.CanHeresyAMin = false;
         Clicker.canBuild = false;
@@ -162,7 +166,11 @@ public class GameManager : MonoBehaviour
     public static void ResumeGame()
     {
         Camera.main.gameObject.GetComponent<CameraMovement>().enabled = true;
-        foreach (FloorInformation floor in FloorManager.floorObjects) floor.Resume();
+        foreach (FloorInformation floor in FloorManager.floorObjects)
+        {
+            floor.Resume();
+            floor.enabled = true;
+        }
         HerecyManager.Instance.CanSpawnAngels = true;
         HerecyManager.Instance.CanHeresyAMin = true;
         Clicker.canBuild = true;

@@ -1,0 +1,27 @@
+[
+    {
+      "id": "heretics",
+      "baseText": "Herectics approach you offering to speak to the gods about you... But for a price",
+      "imagePath": "",
+      "choices": [
+        {
+          "choiceText": "Take the offer",
+          "imageResultPath": "",
+          "effects": {
+            "Money": -10,
+            "Herecy": -30
+          },
+          "resultText": "They thank you for your support and head to a temple"
+        },
+        {
+          "choiceText": "Decline the offer",
+          "imageResultPath": "",
+          "effects": {},
+          "resultText": "They scoff as they walk away"
+        }
+      ]
+    }
+
+
+
+]

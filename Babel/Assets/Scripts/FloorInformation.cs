@@ -169,7 +169,7 @@ public class FloorInformation : MonoBehaviour
 
         //Plays the upgrade sound, changes the gold value and 
         AudioManager.PlaySoundEffect("Upgrade", 5);
-        GameManager.AddGold(-upgradeCost);
+        GameManager.ChangeGold(-upgradeCost);
         
         //Used to figure out what button was clicked
         int index = 0;
@@ -217,7 +217,7 @@ public class FloorInformation : MonoBehaviour
 
         //Update stats
         goldGeneratorScript.GoldPerSecond = currentUpgrade.goldPerSecond;
-        GameManager.DecreaseHerecy(currentUpgrade.herecyChange);
+        GameManager.UpdateHeresy(currentUpgrade.herecyChange);
         HerecyManager.HeresyAMin += currentUpgrade.herecyPerSecond;
         //Insert population stuff here
 
@@ -333,6 +333,7 @@ public class FloorInformation : MonoBehaviour
         }
 
         //Stop generating gold
+        goldGeneratorScript.StopAllCoroutines();
         goldGeneratorScript.enabled = false;
     }
 
@@ -350,6 +351,7 @@ public class FloorInformation : MonoBehaviour
 
         //Stop generating gold
         goldGeneratorScript.enabled = true;
+
     }
 
 
