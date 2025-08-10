@@ -146,13 +146,15 @@ public class HerecyManager : MonoBehaviour
     }
 
     //Increases Heresy and 
-    public static void IncreaseHeresy(int amount)
+    public static void ChangeHeresy(int amount)
     {
         //Increases the gameplay manager herecy
-        GameManager.herecy += (uint)amount;
+        if (amount < 0 && GameManager.herecy + amount < 0) GameManager.herecy = 0;
+        else GameManager.herecy += (uint)amount;
 
         //Uses custom blinking text to make herecy fade in and display the increase
-        if (Instance.blinkingText != null) Instance.blinkingText.ShowBlink("+" + GameManager.FormatNumbers(amount));
+        if (Instance.blinkingText != null && amount > 0) Instance.blinkingText.ShowBlink("+" + GameManager.FormatNumbers(amount));
+        else if(Instance.blinkingText != null) Instance.blinkingText.ShowBlink(GameManager.FormatNumbers(amount));
     }
 
     //Method to make the heresy bar blink when you almost max out
@@ -219,7 +221,7 @@ public class HerecyManager : MonoBehaviour
 
 
 
-        if (canHeresyAMin) IncreaseHeresy(herecyAMin);
+        if (canHeresyAMin) ChangeHeresy(herecyAMin);
 
         StartCoroutine(HerecyAMin()); //this might be causing a bug
     }

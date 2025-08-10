@@ -217,7 +217,7 @@ public class FloorInformation : MonoBehaviour
 
         //Update stats
         goldGeneratorScript.GoldPerSecond = currentUpgrade.goldPerSecond;
-        GameManager.UpdateHeresy(currentUpgrade.herecyChange);
+        HerecyManager.ChangeHeresy(currentUpgrade.herecyChange);
         HerecyManager.HeresyAMin += currentUpgrade.herecyPerSecond;
         //Insert population stuff here
 

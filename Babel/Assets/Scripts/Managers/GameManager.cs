@@ -123,15 +123,7 @@ public class GameManager : MonoBehaviour
 
          return value.ToString("0.##") + suffixes[suffixIndex];
      }
-    
-
-    public static void UpdateHeresy(int amount)
-    {
-        if(amount > herecy) herecy = 0;
-        
-        else herecy += (uint)amount;
-    }
-
+   
 
     //This uses function in FloorInfo.cs to reduce the health and is called in 
     //AngleMovement.cs
