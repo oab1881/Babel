@@ -12,9 +12,6 @@ public class FloorManager : MonoBehaviour
     public static uint floor = 0;
     public static List<FloorInformation> floorObjects = new List<FloorInformation>();
 
-    [SerializeField]
-    private TMPFloatingTextBlink blinkingHerecyIncreaseText;
-
 
     private void Awake()
     {
@@ -44,39 +41,15 @@ public class FloorManager : MonoBehaviour
     public void NewFloor()
     {
         floor++;
-        GameManager.money++;
-        GameManager.herecy += 5;
+        GameManager.IncreaseGold(100);
+        HerecyManager.IncreaseHeresy(5);
 
         //Every 20 floors make the number that spawn in a group increase
         if (floorObjects.Count % 20 == 0)
         {
             HerecyManager.spawnNumber++;
         }
-
-        if(blinkingHerecyIncreaseText != null)blinkingHerecyIncreaseText.ShowBlink("+5");
     }
-
-
-
-
-
-    // Checks if the player has enough money to upgrade
-    //From floor information will have to find a way to figure out floor number then get it's values from the list
-    /*
-    public static bool CheckUpgrade(int floorNum)
-    {
-        if (GameManager.money >= GameManager.floorObjects[Number of the floor once we have it])
-        {
-            return true;
-        }
-        else
-        {
-            TMPFadeWarning.Show(); // Display warning if not enough money
-            return false;
-        }
-    }
-    */
-
 
     private void Restart()
     {

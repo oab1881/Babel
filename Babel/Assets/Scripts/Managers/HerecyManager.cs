@@ -8,7 +8,8 @@ public class HerecyManager : MonoBehaviour
 
     public static HerecyManager Instance;
 
-
+    [SerializeField]
+    Stats statsScript;
 
     private int herecyAMin = 3;
 
@@ -91,6 +92,11 @@ public class HerecyManager : MonoBehaviour
         set { canHeresyAMin = value;}
     }
 
+    public static float Heresy
+    {
+        get { return Instance.statsScript.Heresy.Val; }
+    }
+
     private void Awake()
     {
         Instance= this;
@@ -112,7 +118,7 @@ public class HerecyManager : MonoBehaviour
         CheckEnd();
 
         //We only spawn anagles if herecy is over 50
-        if (GameManager.herecy >= 50)
+        if (Heresy >= 50)
         {
             //Debug.Log(GameManager.herecy);
             spawnAngles = true;
@@ -124,7 +130,7 @@ public class HerecyManager : MonoBehaviour
         }
 
         // Heresy bar blinking logic
-        if (GameManager.herecy > 85)
+        if (Heresy > 85)
         {
             if (!isBlinking)
             {
@@ -145,16 +151,26 @@ public class HerecyManager : MonoBehaviour
 
     }
 
-    //Increases Heresy and 
-    public static void ChangeHeresy(int amount)
+    /// <summary>
+    /// Increases Heresy 
+    /// </summary>
+    /// <param name="amount">Adds amount to total</param>
+    public static void IncreaseHeresy(float amount)
     {
-        //Increases the gameplay manager herecy
-        if (amount < 0 && GameManager.herecy + amount < 0) GameManager.herecy = 0;
-        else GameManager.herecy += (uint)amount;
+       
+        Instance.statsScript.Heresy.Add(amount);
 
         //Uses custom blinking text to make herecy fade in and display the increase
         if (Instance.blinkingText != null && amount > 0) Instance.blinkingText.ShowBlink("+" + GameManager.FormatNumbers(amount));
         else if(Instance.blinkingText != null) Instance.blinkingText.ShowBlink(GameManager.FormatNumbers(amount));
+    }
+
+    /// <summary>
+    /// Sets herecy to value doesn't use UI
+    /// </summary>
+    public static void SetHerecy(float amount)
+    {
+        Instance.statsScript.Heresy.Modify(amount);
     }
 
     //Method to make the heresy bar blink when you almost max out
@@ -221,7 +237,7 @@ public class HerecyManager : MonoBehaviour
 
 
 
-        if (canHeresyAMin) ChangeHeresy(herecyAMin);
+        if (canHeresyAMin) IncreaseHeresy(herecyAMin);
 
         StartCoroutine(HerecyAMin()); //this might be causing a bug
     }
@@ -229,7 +245,7 @@ public class HerecyManager : MonoBehaviour
     private void CheckEnd()
     {
         //end game if heresy hits 100
-        if (GameManager.herecy >= 100)
+        if (Heresy >= 100)
         {
             // Find the top floor and enable its Lightning child
             FloorInformation[] allFloors = FindObjectsOfType<FloorInformation>();

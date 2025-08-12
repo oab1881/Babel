@@ -58,11 +58,11 @@ public class AngleMovement : MonoBehaviour
         float baseTargetY = target.position.y;
 
         // Higher tiers lock in earlier (higher up)
-        if (GameManager.herecy >= 90)
+        if (HerecyManager.Heresy >= 90)
             targetY = baseTargetY + 1.5f;
-        else if (GameManager.herecy >= 80)
+        else if (HerecyManager.Heresy >= 80)
             targetY = baseTargetY + 1.0f;
-        else if (GameManager.herecy >= 70)
+        else if (HerecyManager.Heresy >= 70)
             targetY = baseTargetY + 0.5f;
         else
             targetY = baseTargetY;
@@ -82,26 +82,26 @@ public class AngleMovement : MonoBehaviour
         
         //Arbitrary scaling based on current herecy
         //Makes the angle bigger and gives more health
-        if (GameManager.herecy >= 90)
+        if (HerecyManager.Heresy >= 90)
         {
             health = 9.5f;
             transform.localScale = new Vector3(0.4f, 0.4f, 0);
             Debug.Log("Angle tier 3");
         }
-        else if (GameManager.herecy >= 80)
+        else if (HerecyManager.Heresy >= 80)
         {
             health = 8f;
             transform.localScale = new Vector3(0.3f, 0.3f, 0);
             Debug.Log("Angle tier 2");
         }
 
-        else if (GameManager.herecy >= 70)
+        else if (HerecyManager.Heresy >= 70)
         {
             health = 6f;
             transform.localScale = new Vector3(0.25f, 0.25f, 0);
             Debug.Log("Angle tier 1");
         }
-        else if(GameManager.herecy < 70)
+        else if(HerecyManager.Heresy < 70)
         {
             transform.localScale = new Vector3(0.2f, 0.2f, 0);
         }

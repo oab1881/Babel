@@ -6,12 +6,13 @@ using TMPro;
 public class WorkersManager : MonoBehaviour
 {
     //Worker count increase and they build every second for you
-    uint workerCount = 0;
     uint workerCost = 30;
 
     //Engineer count is strictly for ui as a multiplyer goes into effect in Clicker.cs
-    uint engineerCount = 0;
     uint engineerCost = 60;
+
+    [SerializeField]
+    Stats statsScript;
 
     public static bool canBuy = true;
 
@@ -28,8 +29,6 @@ public class WorkersManager : MonoBehaviour
     GameObject engineerBtn;
     [SerializeField]
     TMP_Text engineerBreakdown;
-
-    public static uint EngineerCount { get;  set; }  //used to access for the particle system in Clicker
 
     [SerializeField]
     uint priceIncreaseEngineers = 100;
@@ -70,11 +69,29 @@ public class WorkersManager : MonoBehaviour
     [SerializeField]
     TMP_Text engineerCountText;
 
+    private static WorkersManager Instance;
+
+    public static uint WorkersCount
+    {
+        get { return (uint)Instance.statsScript.WorkerCount.Val; }
+    }
+
+    public static uint EngineersCount
+    {
+        get { return (uint)Instance.statsScript.EngineerCount.Val; }
+    }
+
+    private void Awake()
+    {
+        Instance= this;
+    }
+
     private void Start()
     {
         //We start the coroutine once so it starts
         StartCoroutine(Workers());
     }
+
 
     // Update is called once per frame
     void Update()
@@ -83,7 +100,7 @@ public class WorkersManager : MonoBehaviour
         //We start the coroutine to generate clicks from workers
 
         //Move and trigger hammer animation & starts particles
-        if (workerCount > 0)
+        if (WorkersCount > 0)
         {
             if (hammerAnimator != null)
             {
@@ -100,10 +117,10 @@ public class WorkersManager : MonoBehaviour
         //Uses the format numbers function in game manager to make the numbers format properly
 
         workerCostText.text = GameManager.FormatNumbers(workerCost);
-        workerCountText.text = GameManager.FormatNumbers(workerCount);
+        workerCountText.text = GameManager.FormatNumbers(WorkersCount);
 
         engineerCostText.text = GameManager.FormatNumbers(engineerCost);
-        engineerCountText.text = GameManager.FormatNumbers(engineerCount);
+        engineerCountText.text = GameManager.FormatNumbers(EngineersCount);
     }
 
     //Starts the couroutine for wokers
@@ -111,7 +128,7 @@ public class WorkersManager : MonoBehaviour
     {
         //Every secondincreases the count progress by total number of workers
         //Clicker.currentClickProgress += workerCount;
-        float scaledWorkerOutput = workerCount * Clicker.multiplyer;     //Edited to now scale with engineer's multiplyer to make sure workers stay useful in late game
+        float scaledWorkerOutput = WorkersCount * Clicker.multiplyer;     //Edited to now scale with engineer's multiplyer to make sure workers stay useful in late game
         Clicker.currentClickProgress += scaledWorkerOutput;
         //Then wait a second
         yield return new WaitForSeconds(1f);
@@ -121,12 +138,12 @@ public class WorkersManager : MonoBehaviour
     }
 
 
-    //Increases the worker counts a function to be used later by the buttons.
+    //Increases the worker counts a function used by the buttons.
     //Will need to incorporate a way to check for enough money
     //Also need to implement a fail vs success outcome
     private void IncreaseWorkers()
     {
-        workerCount++;
+        statsScript.WorkerCount.Add(1);
         AudioManager.PlaySoundEffect("Upgrade2", 6);
     }
 
@@ -135,9 +152,9 @@ public class WorkersManager : MonoBehaviour
     {
         if (canBuy)
         {
-            if (GameManager.money >= workerCost)
+            if (GameManager.Money >= workerCost)
             {
-                GameManager.ChangeGold(-workerCost);
+                GameManager.IncreaseGold(-workerCost);
                 workerCost += priceIncreaseWorkers;
 
                 priceIncreaseWorkers += 5;
@@ -165,14 +182,13 @@ public class WorkersManager : MonoBehaviour
     {
         if (canBuy)
         {
-            if (GameManager.money >= engineerCost)
+            if (GameManager.Money >= engineerCost)
             {
-                GameManager.ChangeGold(-engineerCost); ;
+                GameManager.IncreaseGold(-engineerCost); ;
                 engineerCost += priceIncreaseEngineers;
                 Clicker.IncreaseMultiplyer();
                 UpdateEngineerBreakdown();  //update UI
-                engineerCount++;
-                EngineerCount = engineerCount;  //used in Clicker
+                statsScript.EngineerCount.Add(1);
                 AudioManager.PlaySoundEffect("Upgrade2", 6);
             }
             else
@@ -186,7 +202,7 @@ public class WorkersManager : MonoBehaviour
     private void UpdateWorkerBreakdown()
     {
         if (workerBreakdown != null)
-            workerBreakdown.text = $"{workerCount}";
+            workerBreakdown.text = $"{WorkersCount}";
     }
 
     //Call this whenever the engineer multiplier changes

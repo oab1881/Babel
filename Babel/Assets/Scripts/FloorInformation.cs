@@ -150,7 +150,7 @@ public class FloorInformation : MonoBehaviour
     // Checks if the player has enough money to upgrade
     public bool CheckUpgrade()
     {
-        if (GameManager.money >= upgradeCost)
+        if (GameManager.Money >= upgradeCost)
         {
             return true;
         }
@@ -169,7 +169,7 @@ public class FloorInformation : MonoBehaviour
 
         //Plays the upgrade sound, changes the gold value and 
         AudioManager.PlaySoundEffect("Upgrade", 5);
-        GameManager.ChangeGold(-upgradeCost);
+        GameManager.IncreaseGold(-upgradeCost);
         
         //Used to figure out what button was clicked
         int index = 0;
@@ -217,7 +217,7 @@ public class FloorInformation : MonoBehaviour
 
         //Update stats
         goldGeneratorScript.GoldPerSecond = currentUpgrade.goldPerSecond;
-        HerecyManager.ChangeHeresy(currentUpgrade.herecyChange);
+        HerecyManager.IncreaseHeresy(currentUpgrade.herecyChange);
         HerecyManager.HeresyAMin += currentUpgrade.herecyPerSecond;
         //Insert population stuff here
 

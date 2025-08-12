@@ -135,9 +135,9 @@ public class Clicker : MonoBehaviour
 
             // Configure and play particles
             var emission = clickParticles.emission;
-            emission.rateOverTime = WorkersManager.EngineerCount * 2;
+            emission.rateOverTime = WorkersManager.EngineersCount * 2;
 
-            float engineerBasedSize = 0.1f + WorkersManager.EngineerCount * 0.01f;
+            float engineerBasedSize = 0.1f + WorkersManager.EngineersCount * 0.01f;
             float finalSize = Mathf.Clamp(engineerBasedSize, 0f, 0.2f);
 
             var main = clickParticles.main;

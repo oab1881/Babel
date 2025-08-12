@@ -9,8 +9,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public  static uint money = 0;
-    public static uint herecy = 0;
+    [SerializeField]
+    Stats statsScript;
+
+    
     public static int health = 3;
 
     public int finalScore;
@@ -54,6 +56,10 @@ public class GameManager : MonoBehaviour
     };
 
 
+    public static float Money
+    {
+        get { return Instance.statsScript.Money.Val; }
+    }
 
 
     private void Awake()
@@ -72,14 +78,16 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        statsScript = GetComponent<Stats>();
         AudioManager.SetVolume(0, 0.1f);
         AudioManager.PlayMusic("BabelAmbient", 0);
+        IncreaseGold(100);
     }
 
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M)) ChangeGold(10000);
+        if (Input.GetKeyDown(KeyCode.M)) IncreaseGold(10000);
         if (Input.GetKeyDown(KeyCode.R)) RestartGame();
     }
 
@@ -87,9 +95,9 @@ public class GameManager : MonoBehaviour
 
     //Method that increments gold and calls UpdateGoldUI
     //Everywhere where gold is changed uses this function either through passing in positive or negative amount
-    public static void ChangeGold(float amount)
+    public static void IncreaseGold(float amount)
     {
-        money += (uint)amount;
+        Instance.statsScript.Money.Add(amount);
         Instance.UpdateGoldUI();
     }
 
@@ -98,7 +106,7 @@ public class GameManager : MonoBehaviour
     {
         if (goldDisplay != null)
         {
-            goldDisplay.text = FormatNumbers(money);
+            goldDisplay.text = FormatNumbers((uint)Money);
         }
     }
 
@@ -225,11 +233,9 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("RESET GAME");
         // Reset all static game variables
-        money = 0;
-        herecy = 0;
+        statsScript.ResetStats();
         health = 3;
         FloorManager.floor = 0;
-        WorkersManager.EngineerCount = 0;
 
         FloorManager.floorObjects.Clear();
         Reset?.Invoke();
@@ -238,6 +244,7 @@ public class GameManager : MonoBehaviour
         Clicker.multiplyer = 1; // If you have a multiplier, reset it too
         Clicker.Instance.particlesEnabled = false;
         Clicker.ResetParticles();
+        
 
         ResumeGame();
 

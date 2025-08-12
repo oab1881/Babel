@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Herecy : MonoBehaviour
+public class HerecySlider : MonoBehaviour
 {
 
     [SerializeField]
@@ -16,6 +16,6 @@ public class Herecy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        slider.value = Mathf.Lerp(slider.value, GameManager.herecy, speed * Time.deltaTime);
+        slider.value = Mathf.Lerp(slider.value, HerecyManager.Heresy, speed * Time.deltaTime);
     }
 }

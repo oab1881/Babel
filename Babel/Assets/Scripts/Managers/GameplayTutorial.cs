@@ -58,7 +58,7 @@ public class GameplayTutorial : MonoBehaviour
             StartCoroutine(RunDialogueQueue());
         }
 
-        if (GameManager.herecy > 85 && !hasShownMaxHeresyDialogue)
+        if (HerecyManager.Heresy > 85 && !hasShownMaxHeresyDialogue)
         {
             hasShownMaxHeresyDialogue = true;
             EnqueueDialogue(MaxHeresyDialogue());
