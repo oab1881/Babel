@@ -21,6 +21,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 00134cf2a3bf2794686f0cef5ed291fa, type: 2}
   - {fileID: 11400000, guid: 3a61ed6d13268d34f85a892c7b204967, type: 2}
   - {fileID: 11400000, guid: 65fe423d47469e749ba66f2d559af6ff, type: 2}
+  - {fileID: 11400000, guid: fa0b95172d7d42e4d9339ff6e93a6f92, type: 2}
   goldPerSecond: 20
   herecyChange: 0
   herecyPerSecond: 0
