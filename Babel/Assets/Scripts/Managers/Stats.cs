@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class Stats : MonoBehaviour
 {
+    public static Stats Instance;
+
     //General Stats
     private StatsVal money;
     private StatsVal heresy;
@@ -23,6 +26,7 @@ public class Stats : MonoBehaviour
     public StatsVal power;
 
     //Census stat text fields
+    [Header("Census Text Fields")]
     [SerializeField]
     private TextMeshProUGUI populationField;
     [SerializeField]
@@ -32,11 +36,27 @@ public class Stats : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI heresyPerMinField;
 
+    //Populace sliders
+    [Header("Populace Sliders")]
+    [SerializeField] private Slider dogmaSlider;
+    [SerializeField] private Slider cultureSlider;
+    [SerializeField] private Slider powerSlider;
+
 
 
 
     private void Awake()
     {
+
+        // --- Singleton setup ---
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        Instance = this;
+
+
         money = new StatsVal(0, false);    
         heresy = new StatsVal(0, false, 100);
         engineerCount = new StatsVal(0, false);
@@ -45,6 +65,28 @@ public class Stats : MonoBehaviour
         taxes = new StatsVal(0, false);
         population = new StatsVal(0, false);
         heresyPerMin = new StatsVal(0, false);
+    }
+
+    private void Start()
+    {
+        //Setup ranges (-100 to 100, starting at 0 in the middle)
+        if (dogmaSlider != null) {
+        dogmaSlider.minValue = -100;
+        dogmaSlider.maxValue = 100;
+        dogmaSlider.value = 0; // start in the middle
+    }
+
+    if (cultureSlider != null) {
+        cultureSlider.minValue = -100;
+        cultureSlider.maxValue = 100;
+        cultureSlider.value = 0;
+    }
+
+    if (powerSlider != null) {
+        powerSlider.minValue = -100;
+        powerSlider.maxValue = 100;
+        powerSlider.value = 0;
+    }
     }
 
 
@@ -105,6 +147,27 @@ public class Stats : MonoBehaviour
         //Update heresyPerMin
         if (heresyPerMinField != null)
             heresyPerMinField.text = $"{GameManager.FormatNumbers(heresyPerMin.Val)}/min";
+    }
+
+    // --- Increment Methods for Populace Stats ---
+    public void IncrementDogma(int amount) => ModifyStat(dogma, dogmaSlider, amount);
+    public void IncrementCulture(int amount) => ModifyStat(culture, cultureSlider, amount);
+    public void IncrementPower(int amount) => ModifyStat(power, powerSlider, amount);
+
+    //Method that allows us to modify the populace stats specifically
+    private void ModifyStat(StatsVal stat, Slider slider, int amount)
+    {
+        if (stat == null || slider == null) return;
+
+        //Add first
+        stat.Add(amount);
+
+        //Clamp result manually between -100 and 100
+        float clampedVal = Mathf.Clamp(stat.Val, -100, 100);
+        stat.Modify(clampedVal);
+
+        //Sync to UI
+        slider.value = clampedVal;
     }
 
 

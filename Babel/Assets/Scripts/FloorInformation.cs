@@ -109,7 +109,7 @@ public class FloorInformation : MonoBehaviour
         }
         else if (currentUpgrade.currectType == floorType.temple)
         {
-
+            //Stats.Instance.IncrementDogma(+10); tried to increment dogma here but its not working
         }
     }
 
