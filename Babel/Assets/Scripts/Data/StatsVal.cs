@@ -9,7 +9,7 @@ using UnityEngine;
 public class StatsVal
 {
     float baseVal;
-    float modifier = 1f;
+    List<Modifier> mods;
     bool canNegative;
     float maxVal = float.NaN;
 
@@ -22,6 +22,7 @@ public class StatsVal
     {
         this.baseVal = baseVal;
         this.canNegative = canNegative;
+        mods= new List<Modifier>();
     }
 
     public StatsVal(float baseVal, bool canNegative, float maxVal)
@@ -29,7 +30,10 @@ public class StatsVal
         this.baseVal = baseVal;
         this.canNegative = canNegative;
         this.maxVal = maxVal;
+        mods= new List<Modifier>();
     }
+
+
     /// <summary>
     /// Overwrites base value to the new value
     /// </summary>
@@ -42,8 +46,18 @@ public class StatsVal
         else baseVal = newVal;
     }
 
+    /// <summary>
+    /// Adds the newVal para to current val
+    /// </summary>
+    /// <param name="newVal"></param>
     public void Add(float newVal)
     {
+        int modifier = 1;
+        foreach (Modifier mod in mods)
+        {
+            modifier += mod.ModVal;
+        }
+
         if (maxVal != float.NaN && (baseVal + newVal * modifier) > maxVal) baseVal = maxVal;
         else if (canNegative) baseVal += (newVal * modifier);
         else if ((baseVal + newVal * modifier) < 0) baseVal = 0;
@@ -52,7 +66,9 @@ public class StatsVal
 
     public void AddModifier(float val)
     {
-        modifier += val;
+        //Add in new mod here
     }
 
+
+    
 }
