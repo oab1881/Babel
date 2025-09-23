@@ -87,6 +87,8 @@ public class Stats : MonoBehaviour
         powerSlider.maxValue = 100;
         powerSlider.value = 0;
     }
+
+        //money.AddModifier(10, 20);
     }
 
 

@@ -49,6 +49,7 @@ public class Modifier
     {
         if(peremenant) return false;
         timePassed += Time.deltaTime;
+        Debug.Log(timePassed);
         if (timePassed >= timeTotal) return true;
         return false;
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// Custom value as floats that can be modified used in place of normal primitives
@@ -12,6 +13,8 @@ public class StatsVal
     List<Modifier> mods;
     bool canNegative;
     float maxVal = float.NaN;
+
+    MonoBehaviour MonoBehaviour;
 
     public float Val
     {
@@ -30,7 +33,8 @@ public class StatsVal
         this.baseVal = baseVal;
         this.canNegative = canNegative;
         this.maxVal = maxVal;
-        mods= new List<Modifier>();
+        //MonoBehaviour = new MonoBehaviour();
+        //MonoBehaviour.StartCoroutine(ModLoop());
     }
 
 
@@ -64,11 +68,28 @@ public class StatsVal
         else baseVal += newVal;
     }
 
-    public void AddModifier(float val)
+    public void AddModifier(int val, float time)
     {
-        //Add in new mod here
+        mods.Add(new Modifier(val, time));
     }
 
+    private void checkMods()
+    { 
+        for(int i = 0; i < mods.Count; i++)
+        {
+            if(mods[i].CheckMod())
+            {
+                mods.RemoveAt(i);
+                i++;
+            }
+        }
+    }
 
-    
+    IEnumerator ModLoop()
+    {
+        yield return new WaitForSeconds(1f);
+        checkMods();
+    } 
+
+
 }
