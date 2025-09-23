@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
+using System;
 
 public class Stats : MonoBehaviour
 {
     public static Stats Instance;
+
+    public static Action loop;
 
     //General Stats
     private StatsVal money;
@@ -47,7 +50,6 @@ public class Stats : MonoBehaviour
 
     private void Awake()
     {
-
         // --- Singleton setup ---
         if (Instance != null && Instance != this)
         {
@@ -74,21 +76,19 @@ public class Stats : MonoBehaviour
         dogmaSlider.minValue = -100;
         dogmaSlider.maxValue = 100;
         dogmaSlider.value = 0; // start in the middle
-    }
+        }
 
-    if (cultureSlider != null) {
-        cultureSlider.minValue = -100;
-        cultureSlider.maxValue = 100;
-        cultureSlider.value = 0;
-    }
+        if (cultureSlider != null) {
+            cultureSlider.minValue = -100;
+            cultureSlider.maxValue = 100;
+            cultureSlider.value = 0;
+        }
 
-    if (powerSlider != null) {
-        powerSlider.minValue = -100;
-        powerSlider.maxValue = 100;
-        powerSlider.value = 0;
-    }
-
-        //money.AddModifier(10, 20);
+        if (powerSlider != null) {
+            powerSlider.minValue = -100;
+            powerSlider.maxValue = 100;
+            powerSlider.value = 0;
+        }
     }
 
 
@@ -120,6 +120,10 @@ public class Stats : MonoBehaviour
 
     private void Update()
     {
+        //Inovkes the loop event every frame each statVal will call it's checkMods function
+        loop?.Invoke();
+
+
         //Count all current floors
         int currentFloors = FindObjectsOfType<FloorInformation>().Length;
         floorCount.Modify(currentFloors);
