@@ -42,10 +42,7 @@ public class HerecyManager : MonoBehaviour
 
 
     [Header("Configs")]
-    [SerializeField]
-    private bool canSpawnAngels = true;
-    [SerializeField]
-    private bool canHeresyAMin = true;
+    
     bool spawnAngles = false;
     private bool isBlinking = false;
 
@@ -82,16 +79,7 @@ public class HerecyManager : MonoBehaviour
         }
     }
 
-    public bool CanSpawnAngels
-    {
-        set { canSpawnAngels = value; }
-    }
-
-    public bool CanHeresyAMin
-    {
-        set { canHeresyAMin = value;}
-    }
-
+    
     public static float Heresy
     {
         get { return Instance.statsScript.Heresy.Val; }
@@ -190,10 +178,6 @@ public class HerecyManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator SpawnAngles()
     {
-        //If we even want angels to spawn
-        if (canSpawnAngels)
-        {
-
             //Checks for if heresy is over 50
             if (spawnAngles)
             {
@@ -220,7 +204,7 @@ public class HerecyManager : MonoBehaviour
                     yield return new WaitForSeconds(spawnDiff);
                 }
             }
-        }
+        
 
          //Spawns after spawn time minus however many were spawned using the 2second interval in between
          yield return new WaitForSeconds(spawnTime - (spawnDiff * spawnNumber));
@@ -237,7 +221,7 @@ public class HerecyManager : MonoBehaviour
 
 
 
-        if (canHeresyAMin) IncreaseHeresy(herecyAMin);
+        IncreaseHeresy(herecyAMin);
 
         StartCoroutine(HerecyAMin()); //this might be causing a bug
     }
