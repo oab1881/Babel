@@ -149,32 +149,29 @@ public class GameManager : MonoBehaviour
     //Pauses all activity in the game
     public static void PauseGame()
     {
-        Camera.main.gameObject.GetComponent<CameraMovement>().enabled = false;
+        Time.timeScale = 0;
+        Clicker.canBuild = false;
+        WorkersManager.canBuy = false;
         foreach (FloorInformation floor in FloorManager.floorObjects)
         {
             floor.Pause();
             floor.enabled = false;
         }
-        HerecyManager.Instance.CanSpawnAngels = false;
-        HerecyManager.Instance.CanHeresyAMin = false;
-        Clicker.canBuild = false;
-        WorkersManager.canBuy = false;
     }
 
 
     //Resumes all activity in the game
     public static void ResumeGame()
     {
-        Camera.main.gameObject.GetComponent<CameraMovement>().enabled = true;
+        Time.timeScale = 1;
+        Clicker.canBuild = true;
+        WorkersManager.canBuy = true;
+       
         foreach (FloorInformation floor in FloorManager.floorObjects)
         {
             floor.Resume();
             floor.enabled = true;
         }
-        HerecyManager.Instance.CanSpawnAngels = true;
-        HerecyManager.Instance.CanHeresyAMin = true;
-        Clicker.canBuild = true;
-        WorkersManager.canBuy = true;
     }
 
 

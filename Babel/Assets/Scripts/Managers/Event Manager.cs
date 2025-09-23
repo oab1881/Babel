@@ -9,7 +9,7 @@ public class EventManager : MonoBehaviour
     public static EventManager Instance { get; private set; }
 
     private float countDown;
-    private float startTime = 60f;
+    private float startTime = 20f;
     bool paused = false;
     List<GameObject> children;
 
