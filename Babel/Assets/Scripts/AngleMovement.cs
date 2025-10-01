@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AngleMovement : MonoBehaviour
 {
@@ -49,6 +50,10 @@ public class AngleMovement : MonoBehaviour
 
     //Makes all the angles sway in different patterns
     private float swayOffset;
+
+    //Health Slider
+    [SerializeField]
+    Slider healthSlider;
 
     //Called externally to set the floor this angel should attack
     public void SetTarget(Transform newTarget, int targetIndex, bool spawnOnRight)
@@ -109,6 +114,10 @@ public class AngleMovement : MonoBehaviour
 
 private void Update()
     {
+        //Updates the health slider every frame
+        healthSlider.value = health;
+
+
         if (target == null) return;
 
         Vector3 pos = transform.position;
